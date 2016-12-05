@@ -12,29 +12,101 @@
   <!-- App Install Banner on iOS -->
   <meta name="apple-itunes-app" content="app-id=1046583900">
   <style>
+    body {
+      width: 100%;
+      height: 100%;
+      margin: 0;
+      font-family: Helvetica, sans-serif;
+      font-size: 16px;
+      background-color: gray;
+    }
+    .app {
+      width: 100%;
+      background-color: #123053;
+      color: white;
+      display: inline-block;
+    }
+    .app .left {
+      padding: 5px;
+      width: 150px;
+      float: left;
+    }
+    .app .right {
+      width: 125px;
+      float: right;
+    }
+    .instant-classics {
+      background-color: white;
+    }
+    .instant-classics .header {
+      width: 100%;
+      background-color: gray;
+      color: white;
+      text-align: center;
+      padding: 10px 0 10px 0;
+    }
+    .featured-books {
+      text-align: center;
+      padding: 10px;
+    }
     .featured-books img {
-        height: 170px;
+      height: 145px;
+    }
+    .collapsed {
+      background-color: gray;
+    }
+    .show-more {
+      cursor: pointer;
+      width: 100%;
+      background-color: black;
+      color: white;
+      text-align: center;
+      padding: 5px 0 5px 0;
+    }
+    .collapsed:before {
+      cursor: pointer;
+      content: ' ';
+      height: 0;
+      width: 0;
+      border-color: transparent;
+      border-style: solid;
+      border-width: 40px 100px 40px 100px;
+      border-top-color: black;
+      position: relative;
+      left: calc(50% - 100px);
+      top: 83px;
+      z-index: 2;
     }
     .expanded img {
-        height: 200px;
+      height: 200px;
     }
   </style>
 </head>
 <body>
   <main>
-    <img src="simplye.png" style="margin: auto; display: block; height: 150px; width: 150px;">
-    <div style="text-align: center; margin-top: 1em;">
-      <div class="hide-on-android">
-        <a href="https://itunes.apple.com/us/app/nypl-simplye/id1046583900?mt=8">Download on App Store</a><br />
+    <div class="app">
+      <div class="logos">
+        <img src="simplye.png" style="margin: auto; display: block; height: 100px; width: 150px;">
       </div>
-      <div class="hide-on-ios">
-        <a href="https://play.google.com/store/apps/details?id=org.nypl.simplified.simplye&hl=en">Download on Google Play</a>
+      <div class="left">
+        <div>Access over 300,000 books on your phone with your library card</div>
+        <div class="hide-on-android">
+          <a href="https://itunes.apple.com/us/app/nypl-simplye/id1046583900?mt=8">Download on App Store</a><br />
+        </div>
+        <div class="hide-on-ios">
+          <a href="https://play.google.com/store/apps/details?id=org.nypl.simplified.simplye&hl=en">Download on Google Play</a>
+        </div>
+      </div>
+      <div class="right">
+        <img src="simplye.png" style="margin: auto; display: block; height: 150px; width: 150px;">
       </div>
     </div>
-    <div style="text-align: center; margin-top: 2em;" class="books">
-      <hr/>
-      <strong>Instant Classics</strong>
-      <hr/>
+    <div class="instant-classics">
+      <div class="header">
+        Don't have a library card?
+        <br />
+        Read classic books instantly
+      </div>
       <div class="featured-books">
         <a href="books/Alice%27s%20Adventures%20in%20Wonderland.epub/index.html" title="Alice's Adventures in Wonderland">
           <img src="books/Alice%27s%20Adventures%20in%20Wonderland.epub/epub/images/cover.jpg">
@@ -46,9 +118,10 @@
           <img src="books/Little%20Women.epub/epub/images/cover.jpg">
         </a>
       </div>
-      <br />
-      <div class="collapsed">
-        <button class="expand">Show more books</button>
+      <div class="collapsed expand">
+        <div class="show-more">
+          Show more books
+        </div>
       </div>
       <div class="expanded" style="display: none">
         <button class="collapse">Show fewer books</button>
@@ -82,19 +155,19 @@
     var ios = navigator.userAgent.match(/iPhone|iPad|iPod/i);
     var android = navigator.userAgent.match(/Android/i);
     if (ios) {
-      document.querySelector("[class=hide-on-ios]").style.display = "none";
+      document.querySelector(".hide-on-ios").style.display = "none";
     }
     if (android) {
-      document.querySelector("[class=hide-on-android]").style.display = "none";
+      document.querySelector(".hide-on-android").style.display = "none";
     }
 
-    document.querySelector("[class=expand]").addEventListener("click", function () {
-        document.querySelector("[class=collapsed]").style.display = "none";
-        document.querySelector("[class=expanded]").style.display = "block";
+    document.querySelector(".expand").addEventListener("click", function () {
+        document.querySelector(".collapsed").style.display = "none";
+        document.querySelector(".expanded").style.display = "block";
     });
-    document.querySelector("[class=collapse]").addEventListener("click", function () {
-        document.querySelector("[class=collapsed]").style.display = "block";
-        document.querySelector("[class=expanded]").style.display = "none";
+    document.querySelector(".collapse").addEventListener("click", function () {
+        document.querySelector(".collapsed").style.display = "block";
+        document.querySelector(".expanded").style.display = "none";
     });
   </script>
 </body>
