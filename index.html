@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Books</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- Include Web App Manifest for App Install Banner on Android -->
+  <link href="simplye.webmanifest" rel="manifest" type="application/manifest+json">
+  <link rel="icon" href="simplye.png" sizes="300x300" type="image/png">
+  <!-- Home screen icon in iOS -->
+  <link rel="apple-touch-icon" href="simplye.png" sizes="300x300" type="image/png">
+  <!-- App Install Banner on iOS -->
+  <meta name="apple-itunes-app" content="app-id=1046583900">
+  <style>
+    .featured-books img {
+        height: 170px;
+    }
+    .expanded img {
+        height: 200px;
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <img src="simplye.png" style="margin: auto; display: block; height: 150px; width: 150px;">
+    <div style="text-align: center; margin-top: 1em;">
+      <div class="hide-on-android">
+        <a href="https://itunes.apple.com/us/app/nypl-simplye/id1046583900?mt=8">Download on App Store</a><br />
+      </div>
+      <div class="hide-on-ios">
+        <a href="https://play.google.com/store/apps/details?id=org.nypl.simplified.simplye&hl=en">Download on Google Play</a>
+      </div>
+    </div>
+    <div style="text-align: center; margin-top: 2em;" class="books">
+      <hr/>
+      <strong>Instant Classics</strong>
+      <hr/>
+      <div class="featured-books">
+        <a href="books/Alice%27s%20Adventures%20in%20Wonderland.epub/index.html" title="Alice's Adventures in Wonderland">
+          <img src="books/Alice%27s%20Adventures%20in%20Wonderland.epub/epub/images/cover.jpg">
+        </a>
+        <a href="books/9781682280294.epub/index.html" title="The Brothers Karamazov">
+          <img src="books/9781682280294.epub/OEBPS/images/brothers_karamazov_1_ekg.jpg">
+        </a>
+        <a href="books/Little%20Women.epub/index.html" title="Little Women">
+          <img src="books/Little%20Women.epub/epub/images/cover.jpg">
+        </a>
+      </div>
+      <br />
+      <div class="collapsed">
+        <button class="expand">Show more books</button>
+      </div>
+      <div class="expanded" style="display: none">
+        <button class="collapse">Show fewer books</button>
+        <br />
+        <br />
+        <a href="books/9781682280416.epub/index.html" title="A Christmas Carol">
+          <img src="books/9781682280416.epub/OEBPS/images/image-20843_a_christmas_carol_by_nat_kusinitz.jpg">
+        </a>
+        <a href="books/Right%20Ho%2C%20Jeeves.epub/index.html" title="Right Ho, Jeeves">
+          <img src="books/Right%20Ho%2C%20Jeeves.epub/epub/images/cover.jpg">
+        </a>
+        <a href="books/9781682280423.epub/index.html" title="Gulliver's Travels">
+          <img src="books/9781682280423.epub/OEBPS/images/naomisloman_gulliver27stravels_7662.jpg">
+        </a>
+        <a href="books/The%20Narrative%20of%20Arthur%20Gordon%20Pym%20of%20Nantucket.epub/index.html" title="The Narrative of Arthur Gordon Pym of Nantucket">
+          <img src="books/The%20Narrative%20of%20Arthur%20Gordon%20Pym%20of%20Nantucket.epub/epub/images/cover.jpg">
+        </a>
+        <a href="books/Three%20Men%20in%20a%20Boat.epub/index.html" title="Three Men in a Boat">
+          <img src="books/Three%20Men%20in%20a%20Boat.epub/epub/images/cover.jpg">
+        </a>
+        <a href="books/Twenty%20Thousand%20Leagues%20Under%20the%20Seas.epub/index.html" title="Twenty Thousand Leagues Under the Seas">
+          <img src="books/Twenty%20Thousand%20Leagues%20Under%20the%20Seas.epub/epub/images/cover.jpg">
+        </a>
+        <a href="books/mark-twain_a-connecticut-yankee-in-king-arthurs-court.epub/index.html" title="A Connecticut Yankee in King Arthur's Court">
+          <img src="books/mark-twain_a-connecticut-yankee-in-king-arthurs-court.epub/epub/images/cover.jpg">
+        </a>
+      </div>
+    </div>
+  </main>
+  <script type="text/javascript">
+    var ios = navigator.userAgent.match(/iPhone|iPad|iPod/i);
+    var android = navigator.userAgent.match(/Android/i);
+    if (ios) {
+      document.querySelector("[class=hide-on-ios]").style.display = "none";
+    }
+    if (android) {
+      document.querySelector("[class=hide-on-android]").style.display = "none";
+    }
+
+    document.querySelector("[class=expand]").addEventListener("click", function () {
+        document.querySelector("[class=collapsed]").style.display = "none";
+        document.querySelector("[class=expanded]").style.display = "block";
+    });
+    document.querySelector("[class=collapse]").addEventListener("click", function () {
+        document.querySelector("[class=collapsed]").style.display = "block";
+        document.querySelector("[class=expanded]").style.display = "none";
+    });
+  </script>
+</body>
+</html>

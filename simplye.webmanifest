@@ -1,0 +1,22 @@
+{
+  "name": "SimplyE",
+  "short_name": "SimplyE",
+  "icons": [
+    {
+      "src": "simplye.png",
+      "sizes": "300x300",
+      "type": "image/png"
+    }
+  ],
+  "prefer_related_applications": true,
+  "related_applications": [
+    {
+      "platform": "play",
+      "id": "org.nypl.simplified.simplye"
+    },
+    {
+      "platform": "itunes",
+      "id": "1046583900"
+    }
+  ]
+}
