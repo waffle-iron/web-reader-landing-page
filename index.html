@@ -18,32 +18,74 @@
       margin: 0;
       font-family: Helvetica, sans-serif;
       font-size: 16px;
-      background-color: gray;
+      background-color: #797270;
     }
     .app {
       width: 100%;
-      background-color: #123053;
+      background-color: #113153;
       color: white;
       display: inline-block;
     }
+    .app .logos {
+      width: 100%;
+      height: 50px;
+      margin: 0;
+      background-color: white;
+      list-style-type: none;
+      padding: 0;
+      padding-top: 5px;
+      text-align: center;
+    }
+    .app .logos li {
+      display: inline-block;
+      height: 100%;
+    }
+    .app .logos li:first-child {
+      float: left;
+      margin-left: 10px;
+    }
+    .app .logos li:last-child {
+      float: right;
+      margin-right: 10px;
+    }
+    .app .logos img {
+      width: 75px;
+    }
+    .app .logos img.bpl-logo {
+      position: relative;
+      bottom: -10px;
+    }
     .app .left {
-      padding: 5px;
+      margin-top: 10px;
+      padding: 10px 5px 0 5px;
       width: 150px;
+      height: 160px;
       float: left;
     }
+    .app .left img {
+      width: 150px;
+    }
     .app .right {
-      width: 125px;
+      margin-top: 10px;
+      width: 160px;
       float: right;
+      max-height: 170px;
+      overflow: hidden;
+    }
+    .app .right img {
+      width: 160px;
+      position: relative;
+      right: -10px;
     }
     .instant-classics {
-      background-color: white;
+      background-color: #e1e1e1;
     }
     .instant-classics .header {
       width: 100%;
-      background-color: gray;
+      background-color: #797270;
       color: white;
       text-align: center;
-      padding: 10px 0 10px 0;
+      padding: 13px 0 13px 0;
     }
     .featured-books {
       text-align: center;
@@ -53,7 +95,7 @@
       height: 145px;
     }
     .collapsed {
-      background-color: gray;
+      background-color: #797270;
     }
     .show-more {
       cursor: pointer;
@@ -61,9 +103,9 @@
       background-color: black;
       color: white;
       text-align: center;
-      padding: 5px 0 5px 0;
+      padding: 10px 0 10px 0;
     }
-    .collapsed:before {
+    .collapsed:after {
       cursor: pointer;
       content: ' ';
       height: 0;
@@ -74,31 +116,53 @@
       border-top-color: black;
       position: relative;
       left: calc(50% - 100px);
-      top: 83px;
+      top: 40px;
       z-index: 2;
     }
     .expanded img {
       height: 200px;
+    }
+    @media (min-width: 600px) {
+      body {
+        font-size: 24px;
+      }
+      .app .left {
+        padding: 50px;
+        width: 270px;
+        float: left;
+      }
+      .app .right {
+        width: 125px;
+        float: right;
+      }
+      .collapsed:before {
+        border-width: 60px 140px 60px 140px;
+        left: calc(50% - 140px);
+        top: 120px;
+      }
     }
   </style>
 </head>
 <body>
   <main>
     <div class="app">
-      <div class="logos">
-        <img src="simplye.png" style="margin: auto; display: block; height: 100px; width: 150px;">
-      </div>
+      <ul class="logos">
+        <li><img src="simplyE_logo.png" alt="SimplyE" class="simplye-logo"/></li>
+        <li><img src="brooklyn_logo.png" alt="Brooklyn Public Library" class="bpl-logo"/></li>
+        <li><img src="NYPL_logo.png" alt="New York Public Library" class="nypl-logo"/></li>
+      </ul>
       <div class="left">
         <div>Access over 300,000 books on your phone with your library card</div>
+        <br />
         <div class="hide-on-android">
-          <a href="https://itunes.apple.com/us/app/nypl-simplye/id1046583900?mt=8">Download on App Store</a><br />
+          <a href="https://itunes.apple.com/us/app/nypl-simplye/id1046583900?mt=8"><img src="apple_badge.png" alt="Download on the App Store"/></a><br />
         </div>
         <div class="hide-on-ios">
-          <a href="https://play.google.com/store/apps/details?id=org.nypl.simplified.simplye&hl=en">Download on Google Play</a>
+          <a href="https://play.google.com/store/apps/details?id=org.nypl.simplified.simplye&hl=en"><img src="google_badge.png" alt="Download on Google Play"/></a>
         </div>
       </div>
       <div class="right">
-        <img src="simplye.png" style="margin: auto; display: block; height: 150px; width: 150px;">
+        <img src="books_graphic.png" alt="Examples of library books available in the app"/>
       </div>
     </div>
     <div class="instant-classics">
