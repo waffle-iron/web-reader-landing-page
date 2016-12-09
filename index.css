@@ -135,6 +135,9 @@ a {
   margin: 5px;
   text-align: center;
 }
+.books a {
+  cursor: pointer;
+}
 .books img {
   height: 150px;
 }
@@ -257,11 +260,15 @@ a {
   }
 }
 @media(min-width: 1400px) {
+  html {
+    overflow: hidden;
+  }
   main {
     width: 50%;
     height: 100%;
     float: left;
     background-color: #113153;
+    overflow: visible;
   }
   .app .right {
     overflow: visible;
@@ -298,6 +305,12 @@ a {
     display: block;
     width: 50%;
     float: left;
+    height: 100%;
+    overflow: scroll;
+  }
+  .books-header {
+    position: fixed;
+    top: 0;
   }
   .books-header .tabs li {
     height: 40px;
@@ -305,6 +318,6 @@ a {
     padding: 5px 20px;
   }
   .books {
-    margin: 15px 55px;
+    margin: 115px 55px 5px 55px;
   }
 }
