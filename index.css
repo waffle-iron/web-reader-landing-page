@@ -1,0 +1,199 @@
+body {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  font-family: Helvetica, sans-serif;
+  font-size: 16px;
+  background-color: #797270;
+}
+a {
+  text-decoration: none;
+}
+.app {
+  width: 100%;
+  background-color: #113153;
+  color: white;
+  display: inline-block;
+}
+.app .logos {
+  width: 100%;
+  height: 50px;
+  margin: 0;
+  background-color: white;
+  list-style-type: none;
+  padding: 0;
+  padding-top: 5px;
+  text-align: center;
+}
+.app .logos li {
+  display: inline-block;
+  height: 100%;
+  background-color: white;
+}
+.app .logos li:first-child {
+  float: left;
+  margin-left: 10px;
+}
+.app .logos li:last-child {
+  float: right;
+  margin-right: 10px;
+}
+.app .logos img {
+  width: 75px;
+}
+.app .logos img.bpl-logo {
+  position: relative;
+  bottom: -10px;
+}
+.app .left {
+  margin-top: 10px;
+  padding: 10px 5px 0 5px;
+  width: 150px;
+  height: 160px;
+  float: left;
+}
+.app .left img {
+  width: 150px;
+}
+.app .right {
+  margin-top: 10px;
+  width: 160px;
+  float: right;
+  max-height: 170px;
+  overflow: hidden;
+}
+.app .right img {
+  width: 160px;
+  position: relative;
+  right: -10px;
+}
+.instant-classics {
+  background-color: #e1e1e1;
+}
+.instant-classics .header {
+  width: 100%;
+  background-color: #797270;
+  color: white;
+  text-align: center;
+  padding: 13px 0;
+}
+.featured-books {
+  text-align: center;
+  padding: 10px;
+}
+.featured-books img {
+  height: 145px;
+}
+.collapsed {
+  background-color: #797270;
+}
+.show-more {
+  cursor: pointer;
+  width: 100%;
+  background-color: black;
+  color: white;
+  text-align: center;
+  padding: 10px 0;
+}
+.collapsed:after {
+  cursor: pointer;
+  content: ' ';
+  height: 0;
+  width: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 40px 100px 40px 100px;
+  border-top-color: black;
+  position: relative;
+  left: calc(50% - 100px);
+  top: 40px;
+  z-index: 2;
+}
+.expanded img {
+  height: 200px;
+}
+@media (min-width: 375px) {
+  .app .left {
+    padding: 30px;
+  }
+  .app .right {
+    max-height: 220px;
+  }
+}
+@media (min-width: 400px) {
+  body {
+    font-size: 20px;
+  }
+  .app .left {
+    padding: 15px;
+    width: 200px;
+  }
+  .app .left img {
+    width: 200px;
+  }
+  .app .right, .app .right img {
+    width: 175px;
+  }
+}
+@media (min-width: 700px) {
+  body {
+    font-size: 32px;
+  }
+  .app .logos {
+    height: 100px;
+  }
+  .app .logos img {
+    width: 150px;
+  }
+  .app .logos li:first-child {
+    margin-left: calc(50% - 300px);
+  }
+  .app .logos li:last-child {
+    margin-right: calc(50% - 300px);
+  }
+  .app .left {
+    padding: 50px;
+    width: 300px;
+  }
+  .app .left img {
+    width: 300px;
+  }
+  .app .right {
+    width: 300px;
+    max-height: 410px;
+  }
+  .app .right img {
+    width: 300px;
+    right: 0px;
+  }
+  .instant-classics .header {
+    padding: 20px 0;
+  }
+  .featured-books, .featured-books a {
+    padding: 10px 20px;
+  }
+  .featured-books img {
+    height: 230px;
+  }
+  .show-more {
+    padding: 20px 0;
+  }
+  .collapsed:after {
+    border-width: 40px 160px 40px 160px;
+    left: calc(50% - 160px);
+    top: 40px;
+  }
+}
+@media(min-width: 850px) {
+  .app .left {
+    position: relative;
+    left: calc(50% - 350px);
+  }
+  .app .right {
+    position: relative;
+    left: calc(-50% + 350px);
+  }
+  .featured-books img {
+    height: 300px;
+  }
+}
