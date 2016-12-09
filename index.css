@@ -1,4 +1,4 @@
-body {
+html, body {
   width: 100%;
   height: 100%;
   margin: 0;
@@ -15,7 +15,7 @@ a {
   color: white;
   display: inline-block;
 }
-.app .logos {
+.app .logos, .books-header {
   width: 100%;
   height: 50px;
   margin: 0;
@@ -109,8 +109,33 @@ a {
   top: 40px;
   z-index: 2;
 }
-.expanded img {
-  height: 200px;
+.expanded {
+  display: none;
+}
+.books-header {
+  position: relative;  
+}
+.books-header .tabs {
+  position: absolute;
+  bottom: -32px;
+}
+.books-header .tabs li {
+  display: inline-block;
+  margin: 0px 20px;
+  cursor: pointer;
+  height: 40px;
+  padding: 5px 30px;
+  background-color: #e1e1e1;
+}
+.books-header .tabs li.active {
+  background-color: #797270;
+  color: white;
+}
+.books {
+  margin: 15px 55px;
+}
+.books img {
+  height: 220px;
 }
 @media (min-width: 375px) {
   .app .left {
@@ -139,7 +164,7 @@ a {
   body {
     font-size: 32px;
   }
-  .app .logos {
+  .app .logos, .books-header {
     height: 100px;
   }
   .app .logos img {
@@ -185,6 +210,12 @@ a {
   }
 }
 @media(min-width: 850px) {
+  main {
+    width: 50%;
+    height: 100%;
+    float: left;
+    background-color: #113153;
+  }
   .app .left {
     position: relative;
     left: calc(50% - 350px);
@@ -192,8 +223,39 @@ a {
   .app .right {
     position: relative;
     left: calc(-50% + 350px);
+    overflow: visible;
   }
-  .featured-books img {
-    height: 300px;
+  .featured-books {
+    display: none;
+  }
+  .instant-classics {
+    background-color: #113153;
+  }
+  .instant-classics .header {
+    background-color: black;
+    margin-top: 100px;
+    height: 90px;
+  }
+  .instant-classics .header:after {
+    display: inline-block;
+    content: ' ';
+    height: 0;
+    width: 0;
+    border-color: transparent;
+    border-style: solid;
+    border-width: 62px 48px 62px 48px;
+    border-left-color: black;
+    position: relative;
+    left: calc(50% + 48px);
+    top: -90px;
+    z-index: 2;
+  }
+  .collapsed, .collapse {
+    display: none;
+  }
+  .expanded {
+    display: block;
+    width: 50%;
+    float: left;
   }
 }
