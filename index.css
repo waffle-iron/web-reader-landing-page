@@ -117,14 +117,14 @@ a {
 }
 .books-header .tabs {
   position: absolute;
-  bottom: -32px;
+  bottom: -16px;
 }
 .books-header .tabs li {
   display: inline-block;
-  margin: 0px 20px;
+  margin: 0px 5px;
   cursor: pointer;
-  height: 40px;
-  padding: 5px 30px;
+  height: 20px;
+  padding: 5px;
   background-color: #e1e1e1;
 }
 .books-header .tabs li.active {
@@ -132,10 +132,11 @@ a {
   color: white;
 }
 .books {
-  margin: 15px 55px;
+  margin: 5px;
+  text-align: center;
 }
 .books img {
-  height: 220px;
+  height: 150px;
 }
 @media (min-width: 375px) {
   .app .left {
@@ -145,19 +146,42 @@ a {
     max-height: 220px;
   }
 }
-@media (min-width: 400px) {
+@media (min-width: 420px) {
   body {
     font-size: 20px;
   }
   .app .left {
     padding: 15px;
     width: 200px;
+    height: 210px;
   }
   .app .left img {
     width: 200px;
   }
+  .app .right {
+    max-height: 240px;
+  }
   .app .right, .app .right img {
     width: 175px;
+  }
+  .books-header .tabs {
+    bottom: -20px;
+  }
+}
+@media (min-width: 450px) {
+  .app .logos li:first-child {
+    margin-left: calc(50% - 150px);
+  }
+  .app .logos li:last-child {
+    margin-right: calc(50% - 150px);
+  }
+  .app .left {
+    position: relative;
+    left: calc(50% - 200px);
+  }
+  .app .right {
+    position: relative;
+    left: calc(-50% + 200px);
   }
 }
 @media (min-width: 700px) {
@@ -179,6 +203,8 @@ a {
   .app .left {
     padding: 50px;
     width: 300px;
+    position: relative;
+    left: calc(50% - 350px);
   }
   .app .left img {
     width: 300px;
@@ -186,6 +212,8 @@ a {
   .app .right {
     width: 300px;
     max-height: 410px;
+    position: relative;
+    left: calc(-50% + 350px);
   }
   .app .right img {
     width: 300px;
@@ -208,21 +236,34 @@ a {
     left: calc(50% - 160px);
     top: 40px;
   }
+  .books-header .tabs {
+    bottom: -32px;
+  }
+  .books-header .tabs li {
+    height: 40px;
+    margin: 0px 10px;
+    padding: 5px 10px;
+  }
+  .books img {
+    height: 220px;
+  }
 }
 @media(min-width: 850px) {
+  .app .left {
+    left: calc(50% - 350px);
+  }
+  .app .right {
+    left: calc(-50% + 350px);
+  }
+}
+@media(min-width: 1400px) {
   main {
     width: 50%;
     height: 100%;
     float: left;
     background-color: #113153;
   }
-  .app .left {
-    position: relative;
-    left: calc(50% - 350px);
-  }
   .app .right {
-    position: relative;
-    left: calc(-50% + 350px);
     overflow: visible;
   }
   .featured-books {
@@ -257,5 +298,13 @@ a {
     display: block;
     width: 50%;
     float: left;
+  }
+  .books-header .tabs li {
+    height: 40px;
+    margin: 0px 20px;
+    padding: 5px 20px;
+  }
+  .books {
+    margin: 15px 55px;
   }
 }
