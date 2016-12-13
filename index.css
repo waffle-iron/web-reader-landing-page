@@ -2,6 +2,7 @@ html, body {
   width: 100%;
   height: 100%;
   margin: 0;
+  padding: 0;
   font-family: Helvetica, sans-serif;
   font-size: 16px;
   background-color: #797270;
@@ -67,9 +68,6 @@ a {
   position: relative;
   right: -10px;
 }
-.instant-classics {
-  background-color: #e1e1e1;
-}
 .instant-classics .header {
   width: 100%;
   background-color: #797270;
@@ -78,6 +76,7 @@ a {
   padding: 13px 0;
 }
 .featured-books {
+  background-color: #e1e1e1;
   text-align: center;
   padding: 10px;
 }
@@ -109,27 +108,8 @@ a {
   top: 40px;
   z-index: 2;
 }
-.expanded {
+.expanded, .books-header {
   display: none;
-}
-.books-header {
-  position: relative;  
-}
-.books-header .tabs {
-  position: absolute;
-  bottom: -16px;
-}
-.books-header .tabs li {
-  display: inline-block;
-  margin: 0px 5px;
-  cursor: pointer;
-  height: 20px;
-  padding: 5px;
-  background-color: #e1e1e1;
-}
-.books-header .tabs li.active {
-  background-color: #797270;
-  color: white;
 }
 .books {
   margin: 5px;
@@ -138,8 +118,24 @@ a {
 .books a {
   cursor: pointer;
 }
+.books .adult {
+  display: none;
+}
 .books img {
   height: 150px;
+}
+.age-check {
+  width: 100%;
+  background-color: #e1e1e1;
+  padding: 10px;
+  text-align: center;
+}
+.age-check label, .age-check input {
+  cursor: pointer;
+}
+.age-check input {
+  margin-right: 25px;
+  transform: scale(2);
 }
 @media (min-width: 375px) {
   .app .left {
@@ -166,9 +162,6 @@ a {
   }
   .app .right, .app .right img {
     width: 175px;
-  }
-  .books-header .tabs {
-    bottom: -20px;
   }
 }
 @media (min-width: 450px) {
@@ -239,16 +232,11 @@ a {
     left: calc(50% - 160px);
     top: 40px;
   }
-  .books-header .tabs {
-    bottom: -32px;
-  }
-  .books-header .tabs li {
-    height: 40px;
-    margin: 0px 10px;
-    padding: 5px 10px;
-  }
   .books img {
     height: 220px;
+  }
+  .age-check input {
+    transform-origin: bottom left;
   }
 }
 @media(min-width: 850px) {
@@ -309,13 +297,10 @@ a {
     overflow: scroll;
   }
   .books-header {
+    display: block;
     position: fixed;
     top: 0;
-  }
-  .books-header .tabs li {
-    height: 40px;
-    margin: 0px 20px;
-    padding: 5px 20px;
+    background-color: white;
   }
   .books {
     margin: 115px 55px 5px 55px;

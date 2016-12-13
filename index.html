@@ -63,12 +63,6 @@
   </main>
   <div class="expanded">
     <div class="books-header">
-      <button class="collapse">Show fewer books</button>
-      <ul class="tabs">
-        <li class="adults-tab active">Adults</li>
-        <li class="young-adults-tab">Young Adults</li>
-        <li class="children-tab">Children</li>
-      </ul>
     </div>
     <div class="books">
       <a href="books/Alice%27s%20Adventures%20in%20Wonderland.epub/index.html" title="Alice's Adventures in Wonderland">
@@ -95,31 +89,51 @@
       <a href="books/Three%20Men%20in%20a%20Boat.epub/index.html" title="Three Men in a Boat">
         <img src="books/Three%20Men%20in%20a%20Boat.epub/epub/images/cover.jpg">
       </a>
-      <a href="books/Twenty%20Thousand%20Leagues%20Under%20the%20Seas.epub/index.html" title="Twenty Thousand Leagues Under the Seas">
+      <a href="books/Twenty%20Thousand%20Leagues%20Under%20the%20Seas.epub/index.html" title="Twenty Thousand Leagues Under the Seas" class="adult">
         <img src="books/Twenty%20Thousand%20Leagues%20Under%20the%20Seas.epub/epub/images/cover.jpg">
       </a>
-      <a href="books/mark-twain_a-connecticut-yankee-in-king-arthurs-court.epub/index.html" title="A Connecticut Yankee in King Arthur's Court">
+      <a href="books/mark-twain_a-connecticut-yankee-in-king-arthurs-court.epub/index.html" title="A Connecticut Yankee in King Arthur's Court" class="adult">
         <img src="books/mark-twain_a-connecticut-yankee-in-king-arthurs-court.epub/epub/images/cover.jpg">
       </a>
+    </div>
+    <div class="age-check">
+      <label><input type="checkbox" name="age">I am at least 13 years old</label>
     </div>
   </div>
   <script type="text/javascript">
     var ios = navigator.userAgent.match(/iPhone|iPad|iPod/i);
     var android = navigator.userAgent.match(/Android/i);
     if (ios) {
-      document.querySelector(".hide-on-ios").style.display = "none";
+      var elements = document.querySelectorAll(".hide-on-ios");
+      for (var i = 0; i < elements.length; i++) {
+        elements[i].style.display = "none";
+      }
     }
     if (android) {
-      document.querySelector(".hide-on-android").style.display = "none";
+      var elements = document.querySelectorAll(".hide-on-android");
+      for (var i = 0; i < elements.length; i++) {
+        elements[i].style.display = "none";
+      }
     }
 
     document.querySelector(".expand").addEventListener("click", function () {
-        document.querySelector(".collapsed").style.display = "none";
-        document.querySelector(".expanded").style.display = "block";
+      document.querySelector(".collapsed").style.display = "none";
+      document.querySelector(".expanded").style.display = "block";
     });
-    document.querySelector(".collapse").addEventListener("click", function () {
-        document.querySelector(".collapsed").style.display = "block";
-        document.querySelector(".expanded").style.display = "none";
+
+    document.querySelector(".age-check input").addEventListener("change", function () {
+      var checked = document.querySelector(".age-check input").checked;
+      if (checked) {
+        var elements = document.querySelectorAll(".adult");
+        for (var i = 0; i < elements.length; i++) {
+          elements[i].style.display = "inline";
+        }
+      } else {
+        var elements = document.querySelectorAll(".adult");
+        for (var i = 0; i < elements.length; i++) {
+          elements[i].style.display = "none";
+        }
+      }
     });
   </script>
 </body>
