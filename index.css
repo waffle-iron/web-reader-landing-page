@@ -10,6 +10,12 @@ html, body {
 a {
   text-decoration: none;
 }
+a:focus, input:focus {
+  outline-color: orange;
+  outline-style: solid;
+  outline-width: 3px; 
+  outline-offset: 3px;
+}
 .app {
   width: 100%;
   background-color: #113153;
@@ -86,7 +92,7 @@ a {
 .collapsed {
   background-color: #797270;
 }
-.show-more {
+.show-more, .show-more a {
   cursor: pointer;
   width: 100%;
   background-color: black;
