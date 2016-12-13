@@ -86,6 +86,9 @@ a:focus, input:focus {
   text-align: center;
   padding: 10px;
 }
+.featured-books a, .books a {
+  display: inline-block;
+}
 .featured-books img {
   height: 145px;
 }
