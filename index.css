@@ -7,6 +7,12 @@ html, body {
   font-size: 16px;
   background-color: #797270;
 }
+h1, h2 {
+  font-size: 16px;
+  font-weight: normal;
+  margin: 0;
+  padding: 0;
+}
 a {
   text-decoration: none;
 }
@@ -56,27 +62,32 @@ a:focus, input:focus {
   margin-top: 10px;
   padding: 10px 5px 0 5px;
   width: 150px;
-  height: 160px;
   float: left;
 }
 .app .left img {
   width: 150px;
 }
+.app {
+  position: relative;
+}
 .app .right {
   margin-top: 10px;
   width: 160px;
-  float: right;
-  max-height: 170px;
+  position: absolute;
+  top: 50px;
+  bottom: 0;
+  right: 0;
   overflow: hidden;
 }
 .app .right img {
   width: 160px;
-  position: relative;
+  position: absolute;
+  top: 5px;
   right: -10px;
 }
 .instant-classics .header {
   width: 100%;
-  background-color: #797270;
+  background-color: black;
   color: white;
   text-align: center;
   padding: 13px 0;
@@ -121,8 +132,9 @@ a:focus, input:focus {
   display: none;
 }
 .books {
-  margin: 5px;
-  text-align: center;
+  background-color: #e1e1e1;
+  padding: 5px;
+  text-align: left;
 }
 .books a {
   cursor: pointer;
@@ -131,11 +143,11 @@ a:focus, input:focus {
   display: none;
 }
 .books img {
-  height: 150px;
+  width: 100px;
 }
 .age-check {
-  width: 100%;
-  background-color: #e1e1e1;
+  background-color: #797270;
+  color: white;
   padding: 10px;
   text-align: center;
 }
@@ -146,28 +158,34 @@ a:focus, input:focus {
   margin-right: 25px;
   transform: scale(2);
 }
+@media (min-width: 360px) {
+  .books img {
+    width: 113px;
+  }
+}
 @media (min-width: 375px) {
   .app .left {
     padding: 30px;
   }
-  .app .right {
-    max-height: 220px;
+  .books img {
+    width: 118px;
+  }
+}
+@media (min-width: 412px) {
+  .books img {
+    width: 130px;
   }
 }
 @media (min-width: 420px) {
-  body {
+  body, h1, h2 {
     font-size: 20px;
   }
   .app .left {
     padding: 15px;
     width: 200px;
-    height: 210px;
   }
   .app .left img {
     width: 200px;
-  }
-  .app .right {
-    max-height: 240px;
   }
   .app .right, .app .right img {
     width: 175px;
@@ -182,15 +200,19 @@ a:focus, input:focus {
   }
   .app .left {
     position: relative;
-    left: calc(50% - 200px);
+    left: calc(50% - 210px);
   }
   .app .right {
-    position: relative;
-    left: calc(-50% + 200px);
+    left: calc(50% + 10px);
+  }
+}
+@media (min-width: 640px) {
+  .books img {
+    width: 152px;    
   }
 }
 @media (min-width: 700px) {
-  body {
+  body, h1, h2 {
     font-size: 32px;
   }
   .app .logos, .books-header {
@@ -216,9 +238,8 @@ a:focus, input:focus {
   }
   .app .right {
     width: 300px;
-    max-height: 410px;
-    position: relative;
-    left: calc(-50% + 350px);
+    top: 100px;
+    left: calc(50% + 50px);
   }
   .app .right img {
     width: 300px;
@@ -242,23 +263,39 @@ a:focus, input:focus {
     top: 40px;
   }
   .books img {
-    height: 220px;
+    width: 192px;
   }
   .age-check input {
     transform-origin: bottom left;
   }
 }
-@media(min-width: 850px) {
-  .app .left {
-    left: calc(50% - 350px);
-  }
-  .app .right {
-    left: calc(-50% + 350px);
+@media (min-width: 730px) {
+  .books img {
+    width: 170px;
   }
 }
-@media(min-width: 1400px) {
+@media (min-width: 768px) {
+  .books img {
+    width: 182px;
+  }
+}
+@media (min-width: 1024px) {
+  .books img {
+    width: 160px;
+  }
+}
+@media(min-width: 1100px) {
   html {
     overflow: hidden;
+  }
+  body {
+    font-size: 18px;
+  }
+  h2 {
+    font-size: 22px;
+  }
+  h1 {
+    font-size: 24px;
   }
   main {
     width: 50%;
@@ -267,19 +304,38 @@ a:focus, input:focus {
     background-color: #113153;
     overflow: visible;
   }
+  .app .logos img {
+    width: 120px;
+  }
+  .app .logos li:first-child {
+    margin-left: calc(50% - 240px);
+  }
+  .app .logos li:last-child {
+    margin-right: calc(50% - 240px);
+  }
+  .app .left {
+    padding: 30px 10px 10px 10px;
+    width: 230px;
+    position: relative;
+    left: calc(50% - 250px);
+  }
+  .app .left img {
+    width: 230px;
+  }
   .app .right {
+    width: 230px;
+    left: calc(50% + 20px);
     overflow: visible;
+  }
+  .app .right img {
+    width: 230px;
   }
   .featured-books {
     display: none;
   }
-  .instant-classics {
-    background-color: #113153;
-  }
   .instant-classics .header {
-    background-color: black;
-    margin-top: 100px;
-    height: 90px;
+    margin-top: 80px;
+    height: 60px;
   }
   .instant-classics .header:after {
     display: inline-block;
@@ -288,11 +344,11 @@ a:focus, input:focus {
     width: 0;
     border-color: transparent;
     border-style: solid;
-    border-width: 62px 48px 62px 48px;
+    border-width: 49px 29px 49px 29px;
     border-left-color: black;
     position: relative;
-    left: calc(50% + 48px);
-    top: -90px;
+    left: calc(50% + 29px);
+    top: -68px;
     z-index: 2;
   }
   .collapsed, .collapse {
@@ -312,6 +368,14 @@ a:focus, input:focus {
     background-color: white;
   }
   .books {
-    margin: 115px 55px 5px 55px;
+    background-color: #797270;
+    margin: 115px 5px 5px 35px;
+  }
+  .age-check {
+    background-color: #e1e1e1;
+    color: black;
+  }
+  .age-check input {
+    transform: scale(1.5);
   }
 }
