@@ -17,9 +17,9 @@ from core.model import (
 )
 
 FEATURED_TITLES = ["A Christmas Carol", "Alice's Adventures in Wonderland", "The Adventures of Sherlock Holmes"]
-TITLE_HEADER = "Final List"
-AGE_HEADER = "Age"
-MIN_AGE_RE = re.compile(".*Age\s(\d+).*", re.I)
+SPREADSHEET_TITLE_HEADER = "Final List"
+SPREADSHEET_AGE_HEADER = "Age"
+SPREADSHEET_MIN_AGE_RE = re.compile(".*Age\s(\d+).*", re.I)
 DATA_SOURCES = [DataSource.STANDARD_EBOOKS, DataSource.PLYMPTON]
 TEMPLATE = os.path.join(package_dir, "index.html.template")
 OUTPUT_FILE = os.path.join(package_dir, "index.html")
@@ -39,12 +39,12 @@ class GenerateLandingPageScript(Script):
               reader = csv.DictReader(file)
 
               for row in reader:
-                  title = unicode(row.get(TITLE_HEADER))
-                  age = row.get(AGE_HEADER)
+                  title = unicode(row.get(SPREADSHEET_TITLE_HEADER))
+                  age = row.get(SPREADSHEET_AGE_HEADER)
 
                   adult = True
 
-                  min_age_match = MIN_AGE_RE.match(age)
+                  min_age_match = SPREADSHEET_MIN_AGE_RE.match(age)
                   if min_age_match:
                       min_age = min_age_match.groups()[0]
                       if min_age and int(min_age) < 13:
