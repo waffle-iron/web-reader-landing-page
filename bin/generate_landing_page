@@ -8,6 +8,9 @@ sys.path.append(os.path.abspath(package_dir))
 
 import csv
 import re
+import shutil
+import subprocess
+import urllib2
 from core.scripts import Script
 from core.model import (
     DataSource,
@@ -21,16 +24,40 @@ SPREADSHEET_TITLE_HEADER = "Final List"
 SPREADSHEET_AGE_HEADER = "Age"
 SPREADSHEET_MIN_AGE_RE = re.compile(".*Age\s(\d+).*", re.I)
 DATA_SOURCES = [DataSource.STANDARD_EBOOKS, DataSource.PLYMPTON]
-TEMPLATE = os.path.join(package_dir, "index.html.template")
-OUTPUT_FILE = os.path.join(package_dir, "index.html")
+INDEX_TEMPLATE = os.path.join(package_dir, "index.html.template")
+BOOK_INDEX_TEMPLATE = os.path.join(package_dir, "book_index.html.template")
+FILES_TO_COPY = ["index.css",
+                 "NYPL_logo.png",
+                 "brooklyn_logo.png",
+                 "simplyE_logo.png",
+                 "simplye.png",
+                 "apple_badge.png",
+                 "google_badge.png",
+                 "amazon_badge.png",
+                 "books_graphic.png",
+                 "webpub-viewer/dist/sw.js",
+                 "webpub-viewer/dist/webpub-viewer.js",
+                 "webpub-viewer/node_modules/requirejs/require.js",
+                 "webpub-viewer/node_modules/whatwg-fetch/fetch.js",
+                ]
 
 class GenerateLandingPageScript(Script):
 
-      def __init__(self, csv_file, _db=None):
+      def __init__(self, csv_file, output_file, _db=None):
           self.csv_file = csv_file
+          self.output_dir = output_dir
           super(GenerateLandingPageScript, self).__init__(_db)
 
       def run(self):
+          if not os.path.exists(self.output_dir):
+              os.mkdir(self.output_dir)
+              os.mkdir(self.output_dir + "/books")
+
+          # Prepare javascript to copy into the book directories later.
+          npm_result = subprocess.call("npm install", cwd=os.path.abspath(os.path.join(package_dir, "webpub-viewer")), shell=True)
+          if npm_result != 0:
+                raise Exception("Failed to build javascript")
+
           adult_html = []
           children_html = []
           featured_html = []
@@ -88,6 +115,27 @@ class GenerateLandingPageScript(Script):
                       print "Could not find epub link for %s" % title
                   file_name = download.split("/")[-1]
 
+                  remote_epub = urllib2.urlopen(download)
+                  content = remote_epub.read()
+                  temp_file = os.path.abspath(os.path.join(package_dir, "temp.epub"))
+                  with open(temp_file, "w") as local_epub:
+                      local_epub.write(content)
+
+                  book_dir = os.path.join(self.output_dir, "books/" + file_name)
+                  export_result = subprocess.call("$GOPATH/bin/webpub-exporter -f %s -o %s" % (temp_file, book_dir), shell=True)
+                  if export_result != 0:
+                      print "Failed to export %s" % download
+                      continue
+
+                  os.remove(temp_file)
+
+                  with open(BOOK_INDEX_TEMPLATE) as template_file:
+                      template = template_file.read()
+                      out = template.replace("{{title}}", title).replace("{{cover}}", cover)
+                      with open(os.path.join(book_dir, "index.html"), "w") as output_file:
+                          output_file.write(out)
+
+
                   book_html = """
                   <a href="books/%(file_name)s/index.html" title="%(title)s" class="%(class)s">
                     <img src="%(cover)s" alt="%(title)s" />
@@ -107,19 +155,24 @@ class GenerateLandingPageScript(Script):
                   if title in FEATURED_TITLES:
                       featured_html += book_html
 
-          with open(TEMPLATE) as template_file:
+
+          with open(INDEX_TEMPLATE) as template_file:
               template = template_file.read()
               all_books_html = "".join(children_html) + "".join(adult_html)
               featured_books_html = "".join(featured_html)
               out = template.replace("{{all_books}}", all_books_html).replace("{{featured_books}}", featured_books_html)
 
-              with open(OUTPUT_FILE, 'w') as output_file:
+              with open(os.path.join(self.output_dir, "index.html"), 'w') as output_file:
                   output_file.write(out)
 
+          for file_to_copy in FILES_TO_COPY:
+              path = os.path.join(package_dir, file_to_copy)
+              shutil.copy(path, self.output_dir)
 
-if len(sys.argv) < 2:
-   raise Exception("Usage: bin/generate_landing_page <csv_file>")
+if len(sys.argv) < 3:
+   raise Exception("Usage: bin/generate_landing_page <csv_file> <output_dir>")
 
 csv_file = sys.argv[1]
-GenerateLandingPageScript(csv_file).run()
+output_dir = sys.argv[2]
+GenerateLandingPageScript(csv_file, output_dir).run()
 
