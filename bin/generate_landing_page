@@ -7,6 +7,7 @@ package_dir = os.path.join(bin_dir, "..")
 sys.path.append(os.path.abspath(package_dir))
 
 import csv
+import datetime
 import re
 import shutil
 import subprocess
@@ -156,6 +157,10 @@ class GenerateLandingPageScript(Script):
                       featured_html += book_html
 
 
+          cacheManifest = "CACHE MANIFEST\n #timestamp "
+          cacheManifest += str(datetime.datetime.utcnow())
+          cacheManifest += "\n\n"
+
           with open(INDEX_TEMPLATE) as template_file:
               template = template_file.read()
               all_books_html = "".join(children_html) + "".join(adult_html)
@@ -165,9 +170,17 @@ class GenerateLandingPageScript(Script):
               with open(os.path.join(self.output_dir, "index.html"), 'w') as output_file:
                   output_file.write(out)
 
+              cacheManifest += "index.html\n"
+
           for file_to_copy in FILES_TO_COPY:
               path = os.path.join(package_dir, file_to_copy)
               shutil.copy(path, self.output_dir)
+              cacheManifest += file_to_copy.split("/")[-1] + "\n"
+
+          cacheManifest += "\nNETWORK:\n*\n"
+
+          with open(os.path.join(self.output_dir, "manifest.appcache"), "w") as output_file:
+                output_file.write(cacheManifest)
 
 if len(sys.argv) < 3:
    raise Exception("Usage: bin/generate_landing_page <csv_file> <output_dir>")
