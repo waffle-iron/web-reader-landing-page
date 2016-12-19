@@ -6,6 +6,7 @@ bin_dir = os.path.split(__file__)[0]
 package_dir = os.path.join(bin_dir, "..")
 sys.path.append(os.path.abspath(package_dir))
 
+import codecs
 import csv
 import datetime
 import re
@@ -70,7 +71,7 @@ class GenerateLandingPageScript(Script):
               reader = csv.DictReader(file)
 
               for row in reader:
-                  title = unicode(row.get(SPREADSHEET_TITLE_HEADER))
+                  title = unicode(row.get(SPREADSHEET_TITLE_HEADER), 'utf-8')
                   age = row.get(SPREADSHEET_AGE_HEADER)
 
                   adult = True
@@ -136,7 +137,7 @@ class GenerateLandingPageScript(Script):
                   with open(BOOK_INDEX_TEMPLATE) as template_file:
                       template = template_file.read()
                       out = template.replace("{{title}}", title).replace("{{cover}}", cover)
-                      with open(os.path.join(book_dir, "index.html"), "w") as output_file:
+                      with codecs.open(os.path.join(book_dir, "index.html"), "w", "utf-8") as output_file:
                           output_file.write(out)
 
 
@@ -170,7 +171,7 @@ class GenerateLandingPageScript(Script):
               featured_books_html = "".join(featured_html)
               out = template.replace("{{all_books}}", all_books_html).replace("{{featured_books}}", featured_books_html)
 
-              with open(os.path.join(self.output_dir, "index.html"), 'w') as output_file:
+              with codecs.open(os.path.join(self.output_dir, "index.html"), 'w', "utf-8") as output_file:
                   output_file.write(out)
 
               cacheManifest += "index.html\n"
