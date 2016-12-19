@@ -9,6 +9,90 @@
   <script src="../../require.js"></script>
   <script src="../../fetch.js"></script>
   <script src="../../webpub-viewer.js"></script>
+  <style>
+    .controls {
+      position: fixed;
+      top: 0;
+      right: 0;
+      width: 100%;
+      background-color: rgb(221, 221, 221);
+      height: 4em;
+    }
+    .controls ul {
+      list-style-type: none;
+      margin: 0;
+      padding: 2px;
+      position: relative;
+    }
+    .controls ul li a[rel="start"], .controls ul li a.disabled {
+      display: none;
+    }
+    .controls ul li {
+      position: absolute;
+      top: 5px;
+      text-align: center;
+    }
+    .controls ul li:nth-child(5) {
+      right: calc(50% + 5px);
+    }
+    .controls ul li:nth-child(2) {
+      left: calc(50% + 5px);
+    }
+    .controls ul li:nth-child(3) {
+      top: 2.2em;
+      right: calc(50% + 5px);
+    }
+    .controls ul li:nth-child(4) {
+      top: 2.2em;
+      left: calc(50% + 5px);
+    }
+    .controls ul li a {
+      text-decoration: none;
+      background-color: #113153;
+      color: #e1e1e1;
+      font-family: Helvetica, sans-serif;
+      font-size: 16px;
+      padding: 2px 10px;
+      border-radius: 5px;
+    }
+    .controls ul li a[rel=prev], .controls ul li a.all-books {
+      padding-left: 2em;
+    }
+    .controls ul li a[rel=prev], .controls ul li a.all-books {
+      background-image: url("../../arrowL_small.png");
+      background-repeat: no-repeat;
+      background-size: 1em 1em;
+      background-position: 0.5em 0.2em;
+    }
+    .controls ul li a[rel=next] {
+      padding-right: 2em;
+    }
+    .controls ul li a[rel=next] {
+      background-image: url("../../arrowR_small.png");
+      background-repeat: no-repeat;
+      background-size: 1em 1em;
+      background-position: calc(100% - 0.5em) 0.2em;
+    }
+    @media (min-width: 676px) {
+      .controls {
+        height: 2em;
+      }
+      .controls ul li:nth-child(5) {
+        right: calc(75% + 5px);
+      }
+      .controls ul li:nth-child(2) {
+        left: calc(25% + 5px);
+      }
+      .controls ul li:nth-child(3) {
+        top: 5px;
+        right: calc(25% + 5px);
+      }
+      .controls ul li:nth-child(4) {
+        top: 5px;
+        left: calc(75% + 5px); 
+      }
+    }
+  </style>
 </head>
 <body style="margin: 0;">
   <div id="viewer">
@@ -20,7 +104,20 @@
       var annotator = new LocalStorageAnnotator.default();
       var navigator = new IFrameNavigator.default(cacher, annotator);
       var viewer = new WebpubViewer.default(cacher, navigator, annotator);
-      viewer.start(element);
+      viewer.start(element).then(function () {
+        var controls = document.querySelector(".controls ul");
+        var li = document.createElement("li");
+        var allBooksLink = document.createElement("a");
+        allBooksLink.href = "/";
+        allBooksLink.title = "All Books";
+        allBooksLink.textContent = "All Books";
+        allBooksLink.className = "all-books";
+        li.appendChild(allBooksLink);
+        controls.appendChild(li);
+
+        var toc = document.querySelector(".controls ul li a[rel=contents]");
+        toc.textContent = "Table of Contents";
+      });
     });
   </script>
 </body>

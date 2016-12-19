@@ -41,6 +41,8 @@ FILES_TO_COPY = ["index.css",
                  "webpub-viewer/dist/webpub-viewer.js",
                  "webpub-viewer/node_modules/requirejs/require.js",
                  "webpub-viewer/node_modules/whatwg-fetch/fetch.js",
+                 "images/arrowL_small.png",
+                 "images/arrowR_small.png",
                 ]
 
 class GenerateLandingPageScript(Script):
