@@ -1,0 +1,381 @@
+html, body {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  font-family: Helvetica, sans-serif;
+  font-size: 16px;
+  background-color: #797270;
+}
+h1, h2 {
+  font-size: 16px;
+  font-weight: normal;
+  margin: 0;
+  padding: 0;
+}
+a {
+  text-decoration: none;
+}
+a:focus, input:focus {
+  outline-color: orange;
+  outline-style: solid;
+  outline-width: 3px; 
+  outline-offset: 3px;
+}
+.app {
+  width: 100%;
+  background-color: #113153;
+  color: white;
+  display: inline-block;
+}
+.app .logos, .books-header {
+  width: 100%;
+  height: 50px;
+  margin: 0;
+  background-color: white;
+  list-style-type: none;
+  padding: 0;
+  padding-top: 5px;
+  text-align: center;
+}
+.app .logos li {
+  display: inline-block;
+  height: 100%;
+  background-color: white;
+}
+.app .logos li:first-child {
+  float: left;
+  margin-left: 10px;
+}
+.app .logos li:last-child {
+  float: right;
+  margin-right: 10px;
+}
+.app .logos img {
+  width: 75px;
+}
+.app .logos img.bpl-logo {
+  position: relative;
+  bottom: -10px;
+}
+.app .left {
+  margin-top: 10px;
+  padding: 10px 5px 0 5px;
+  width: 150px;
+  float: left;
+}
+.app .left img {
+  width: 150px;
+}
+.app {
+  position: relative;
+}
+.app .right {
+  margin-top: 10px;
+  width: 160px;
+  position: absolute;
+  top: 50px;
+  bottom: 0;
+  right: 0;
+  overflow: hidden;
+}
+.app .right img {
+  width: 160px;
+  position: absolute;
+  top: 5px;
+  right: -10px;
+}
+.instant-classics .header {
+  width: 100%;
+  background-color: black;
+  color: white;
+  text-align: center;
+  padding: 13px 0;
+}
+.featured-books {
+  background-color: #e1e1e1;
+  text-align: center;
+  padding: 10px;
+}
+.featured-books a, .books a {
+  display: inline-block;
+}
+.featured-books img {
+  height: 145px;
+}
+.collapsed {
+  background-color: #797270;
+}
+.show-more, .show-more a {
+  cursor: pointer;
+  width: 100%;
+  background-color: black;
+  color: white;
+  text-align: center;
+  padding: 10px 0;
+}
+.collapsed:after {
+  cursor: pointer;
+  content: ' ';
+  height: 0;
+  width: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 40px 100px 40px 100px;
+  border-top-color: black;
+  position: relative;
+  left: calc(50% - 100px);
+  top: 40px;
+  z-index: 2;
+}
+.expanded, .books-header {
+  display: none;
+}
+.books {
+  background-color: #e1e1e1;
+  padding: 5px;
+  text-align: left;
+}
+.books a {
+  cursor: pointer;
+}
+.books .adult {
+  display: none;
+}
+.books img {
+  width: 100px;
+}
+.age-check {
+  background-color: #797270;
+  color: white;
+  padding: 10px;
+  text-align: center;
+}
+.age-check label, .age-check input {
+  cursor: pointer;
+}
+.age-check input {
+  margin-right: 25px;
+  transform: scale(2);
+}
+@media (min-width: 360px) {
+  .books img {
+    width: 113px;
+  }
+}
+@media (min-width: 375px) {
+  .app .left {
+    padding: 30px;
+  }
+  .books img {
+    width: 118px;
+  }
+}
+@media (min-width: 412px) {
+  .books img {
+    width: 130px;
+  }
+}
+@media (min-width: 420px) {
+  body, h1, h2 {
+    font-size: 20px;
+  }
+  .app .left {
+    padding: 15px;
+    width: 200px;
+  }
+  .app .left img {
+    width: 200px;
+  }
+  .app .right, .app .right img {
+    width: 175px;
+  }
+}
+@media (min-width: 450px) {
+  .app .logos li:first-child {
+    margin-left: calc(50% - 150px);
+  }
+  .app .logos li:last-child {
+    margin-right: calc(50% - 150px);
+  }
+  .app .left {
+    position: relative;
+    left: calc(50% - 210px);
+  }
+  .app .right {
+    left: calc(50% + 10px);
+  }
+}
+@media (min-width: 640px) {
+  .books img {
+    width: 152px;    
+  }
+}
+@media (min-width: 700px) {
+  body, h1, h2 {
+    font-size: 32px;
+  }
+  .app .logos, .books-header {
+    height: 100px;
+  }
+  .app .logos img {
+    width: 150px;
+  }
+  .app .logos li:first-child {
+    margin-left: calc(50% - 300px);
+  }
+  .app .logos li:last-child {
+    margin-right: calc(50% - 300px);
+  }
+  .app .left {
+    padding: 50px;
+    width: 300px;
+    position: relative;
+    left: calc(50% - 350px);
+  }
+  .app .left img {
+    width: 300px;
+  }
+  .app .right {
+    width: 300px;
+    top: 100px;
+    left: calc(50% + 50px);
+  }
+  .app .right img {
+    width: 300px;
+    right: 0px;
+  }
+  .instant-classics .header {
+    padding: 20px 0;
+  }
+  .featured-books, .featured-books a {
+    padding: 10px 20px;
+  }
+  .featured-books img {
+    height: 230px;
+  }
+  .show-more {
+    padding: 20px 0;
+  }
+  .collapsed:after {
+    border-width: 40px 160px 40px 160px;
+    left: calc(50% - 160px);
+    top: 40px;
+  }
+  .books img {
+    width: 192px;
+  }
+  .age-check input {
+    transform-origin: bottom left;
+  }
+}
+@media (min-width: 730px) {
+  .books img {
+    width: 170px;
+  }
+}
+@media (min-width: 768px) {
+  .books img {
+    width: 182px;
+  }
+}
+@media (min-width: 1024px) {
+  .books img {
+    width: 160px;
+  }
+}
+@media(min-width: 1100px) {
+  html {
+    overflow: hidden;
+  }
+  body {
+    font-size: 18px;
+  }
+  h2 {
+    font-size: 22px;
+  }
+  h1 {
+    font-size: 24px;
+  }
+  main {
+    width: 50%;
+    height: 100%;
+    float: left;
+    background-color: #113153;
+    overflow: visible;
+  }
+  .app .logos img {
+    width: 120px;
+  }
+  .app .logos li:first-child {
+    margin-left: calc(50% - 240px);
+  }
+  .app .logos li:last-child {
+    margin-right: calc(50% - 240px);
+  }
+  .app .left {
+    padding: 30px 10px 10px 10px;
+    width: 230px;
+    position: relative;
+    left: calc(50% - 250px);
+  }
+  .app .left img {
+    width: 230px;
+  }
+  .app .right {
+    width: 230px;
+    left: calc(50% + 20px);
+    overflow: visible;
+  }
+  .app .right img {
+    width: 230px;
+  }
+  .featured-books {
+    display: none;
+  }
+  .instant-classics .header {
+    margin-top: 80px;
+    height: 60px;
+  }
+  .instant-classics .header:after {
+    display: inline-block;
+    content: ' ';
+    height: 0;
+    width: 0;
+    border-color: transparent;
+    border-style: solid;
+    border-width: 49px 29px 49px 29px;
+    border-left-color: black;
+    position: relative;
+    left: calc(50% + 29px);
+    top: -68px;
+    z-index: 2;
+  }
+  .collapsed, .collapse {
+    display: none;
+  }
+  .expanded {
+    display: block;
+    width: 50%;
+    float: left;
+    height: 100%;
+    overflow: scroll;
+  }
+  .books-header {
+    display: block;
+    position: fixed;
+    top: 0;
+    background-color: white;
+  }
+  .books {
+    background-color: #797270;
+    margin: 115px 5px 5px 35px;
+  }
+  .age-check {
+    background-color: #e1e1e1;
+    color: black;
+  }
+  .age-check input {
+    transform: scale(1.5);
+  }
+}

@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en" manifest="manifest.appcache">
+<head>
+  <title>Subway Reads</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="index.css" />
+  <!-- Include Web App Manifest for App Install Banner on Android -->
+  <link href="simplye.webmanifest" rel="manifest" type="application/manifest+json"/>
+  <link rel="icon" href="simplye.png" sizes="300x300" type="image/png"/>
+  <!-- Home screen icon in iOS -->
+  <link rel="apple-touch-icon" href="simplye.png" sizes="300x300" type="image/png"/>
+  <!-- App Install Banner on iOS -->
+  <meta name="apple-itunes-app" content="app-id=1046583900">
+</head>
+<body>
+  <main>
+    <div class="app">
+      <ul class="logos">
+        <li><img src="simplyE_logo.png" alt="SimplyE" class="simplye-logo"/></li>
+        <li><img src="brooklyn_logo.png" alt="Brooklyn Public Library" class="bpl-logo"/></li>
+        <li><img src="NYPL_logo.png" alt="New York Public Library" class="nypl-logo"/></li>
+      </ul>
+      <div class="left">
+        <h1>Access over 300,000 books on your phone with your library card</h1>
+        <br />
+        <div class="hide-on-android">
+          <a href="https://itunes.apple.com/us/app/nypl-simplye/id1046583900?mt=8" title="Download on the App Store"><img src="apple_badge.png" alt="Download on the App Store"/></a><br />
+        </div>
+        <div class="hide-on-ios">
+          <a href="https://play.google.com/store/apps/details?id=org.nypl.simplified.simplye&hl=en" title="Get it on Google Play"><img src="google_badge.png" alt="Get it on Google Play"/></a>
+        </div>
+      </div>
+      <div class="right">
+        <img src="books_graphic.png" alt="Cover of The Girl with the Dragon Tattoo"/>
+      </div>
+    </div>
+    <div class="instant-classics">
+      <div class="header">
+        <h2>
+          Don't have a library card?
+          <br />
+          Read classic books instantly
+        </h2>
+      </div>
+      <div class="collapsed">
+        <div class="featured-books">
+          {{featured_books}}
+        </div>
+        <h2 class="expand show-more">
+          <a href="#" title="Show more books">Show more books</a>
+        </h2>
+      </div>
+    </div>
+  </main>
+  <div class="expanded">
+    <div class="books-header">
+    </div>
+    <div class="books">
+      {{all_books}}
+    </div>
+    <div class="age-check">
+      <label><input type="checkbox" name="age-13-or-over">I am at least 13 years old</label>
+    </div>
+  </div>
+  <script type="text/javascript">
+    var ios = navigator.userAgent.match(/iPhone|iPad|iPod/i);
+    var android = navigator.userAgent.match(/Android/i);
+    if (ios) {
+      var elements = document.querySelectorAll(".hide-on-ios");
+      for (var i = 0; i < elements.length; i++) {
+        elements[i].style.display = "none";
+      }
+    }
+    if (android) {
+      var elements = document.querySelectorAll(".hide-on-android");
+      for (var i = 0; i < elements.length; i++) {
+        elements[i].style.display = "none";
+      }
+    }
+
+    document.querySelector(".expand").addEventListener("click", function () {
+      document.querySelector(".collapsed").style.display = "none";
+      document.querySelector(".expanded").style.display = "block";
+    });
+
+    document.querySelector(".age-check input").addEventListener("change", function () {
+      var checked = document.querySelector(".age-check input").checked;
+      if (checked) {
+        var elements = document.querySelectorAll(".adult");
+        for (var i = 0; i < elements.length; i++) {
+          elements[i].style.display = "inline";
+        }
+        if (elements.length > 0) {
+          elements[0].focus();
+        }
+      } else {
+        var elements = document.querySelectorAll(".adult");
+        for (var i = 0; i < elements.length; i++) {
+          elements[i].style.display = "none";
+        }
+      }
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en" manifest="manifest.appcache">
+<head>
+  <title>{{title}}</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="webapp.webmanifest" rel="manifest" type="application/manifest+json">
+  <link rel="apple-touch-icon" href="{{cover}}" type="image/jpeg">
+  <script src="../../require.js"></script>
+  <script src="../../fetch.js"></script>
+  <script src="../../webpub-viewer.js"></script>
+</head>
+<body style="margin: 0;">
+  <div id="viewer">
+  </div>
+  <script>
+    require(["WebpubViewer", "ServiceWorkerCacher", "IFrameNavigator", "LocalStorageAnnotator"], function (WebpubViewer, ServiceWorkerCacher, IFrameNavigator, LocalStorageAnnotator) {
+      var element = document.getElementById("viewer");
+      var cacher = new ServiceWorkerCacher.default("../../sw.js");
+      var annotator = new LocalStorageAnnotator.default();
+      var navigator = new IFrameNavigator.default(cacher, annotator);
+      var viewer = new WebpubViewer.default(cacher, navigator, annotator);
+      viewer.start(element);
+    });
+  </script>
+</body>
+</html>

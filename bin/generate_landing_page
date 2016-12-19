@@ -1,0 +1,192 @@
+#!/usr/bin/env python
+"""Generate HTML for the landing page based on a spreadsheet of book titles and age classifications."""
+import os
+import sys
+bin_dir = os.path.split(__file__)[0]
+package_dir = os.path.join(bin_dir, "..")
+sys.path.append(os.path.abspath(package_dir))
+
+import csv
+import datetime
+import re
+import shutil
+import subprocess
+import urllib2
+from core.scripts import Script
+from core.model import (
+    DataSource,
+    Edition,
+    Hyperlink,
+    Representation,
+)
+
+FEATURED_TITLES = ["A Christmas Carol", "Alice's Adventures in Wonderland", "The Adventures of Sherlock Holmes"]
+SPREADSHEET_TITLE_HEADER = "Final List"
+SPREADSHEET_AGE_HEADER = "Age"
+SPREADSHEET_MIN_AGE_RE = re.compile(".*Age\s(\d+).*", re.I)
+DATA_SOURCES = [DataSource.STANDARD_EBOOKS, DataSource.PLYMPTON]
+INDEX_TEMPLATE = os.path.join(package_dir, "index.html.template")
+BOOK_INDEX_TEMPLATE = os.path.join(package_dir, "book_index.html.template")
+FILES_TO_COPY = ["index.css",
+                 "NYPL_logo.png",
+                 "brooklyn_logo.png",
+                 "simplyE_logo.png",
+                 "simplye.png",
+                 "apple_badge.png",
+                 "google_badge.png",
+                 "amazon_badge.png",
+                 "books_graphic.png",
+                 "simplye.webmanifest",
+                 "webpub-viewer/dist/sw.js",
+                 "webpub-viewer/dist/webpub-viewer.js",
+                 "webpub-viewer/node_modules/requirejs/require.js",
+                 "webpub-viewer/node_modules/whatwg-fetch/fetch.js",
+                ]
+
+class GenerateLandingPageScript(Script):
+
+      def __init__(self, csv_file, output_file, _db=None):
+          self.csv_file = csv_file
+          self.output_dir = output_dir
+          super(GenerateLandingPageScript, self).__init__(_db)
+
+      def run(self):
+          if not os.path.exists(self.output_dir):
+              os.mkdir(self.output_dir)
+              os.mkdir(self.output_dir + "/books")
+
+          # Prepare javascript to copy into the book directories later.
+          npm_result = subprocess.call("npm install", cwd=os.path.abspath(os.path.join(package_dir, "webpub-viewer")), shell=True)
+          if npm_result != 0:
+                raise Exception("Failed to build javascript")
+
+          adult_html = []
+          children_html = []
+          featured_html = []
+
+          with open(csv_file) as file:
+              reader = csv.DictReader(file)
+
+              for row in reader:
+                  title = unicode(row.get(SPREADSHEET_TITLE_HEADER))
+                  age = row.get(SPREADSHEET_AGE_HEADER)
+
+                  adult = True
+
+                  min_age_match = SPREADSHEET_MIN_AGE_RE.match(age)
+                  if min_age_match:
+                      min_age = min_age_match.groups()[0]
+                      if min_age and int(min_age) < 13:
+                          adult = False
+                  else:
+                      print "Could not find age range for %s" % title
+
+                  editions = self._db.query(Edition).filter(Edition.title==title).all()
+                  best_edition = None
+                  for edition in editions:
+                      source = edition.data_source.name
+                      if source in DATA_SOURCES:
+                          if not best_edition or DATA_SOURCES.index(source) < DATA_SOURCES.index(best_edition.data_source.name):
+                              best_edition = edition
+
+                  if not best_edition:
+                      print "Could not find edition for %s" % title
+                      continue
+
+                  links = best_edition.license_pool.links
+                  cover_links = [link for link in links if link.rel == Hyperlink.IMAGE]
+                  if len(cover_links) < 1:
+                      print "Could not find cover for %s" % title
+                      continue
+
+                  thumbnails = cover_links[0].resource.representation.thumbnails
+                  if len(thumbnails) < 1:
+                      print "Could not find thumbnail for %s" % title
+                      continue
+                  cover = thumbnails[0].url
+
+                  download_links = [link for link in links if link.rel == Hyperlink.OPEN_ACCESS_DOWNLOAD]
+                  download = None
+                  for link in download_links:
+                      representation = link.resource.representation
+                      if representation.media_type == Representation.EPUB_MEDIA_TYPE:
+                          download = representation.url
+                          break
+
+                  if not download:
+                      print "Could not find epub link for %s" % title
+                  file_name = download.split("/")[-1]
+
+                  remote_epub = urllib2.urlopen(download)
+                  content = remote_epub.read()
+                  temp_file = os.path.abspath(os.path.join(package_dir, "temp.epub"))
+                  with open(temp_file, "w") as local_epub:
+                      local_epub.write(content)
+
+                  book_dir = os.path.join(self.output_dir, "books/" + file_name)
+                  export_result = subprocess.call("$GOPATH/bin/webpub-exporter -f %s -o %s" % (temp_file, book_dir), shell=True)
+                  if export_result != 0:
+                      print "Failed to export %s" % download
+                      continue
+
+                  os.remove(temp_file)
+
+                  with open(BOOK_INDEX_TEMPLATE) as template_file:
+                      template = template_file.read()
+                      out = template.replace("{{title}}", title).replace("{{cover}}", cover)
+                      with open(os.path.join(book_dir, "index.html"), "w") as output_file:
+                          output_file.write(out)
+
+
+                  book_html = """
+                  <a href="books/%(file_name)s/index.html" title="%(title)s" class="%(class)s">
+                    <img src="%(cover)s" alt="%(title)s" />
+                  </a>
+                  """ % { 
+                      "title": title,
+                      "cover": cover,
+                      "file_name": file_name,
+                      "class": "adult" if adult else ""
+                  }
+
+                  if adult:
+                      adult_html += book_html
+                  else:
+                      children_html += book_html
+
+                  if title in FEATURED_TITLES:
+                      featured_html += book_html
+
+
+          cacheManifest = "CACHE MANIFEST\n #timestamp "
+          cacheManifest += str(datetime.datetime.utcnow())
+          cacheManifest += "\n\n"
+
+          with open(INDEX_TEMPLATE) as template_file:
+              template = template_file.read()
+              all_books_html = "".join(children_html) + "".join(adult_html)
+              featured_books_html = "".join(featured_html)
+              out = template.replace("{{all_books}}", all_books_html).replace("{{featured_books}}", featured_books_html)
+
+              with open(os.path.join(self.output_dir, "index.html"), 'w') as output_file:
+                  output_file.write(out)
+
+              cacheManifest += "index.html\n"
+
+          for file_to_copy in FILES_TO_COPY:
+              path = os.path.join(package_dir, file_to_copy)
+              shutil.copy(path, self.output_dir)
+              cacheManifest += file_to_copy.split("/")[-1] + "\n"
+
+          cacheManifest += "\nNETWORK:\n*\n"
+
+          with open(os.path.join(self.output_dir, "manifest.appcache"), "w") as output_file:
+                output_file.write(cacheManifest)
+
+if len(sys.argv) < 3:
+   raise Exception("Usage: bin/generate_landing_page <csv_file> <output_dir>")
+
+csv_file = sys.argv[1]
+output_dir = sys.argv[2]
+GenerateLandingPageScript(csv_file, output_dir).run()
+
