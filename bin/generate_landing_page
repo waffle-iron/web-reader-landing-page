@@ -23,6 +23,7 @@ from core.model import (
 
 FEATURED_TITLES = ["A Christmas Carol", "Alice's Adventures in Wonderland", "The Adventures of Sherlock Holmes"]
 SPREADSHEET_TITLE_HEADER = "Final List"
+SPREADSHEET_AUTHOR_HEADER = "Author"
 SPREADSHEET_AGE_HEADER = "Age"
 SPREADSHEET_MIN_AGE_RE = re.compile(".*Age\s(\d+).*", re.I)
 DATA_SOURCES = [DataSource.STANDARD_EBOOKS, DataSource.PLYMPTON]
@@ -84,7 +85,11 @@ class GenerateLandingPageScript(Script):
                   else:
                       print "Could not find age range for %s" % title
 
-                  editions = self._db.query(Edition).filter(Edition.title==title).all()
+                  if title == "Short Fiction":
+                      author = unicode(row.get(SPREADSHEET_AUTHOR_HEADER), 'utf-8')
+                      editions = self._db.query(Edition).filter(Edition.title==title, Edition.author==author).all()
+                  else:
+                      editions = self._db.query(Edition).filter(Edition.title==title).all()
                   best_edition = None
                   for edition in editions:
                       source = edition.data_source.name
