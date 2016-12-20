@@ -59,10 +59,15 @@
       padding-left: 2em;
     }
     .controls ul li a[rel=prev], .controls ul li a.all-books {
-      background-image: url("../../arrowL_small.png");
       background-repeat: no-repeat;
       background-size: 1em 1em;
       background-position: 0.5em 0.2em;
+    }
+    .controls ul li a[rel=prev] {
+      background-image: url("../../arrowL_small.png");
+    }
+    .controls ul li a.all-books {
+      background-image: url("../../arrow_back.png");
     }
     .controls ul li a[rel=next] {
       padding-right: 2em;
