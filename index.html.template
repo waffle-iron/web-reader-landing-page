@@ -84,7 +84,7 @@
       document.querySelector(".expanded").style.display = "block";
     });
 
-    document.querySelector(".age-check input").addEventListener("change", function () {
+    var updateAge = function() {
       var checked = document.querySelector(".age-check input").checked;
       if (checked) {
         var elements = document.querySelectorAll(".adult");
@@ -100,7 +100,10 @@
           elements[i].style.display = "none";
         }
       }
-    });
+    };
+
+    document.querySelector(".age-check input").addEventListener("change", updateAge);
+    updateAge();
   </script>
 </body>
 </html>
