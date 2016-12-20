@@ -118,12 +118,13 @@ class GenerateLandingPageScript(Script):
                   for link in download_links:
                       representation = link.resource.representation
                       if representation.media_type == Representation.EPUB_MEDIA_TYPE:
-                          download = representation.url
+                          download = representation.mirror_url
                           break
 
                   if not download:
                       print "Could not find epub link for %s" % title
                   file_name = download.split("/")[-1]
+                  file_name = urllib2.unquote(file_name)
 
                   remote_epub = urllib2.urlopen(download)
                   content = remote_epub.read()
@@ -132,7 +133,7 @@ class GenerateLandingPageScript(Script):
                       local_epub.write(content)
 
                   book_dir = os.path.join(self.output_dir, "books/" + file_name)
-                  export_result = subprocess.call("$GOPATH/bin/webpub-exporter -f %s -o %s" % (temp_file, book_dir), shell=True)
+                  export_result = subprocess.call('$GOPATH/bin/webpub-exporter -f %s -o "%s"' % (temp_file, book_dir), shell=True)
                   if export_result != 0:
                       print "Failed to export %s" % download
                       continue
