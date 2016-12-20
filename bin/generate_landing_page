@@ -87,7 +87,6 @@ class GenerateLandingPageScript(Script):
                       print "Could not find age range for %s" % title
 
                   author = unicode(row.get(SPREADSHEET_AUTHOR_HEADER), 'utf-8')
-                  folder_name = urllib2.quote((title + " - " + author).encode('utf-8'))
 
                   if title == "Short Fiction":
                       editions = self._db.query(Edition).filter(Edition.title==title, Edition.author==author).all()
@@ -126,6 +125,8 @@ class GenerateLandingPageScript(Script):
 
                   if not download:
                       print "Could not find epub link for %s" % title
+
+                  folder_name = (title + " - " + author).encode('ascii', 'ignore')
 
                   remote_epub = urllib2.urlopen(download)
                   content = remote_epub.read()
