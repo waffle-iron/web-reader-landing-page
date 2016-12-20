@@ -86,8 +86,10 @@ class GenerateLandingPageScript(Script):
                   else:
                       print "Could not find age range for %s" % title
 
+                  author = unicode(row.get(SPREADSHEET_AUTHOR_HEADER), 'utf-8')
+                  folder_name = title + " - " + author
+
                   if title == "Short Fiction":
-                      author = unicode(row.get(SPREADSHEET_AUTHOR_HEADER), 'utf-8')
                       editions = self._db.query(Edition).filter(Edition.title==title, Edition.author==author).all()
                   else:
                       editions = self._db.query(Edition).filter(Edition.title==title).all()
@@ -124,8 +126,6 @@ class GenerateLandingPageScript(Script):
 
                   if not download:
                       print "Could not find epub link for %s" % title
-                  file_name = download.split("/")[-1]
-                  file_name = urllib2.unquote(file_name)
 
                   remote_epub = urllib2.urlopen(download)
                   content = remote_epub.read()
@@ -133,7 +133,7 @@ class GenerateLandingPageScript(Script):
                   with open(temp_file, "w") as local_epub:
                       local_epub.write(content)
 
-                  book_dir = os.path.join(self.output_dir, "books/" + file_name)
+                  book_dir = os.path.join(self.output_dir, "books/" + folder_name)
                   export_result = subprocess.call('$GOPATH/bin/webpub-exporter -f %s -o "%s"' % (temp_file, book_dir), shell=True)
                   if export_result != 0:
                       print "Failed to export %s" % download
@@ -149,13 +149,13 @@ class GenerateLandingPageScript(Script):
 
 
                   book_html = """
-                  <a href="books/%(file_name)s/index.html" title="%(title)s" class="%(class)s">
+                  <a href="books/%(folder_name)s/index.html" title="%(title)s" class="%(class)s">
                     <img src="%(cover)s" alt="%(title)s" />
                   </a>
                   """ % { 
                       "title": title,
                       "cover": cover,
-                      "file_name": file_name,
+                      "folder_name": folder_name,
                       "class": "adult" if adult else ""
                   }
 
