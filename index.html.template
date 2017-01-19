@@ -5,13 +5,9 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="index.css" />
-  <!-- Include Web App Manifest for App Install Banner on Android -->
-  <link href="simplye.webmanifest" rel="manifest" type="application/manifest+json"/>
   <link rel="icon" href="simplye.png" sizes="300x300" type="image/png"/>
   <!-- Home screen icon in iOS -->
   <link rel="apple-touch-icon" href="simplye.png" sizes="300x300" type="image/png"/>
-  <!-- App Install Banner on iOS -->
-  <meta name="apple-itunes-app" content="app-id=1046583900">
 </head>
 <body>
   <header>
