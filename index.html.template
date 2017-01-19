@@ -92,16 +92,15 @@
     };
 
     document.querySelector(".all-tab").addEventListener("click", function () {
-      showAdult();
       showAgeCheck();
     });
 
     document.querySelector(".age-check-under").addEventListener("click", function () {
-      showChildrens();
       hideAgeCheck();
     });
 
     document.querySelector(".age-check-over").addEventListener("click", function () {
+      showAdult();
       hideAgeCheck();
     });
 
