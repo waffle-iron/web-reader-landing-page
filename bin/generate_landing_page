@@ -21,7 +21,6 @@ from core.model import (
     Representation,
 )
 
-FEATURED_TITLES = ["A Christmas Carol", "Alice's Adventures in Wonderland", "The Adventures of Sherlock Holmes"]
 SPREADSHEET_TITLE_HEADER = "Final List"
 SPREADSHEET_AUTHOR_HEADER = "Author"
 SPREADSHEET_AGE_HEADER = "Age"
@@ -30,14 +29,11 @@ DATA_SOURCES = [DataSource.STANDARD_EBOOKS, DataSource.PLYMPTON]
 INDEX_TEMPLATE = os.path.join(package_dir, "index.html.template")
 BOOK_INDEX_TEMPLATE = os.path.join(package_dir, "book_index.html.template")
 FILES_TO_COPY = ["index.css",
-                 "NYPL_logo.png",
-                 "brooklyn_logo.png",
                  "simplyE_logo.png",
                  "simplye.png",
                  "apple_badge.png",
                  "google_badge.png",
                  "amazon_badge.png",
-                 "books_graphic.png",
                  "simplye.webmanifest",
                  "webpub-viewer/dist/sw.js",
                  "webpub-viewer/dist/webpub-viewer.js",
@@ -65,9 +61,7 @@ class GenerateLandingPageScript(Script):
           if npm_result != 0:
                 raise Exception("Failed to build javascript")
 
-          adult_html = []
-          children_html = []
-          featured_html = []
+          books_html = []
 
           with open(csv_file) as file:
               reader = csv.DictReader(file)
@@ -148,26 +142,38 @@ class GenerateLandingPageScript(Script):
                       with codecs.open(os.path.join(book_dir, "index.html"), "w", "utf-8") as output_file:
                           output_file.write(out)
 
+                  with open(os.path.join(book_dir, "manifest.appcache")) as manifest_file:
+                      manifest = manifest_file.read()
+
+                  manifest_list = "index.html\n"
+                  for file_to_copy in FILES_TO_COPY:
+                      path = os.path.join(package_dir, file_to_copy)
+                      shutil.copy(path, self.output_dir)
+                      manifest_list += "../../" + file_to_copy.split("/")[-1] + "\n"
+
+                  manifest = manifest.replace("index.html\n", manifest_list)
+                  with open(os.path.join(book_dir, "manifest.appcache"), "w") as manifest_file:
+                        manifest_file.write(manifest)
 
                   book_html = """
                   <a href="books/%(folder_name)s/index.html" title="%(title)s" class="%(class)s">
                     <img src="%(cover)s" alt="%(title)s" />
+                    <div class="info">
+                      <div class="title">%(title)s</div>
+                      <div class="author">%(author)s</div>
+                    </div>
                   </a>
                   """ % { 
                       "title": title,
+                      "author": author,
                       "cover": cover,
                       "folder_name": folder_name,
                       "class": "adult" if adult else ""
                   }
 
-                  if adult:
-                      adult_html += book_html
-                  else:
-                      children_html += book_html
 
-                  if title in FEATURED_TITLES:
-                      featured_html += book_html
 
+                  books_html += book_html
 
           cacheManifest = "CACHE MANIFEST\n #timestamp "
           cacheManifest += str(datetime.datetime.utcnow())
@@ -175,9 +181,7 @@ class GenerateLandingPageScript(Script):
 
           with open(INDEX_TEMPLATE) as template_file:
               template = template_file.read()
-              all_books_html = "".join(children_html) + "".join(adult_html)
-              featured_books_html = "".join(featured_html)
-              out = template.replace("{{all_books}}", all_books_html).replace("{{featured_books}}", featured_books_html)
+              out = template.replace("{{all_books}}", "".join(books_html))
 
               with codecs.open(os.path.join(self.output_dir, "index.html"), 'w', "utf-8") as output_file:
                   output_file.write(out)
