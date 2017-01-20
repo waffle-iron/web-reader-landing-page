@@ -35,7 +35,7 @@
       {{all_books}}
     </div>
     <div class="app">
-      <h3>Access thousands more books from your library with &nbsp;<img src="simplyE_logo.png" alt="SimplyE"/></h3>
+      <h3><span>Access thousands more books from your library with </span><img src="simplyE_logo.png" alt="SimplyE"/></h3>
       <div>
         <span class="hide-on-android">
           <a href="https://itunes.apple.com/us/app/nypl-simplye/id1046583900?mt=8" title="Download on the App Store"><img src="apple_badge.png" alt="Download on the App Store"/></a>

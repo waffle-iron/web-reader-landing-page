@@ -58,6 +58,7 @@ header h1 {
 }
 main {
   padding-bottom: 40px;
+  overflow: hidden;
 }
 .books {
   display: inline-flex;
@@ -140,13 +141,10 @@ main {
 .app img {
   height: 35px;
 }
-.app h3 {
-  position: relative;
-}
 .app h3 img {
   height: 27px;
-  position: absolute;
-  top: -7px;
+  vertical-align: bottom;
+  margin-bottom: -4px;
 }
 .app .hide-on-android, .app .hide-on-ios {
   margin-left: 5px;
