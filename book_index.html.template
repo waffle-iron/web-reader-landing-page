@@ -3,7 +3,7 @@
 <head>
   <title>{{title}}</title>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <link href="webapp.webmanifest" rel="manifest" type="application/manifest+json">
   <link rel="apple-touch-icon" href="{{cover}}" type="image/jpeg">
   <script src="../../require.js"></script>
@@ -15,36 +15,22 @@
       top: 0;
       right: 0;
       width: 100%;
-      background-color: rgb(221, 221, 221);
-      height: 4em;
+      height: 4.5em;
     }
-    .controls ul {
+    .controls .links {
+      position: relative;
+      height: inherit;
+      background-color: rgb(221, 221, 221);
       list-style-type: none;
       margin: 0;
       padding: 2px;
-      position: relative;
     }
     .controls ul li a[rel="start"], .controls ul li a.disabled {
       display: none;
     }
     .controls ul li {
-      position: absolute;
-      top: 5px;
-      text-align: center;
-    }
-    .controls ul li:nth-child(5) {
-      right: calc(50% + 5px);
-    }
-    .controls ul li:nth-child(2) {
-      left: calc(50% + 5px);
-    }
-    .controls ul li:nth-child(3) {
-      top: 2.2em;
-      right: calc(50% + 5px);
-    }
-    .controls ul li:nth-child(4) {
-      top: 2.2em;
-      left: calc(50% + 5px);
+      float: left;
+      margin: 10px;
     }
     .controls ul li a {
       text-decoration: none;
@@ -56,12 +42,10 @@
       border-radius: 5px;
     }
     .controls ul li a[rel=prev], .controls ul li a.all-books {
-      padding-left: 2em;
-    }
-    .controls ul li a[rel=prev], .controls ul li a.all-books {
       background-repeat: no-repeat;
       background-size: 1em 1em;
       background-position: 0.5em 0.2em;
+      padding-left: 2em;
     }
     .controls ul li a[rel=prev] {
       background-image: url("../../arrowL_small.png");
@@ -78,23 +62,37 @@
       background-size: 1em 1em;
       background-position: calc(100% - 0.5em) 0.2em;
     }
+    .loading {
+      position: fixed;
+      width: 200px;
+      height: 200px;
+      line-height: 200px;
+      text-align: center;
+      vertical-align: middle;
+      left: calc(50% - 100px);
+      top: calc(50% - 100px);
+      background-color: rgb(221, 221, 221);
+    }
+    .controls-view {
+      position: fixed;
+      top: 4.5em;
+      left: 0;
+      width: 100%;
+      height: calc(100% - 4.5em);
+      overflow: scroll;
+      padding: 10px;
+      background-color: white;
+    }
+    .controls-view .active {
+      background-color: rgb(221, 221, 221);
+    }
     @media (min-width: 676px) {
       .controls {
         height: 2em;
       }
-      .controls ul li:nth-child(5) {
-        right: calc(75% + 5px);
-      }
-      .controls ul li:nth-child(2) {
-        left: calc(25% + 5px);
-      }
-      .controls ul li:nth-child(3) {
-        top: 5px;
-        right: calc(25% + 5px);
-      }
-      .controls ul li:nth-child(4) {
-        top: 5px;
-        left: calc(75% + 5px); 
+      .controls-view {
+        top: 2em;
+        height: calc(100% - 2em);
       }
     }
   </style>
@@ -103,25 +101,31 @@
   <div id="viewer">
   </div>
   <script>
-    require(["WebpubViewer", "ServiceWorkerCacher", "IFrameNavigator", "LocalStorageAnnotator"], function (WebpubViewer, ServiceWorkerCacher, IFrameNavigator, LocalStorageAnnotator) {
+    require(["LocalStorageStore", "ServiceWorkerCacher", "IFrameNavigator", "ColumnsPaginatedBookView", "ScrollingBookView", "LocalAnnotator", "BookSettings"], function (LocalStorageStore, ServiceWorkerCacher, IFrameNavigator, ColumnsPaginatedBookView, ScrollingBookView, LocalAnnotator, BookSettings) {
       var element = document.getElementById("viewer");
-      var cacher = new ServiceWorkerCacher.default("../../sw.js");
-      var annotator = new LocalStorageAnnotator.default();
-      var navigator = new IFrameNavigator.default(cacher, annotator);
-      var viewer = new WebpubViewer.default(cacher, navigator, annotator);
-      viewer.start(element).then(function () {
-        var controls = document.querySelector(".controls ul");
-        var li = document.createElement("li");
-        var allBooksLink = document.createElement("a");
-        allBooksLink.href = "/";
-        allBooksLink.title = "All Books";
-        allBooksLink.textContent = "All Books";
-        allBooksLink.className = "all-books";
-        li.appendChild(allBooksLink);
-        controls.appendChild(li);
+      var manifestUrl = new URL("manifest.json", window.location.href).href;
 
-        var toc = document.querySelector(".controls ul li a[rel=contents]");
-        toc.textContent = "Table of Contents";
+      var store = new LocalStorageStore.default(manifestUrl);
+      ServiceWorkerCacher.default.create(store, "../../sw.js").then(function (cacher) {
+        var paginator = new ColumnsPaginatedBookView.default();
+        var scroller = new ScrollingBookView.default();
+        var annotator = new LocalAnnotator.default(store);
+        BookSettings.default.create([paginator, scroller], store).then(function (settings) {
+          IFrameNavigator.default.create(element, manifestUrl, cacher, settings, annotator, paginator, scroller).then(function () {
+            var controls = document.querySelector(".controls ul");
+            var li = document.createElement("li");
+            var allBooksLink = document.createElement("a");
+            allBooksLink.href = "/";
+            allBooksLink.title = "All Books";
+            allBooksLink.textContent = "All Books";
+            allBooksLink.className = "all-books";
+            li.appendChild(allBooksLink);
+            controls.appendChild(li);
+
+            var toc = document.querySelector(".controls ul li a[rel=contents]");
+            toc.textContent = "Table of Contents";
+          });
+        });
       });
     });
   </script>
