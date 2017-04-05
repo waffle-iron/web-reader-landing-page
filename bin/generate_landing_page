@@ -28,6 +28,7 @@ SPREADSHEET_MIN_AGE_RE = re.compile(".*Age\s(\d+).*", re.I)
 DATA_SOURCES = [DataSource.STANDARD_EBOOKS, DataSource.PLYMPTON]
 INDEX_TEMPLATE = os.path.join(package_dir, "index.html.template")
 BOOK_INDEX_TEMPLATE = os.path.join(package_dir, "book_index.html.template")
+APP_CACHE_HTML = os.path.join(package_dir, "appcache.html")
 FILES_TO_COPY = ["index.css",
                  "simplyE_logo.png",
                  "simplye.png",
@@ -38,9 +39,7 @@ FILES_TO_COPY = ["index.css",
                  "webpub-viewer/dist/webpub-viewer.js",
                  "webpub-viewer/node_modules/requirejs/require.js",
                  "webpub-viewer/node_modules/whatwg-fetch/fetch.js",
-                 "images/arrowL_small.png",
-                 "images/arrowR_small.png",
-                 "images/arrow_back.png",
+                 "webpub-viewer/dist/styles/css/main.css",
                 ]
 
 class GenerateLandingPageScript(Script):
@@ -140,6 +139,11 @@ class GenerateLandingPageScript(Script):
                       out = template.replace("{{title}}", title).replace("{{cover}}", cover)
                       with codecs.open(os.path.join(book_dir, "index.html"), "w", "utf-8") as output_file:
                           output_file.write(out)
+
+                  with open(APP_CACHE_HTML) as appcache_file:
+                        html = appcache_file.read()
+                        with open(os.path.join(book_dir, "appcache.html"), "w") as output_file:
+                              output_file.write(html)
 
                   with open(os.path.join(book_dir, "manifest.appcache")) as manifest_file:
                       manifest = manifest_file.read()

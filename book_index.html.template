@@ -1,131 +1,36 @@
 <!DOCTYPE html>
-<html lang="en" manifest="manifest.appcache">
+<html lang="en">
 <head>
   <title>{{title}}</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <link href="webapp.webmanifest" rel="manifest" type="application/manifest+json">
   <link rel="apple-touch-icon" href="{{cover}}" type="image/jpeg">
+  <link rel="stylesheet" href="../../main.css">
   <script src="../../require.js"></script>
   <script src="../../fetch.js"></script>
   <script src="../../webpub-viewer.js"></script>
-  <style>
-    .controls {
-      position: fixed;
-      top: 0;
-      right: 0;
-      width: 100%;
-      height: 4.5em;
-    }
-    .controls .links {
-      position: relative;
-      height: inherit;
-      background-color: rgb(221, 221, 221);
-      list-style-type: none;
-      margin: 0;
-      padding: 2px;
-    }
-    .controls ul li a[rel="start"], .controls ul li a.disabled {
-      display: none;
-    }
-    .controls ul li {
-      float: left;
-      margin: 10px;
-    }
-    .controls ul li a {
-      text-decoration: none;
-      background-color: #113153;
-      color: #e1e1e1;
-      font-family: Helvetica, sans-serif;
-      font-size: 16px;
-      padding: 2px 10px;
-      border-radius: 5px;
-    }
-    .controls ul li a[rel=prev], .controls ul li a.all-books {
-      background-repeat: no-repeat;
-      background-size: 1em 1em;
-      background-position: 0.5em 0.2em;
-      padding-left: 2em;
-    }
-    .controls ul li a[rel=prev] {
-      background-image: url("../../arrowL_small.png");
-    }
-    .controls ul li a.all-books {
-      background-image: url("../../arrow_back.png");
-    }
-    .controls ul li a[rel=next] {
-      padding-right: 2em;
-    }
-    .controls ul li a[rel=next] {
-      background-image: url("../../arrowR_small.png");
-      background-repeat: no-repeat;
-      background-size: 1em 1em;
-      background-position: calc(100% - 0.5em) 0.2em;
-    }
-    .loading {
-      position: fixed;
-      width: 200px;
-      height: 200px;
-      line-height: 200px;
-      text-align: center;
-      vertical-align: middle;
-      left: calc(50% - 100px);
-      top: calc(50% - 100px);
-      background-color: rgb(221, 221, 221);
-    }
-    .controls-view {
-      position: fixed;
-      top: 4.5em;
-      left: 0;
-      width: 100%;
-      height: calc(100% - 4.5em);
-      overflow: scroll;
-      padding: 10px;
-      background-color: white;
-    }
-    .controls-view .active {
-      background-color: rgb(221, 221, 221);
-    }
-    @media (min-width: 676px) {
-      .controls {
-        height: 2em;
-      }
-      .controls-view {
-        top: 2em;
-        height: calc(100% - 2em);
-      }
-    }
-  </style>
 </head>
-<body style="margin: 0;">
+<body>
   <div id="viewer">
   </div>
   <script>
-    require(["LocalStorageStore", "ServiceWorkerCacher", "IFrameNavigator", "ColumnsPaginatedBookView", "ScrollingBookView", "LocalAnnotator", "BookSettings"], function (LocalStorageStore, ServiceWorkerCacher, IFrameNavigator, ColumnsPaginatedBookView, ScrollingBookView, LocalAnnotator, BookSettings) {
+    require(["LocalStorageStore", "ServiceWorkerCacher", "IFrameNavigator", "ColumnsPaginatedBookView", "ScrollingBookView", "LocalAnnotator", "BookSettings"],
+            function (LocalStorageStore, ServiceWorkerCacher, IFrameNavigator, ColumnsPaginatedBookView, ScrollingBookView, LocalAnnotator, BookSettings) {
       var element = document.getElementById("viewer");
-      var manifestUrl = new URL("manifest.json", window.location.href).href;
+      var webpubManifestUrl = new URL("manifest.json", window.location.href);
+      var bookCacheUrl = new URL("appcache.html", window.location.href);
 
-      var store = new LocalStorageStore.default(manifestUrl);
-      ServiceWorkerCacher.default.create(store, "../../sw.js").then(function (cacher) {
-        var paginator = new ColumnsPaginatedBookView.default();
-        var scroller = new ScrollingBookView.default();
-        var annotator = new LocalAnnotator.default(store);
-        BookSettings.default.create([paginator, scroller], store).then(function (settings) {
-          IFrameNavigator.default.create(element, manifestUrl, cacher, settings, annotator, paginator, scroller).then(function () {
-            var controls = document.querySelector(".controls ul");
-            var li = document.createElement("li");
-            var allBooksLink = document.createElement("a");
-            allBooksLink.href = "/";
-            allBooksLink.title = "All Books";
-            allBooksLink.textContent = "All Books";
-            allBooksLink.className = "all-books";
-            li.appendChild(allBooksLink);
-            controls.appendChild(li);
+      var store = new LocalStorageStore.default(webpubManifestUrl);
+      var cacher = new ServiceWorkerCacher.default(store, webpubManifestUrl, "../../sw.js", bookCacheUrl);
 
-            var toc = document.querySelector(".controls ul li a[rel=contents]");
-            toc.textContent = "Table of Contents";
-          });
-        });
+      var paginator = new ColumnsPaginatedBookView.default();
+      var scroller = new ScrollingBookView.default();
+      var annotator = new LocalAnnotator.default(store);
+      var fontSizes = [ 12, 14, 16, 18, 20, 22, 24, 26, 28, 30, 32 ];
+      var defaultFontSize = 16;
+      BookSettings.default.create(store, [paginator, scroller], fontSizes, defaultFontSize).then(function (settings) {
+        IFrameNavigator.default.create(element, webpubManifestUrl, store, cacher, settings, annotator, paginator, scroller);
       });
     });
   </script>
