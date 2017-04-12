@@ -61,9 +61,8 @@ class GenerateLandingPageScript:
               for row in reader:
                   title = unicode(row.get(SPREADSHEET_TITLE_HEADER), 'utf-8')
 
-                  if row.get(OKAY_FOR_12_AND_UNDER) == "N":
-                      adult = True
-                  else:
+                  adult = True
+                  if row.get(OKAY_FOR_12_AND_UNDER) == "Y":
                       adult = False
 
                   author = unicode(row.get(SPREADSHEET_AUTHOR_HEADER), 'utf-8')
