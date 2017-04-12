@@ -1,16 +1,23 @@
 # web-reader-landing-page
 
 ## Setup
-This script must be run from a content server virtual environment, with a config file pointing to a content server database.
 
-Run `git submodule init && git submodule update` to set up the core python module.
+### Dependencies
 
-This project also uses npm and go, so both must be installed.
+* `npm` installed
+* Having `go` installed and having `$GOPATH` env var set.
 
 go requires a directory to use for the $GOPATH. go will install dependencies there.
 E.g. `mkdir ~/dev/gopath; export GOPATH=~/dev/gopath`
 
 Run `go get -u github.com/NYPL-Simplified/webpub-exporter` to download and build the exporter in your $GOPATH.
+
+### Setup
+
+* Install [virtualenv](http://pythoncentral.io/how-to-install-virtualenv-python/).
+* Run `virtualenv env` to create the sandboxed virtualenv.
+* Run `source ./env/bin/activate`
+* Run `git submodule init && git submodule update` to bring in the web reader.
 
 ## Usage
 bin/generate_landing_page <spreadsheet_file_name> <output_directory>
