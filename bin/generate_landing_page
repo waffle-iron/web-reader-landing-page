@@ -10,10 +10,6 @@ import shutil
 import subprocess
 import urllib2
 
-bin_dir = os.path.split(__file__)[0]
-package_dir = os.path.join(bin_dir, "..")
-sys.path.append(os.path.abspath(package_dir))
-
 # Header Title Mappings
 SPREADSHEET_TITLE_HEADER    = "Title"
 SPREADSHEET_AUTHOR_HEADER   = "Author"
@@ -21,6 +17,9 @@ OKAY_FOR_12_AND_UNDER       = "OK for 12yo?"
 DESCRIPTION_HEADER          = "Description"
 COVER_URL_HEADER            = "Cover URL"
 EPUB_URL_HEADER             = "EPUB URL"
+
+bin_dir = os.path.split(__file__)[0]
+package_dir = os.path.join(bin_dir, "..")
 
 INDEX_TEMPLATE = os.path.join(package_dir, "index.html.template")
 BOOK_INDEX_TEMPLATE = os.path.join(package_dir, "book_index.html.template")
