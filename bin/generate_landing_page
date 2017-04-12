@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 """Generate HTML for the landing page based on a spreadsheet of book titles and age classifications."""
+
 import os
 import sys
 bin_dir = os.path.split(__file__)[0]
@@ -9,23 +10,18 @@ sys.path.append(os.path.abspath(package_dir))
 import codecs
 import csv
 import datetime
-import re
 import shutil
 import subprocess
 import urllib2
-from core.scripts import Script
-from core.model import (
-    DataSource,
-    Edition,
-    Hyperlink,
-    Representation,
-)
 
-SPREADSHEET_TITLE_HEADER = "Final List"
-SPREADSHEET_AUTHOR_HEADER = "Author"
-SPREADSHEET_AGE_HEADER = "Age"
-SPREADSHEET_MIN_AGE_RE = re.compile(".*Age\s(\d+).*", re.I)
-DATA_SOURCES = [DataSource.STANDARD_EBOOKS, DataSource.PLYMPTON]
+# Header Title Mappings
+SPREADSHEET_TITLE_HEADER    = "Title"
+SPREADSHEET_AUTHOR_HEADER   = "Author"
+OKAY_FOR_12_AND_UNDER       = "OK for 12yo?"
+DESCRIPTION_HEADER          = "Description"
+COVER_URL_HEADER            = "Cover URL"
+EPUB_URL_HEADER             = "EPUB URL"
+
 INDEX_TEMPLATE = os.path.join(package_dir, "index.html.template")
 BOOK_INDEX_TEMPLATE = os.path.join(package_dir, "book_index.html.template")
 APP_CACHE_HTML = os.path.join(package_dir, "appcache.html")
@@ -42,12 +38,11 @@ FILES_TO_COPY = ["index.css",
                  "webpub-viewer/dist/styles/css/main.css",
                 ]
 
-class GenerateLandingPageScript(Script):
+class GenerateLandingPageScript:
 
-      def __init__(self, csv_file, output_file, _db=None):
+      def __init__(self, csv_file, output_file):
           self.csv_file = csv_file
           self.output_dir = output_dir
-          super(GenerateLandingPageScript, self).__init__(_db)
 
       def run(self):
           if not os.path.exists(self.output_dir):
@@ -66,60 +61,18 @@ class GenerateLandingPageScript(Script):
 
               for row in reader:
                   title = unicode(row.get(SPREADSHEET_TITLE_HEADER), 'utf-8')
-                  age = row.get(SPREADSHEET_AGE_HEADER)
 
-                  adult = True
-
-                  min_age_match = SPREADSHEET_MIN_AGE_RE.match(age)
-                  if min_age_match:
-                      min_age = min_age_match.groups()[0]
-                      if min_age and int(min_age) < 13:
-                          adult = False
+                  if row.get(OKAY_FOR_12_AND_UNDER) == "N":
+                      adult = True
                   else:
-                      print "Could not find age range for %s" % title
+                      adult = False
 
                   author = unicode(row.get(SPREADSHEET_AUTHOR_HEADER), 'utf-8')
-
-                  if title == "Short Fiction":
-                      editions = self._db.query(Edition).filter(Edition.title==title, Edition.author==author).all()
-                  else:
-                      editions = self._db.query(Edition).filter(Edition.title==title).all()
-                  best_edition = None
-                  for edition in editions:
-                      source = edition.data_source.name
-                      if source in DATA_SOURCES:
-                          if not best_edition or DATA_SOURCES.index(source) < DATA_SOURCES.index(best_edition.data_source.name):
-                              best_edition = edition
-
-                  if not best_edition:
-                      print "Could not find edition for %s" % title
-                      continue
-
-                  links = best_edition.license_pool.links
-                  cover_links = [link for link in links if link.rel == Hyperlink.IMAGE]
-                  if len(cover_links) < 1:
-                      print "Could not find cover for %s" % title
-                      continue
-
-                  thumbnails = cover_links[0].resource.representation.thumbnails
-                  if len(thumbnails) < 1:
-                      print "Could not find thumbnail for %s" % title
-                      continue
-                  cover = thumbnails[0].url
-
-                  download_links = [link for link in links if link.rel == Hyperlink.OPEN_ACCESS_DOWNLOAD]
-                  download = None
-                  for link in download_links:
-                      representation = link.resource.representation
-                      if representation.media_type == Representation.EPUB_MEDIA_TYPE:
-                          download = representation.mirror_url
-                          break
-
-                  if not download:
-                      print "Could not find epub link for %s" % title
+                  cover = row.get(COVER_URL_HEADER)
+                  download = row.get(EPUB_URL_HEADER)
 
                   folder_name = (title + " - " + author).encode('ascii', 'ignore')
-
+                  print "Downloading %s." % download
                   remote_epub = urllib2.urlopen(download)
                   content = remote_epub.read()
                   temp_file = os.path.abspath(os.path.join(package_dir, "temp.epub"))
@@ -166,15 +119,13 @@ class GenerateLandingPageScript(Script):
                       <div class="author">%(author)s</div>
                     </div>
                   </a>
-                  """ % { 
+                  """ % {
                       "title": title,
                       "author": author,
                       "cover": cover,
                       "folder_name": folder_name,
                       "class": "adult" if adult else ""
                   }
-
-
 
                   books_html += book_html
 
@@ -207,4 +158,3 @@ if len(sys.argv) < 3:
 csv_file = sys.argv[1]
 output_dir = sys.argv[2]
 GenerateLandingPageScript(csv_file, output_dir).run()
-
