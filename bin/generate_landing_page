@@ -89,13 +89,13 @@ class GenerateLandingPageScript:
                   manifest_as_string = open(manifest_path).read()
                   manifest_as_obj = json.loads(manifest_as_string)
 
-                  manifest_as_obj['spine'].append({'type': 'application/html', 'href': 'text/call-to-action.html'})
+                  manifest_as_obj['spine'].append({'type': 'application/html', 'href': 'call-to-action.html'})
 
                   #  read call-to-action.html as a template and substitute in the Book's title as document title
                   call_to_action_string = open(os.path.join(package_dir, 'call-to-action.html')).read()
                   call_to_action_string = call_to_action_string.replace("{{title}}", title)
 
-                  with codecs.open(os.path.join(book_dir, 'text', 'call-to-action.html'), 'w', 'utf-8') as book_specific_call_to_action_file:
+                  with codecs.open(os.path.join(book_dir, 'call-to-action.html'), 'w', 'utf-8') as book_specific_call_to_action_file:
                     book_specific_call_to_action_file.write(call_to_action_string)
 
                 #   shutil.copy(os.path.join(package_dir, 'call-to-action.html'), os.path.join(book_dir, 'text'))
