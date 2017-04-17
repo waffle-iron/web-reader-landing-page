@@ -119,7 +119,7 @@ class GenerateLandingPageScript:
                       manifest = manifest_file.read()
 
                   manifest_list = "index.html\n"
-                  manifest_list += "text/call-to-action.html\n"
+                  manifest_list += "call-to-action.html\n"
 
                   for file_to_copy in FILES_TO_COPY:
                       path = os.path.join(package_dir, file_to_copy)
