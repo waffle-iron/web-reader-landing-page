@@ -15,7 +15,9 @@
      })(window,document,'script','https://api.nypltech.org/api/v0.1/ga-proxy/javascript/gaproxy.js','gap');
 
      gap('init', 'SubwayReads');
-     gap('create', 'UA-1420324-145', 'auto');
+     gap('create', 'UA-1420324-145', {
+       cookieExpires: 60 * 60 * 24 * 7 * 14 // 14 weeks
+     });
      gap('send', 'pageview');
   </script>
 </head>
