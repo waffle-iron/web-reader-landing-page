@@ -22,6 +22,16 @@ Run `go get -u github.com/NYPL-Simplified/webpub-exporter` to download and build
 ## Usage
 bin/generate_landing_page <spreadsheet_file_name> <output_directory>
 
+
+### Uploading to S3
+
+Follow the instructions at http://docs.aws.amazon.com/cli/latest/userguide/installing.html to install and configure the aws cli.
+
+To upload an output directory to an s3 bucket, run
+```aws s3 cp output s3://bucket-name/ --recursive --acl public-read```
+
+Note this command is `cp`, not `sync`. This uploads any new or updated files, but does not remove deleted files. Any books that have been removed from the landing page will continue to be available to anyone who has started reading and bookmarked them.
+
 ## License
 
 ```
