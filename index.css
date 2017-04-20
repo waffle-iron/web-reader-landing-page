@@ -95,7 +95,6 @@ nav {
 main {
   padding-bottom: 40px;
   overflow: hidden;
-  /*margin: 20px 15px;*/
 }
 .books {
   /*display: inline-flex;
@@ -130,18 +129,6 @@ main {
 .books .info {
   margin-top: 5px;
 }
-/*.books .info::before {
-  content: "READ";
-  background-color: #113154;
-  color: white;
-  font-size: 0.7em;
-  font-weight: bold;
-  padding: 1px 30px;
-  border-radius: 3px;
-  position: absolute;
-  left: 7px;
-  top: -20px;
-}*/
 
 .book .book-details {
   text-align: center;
@@ -227,8 +214,6 @@ main {
   margin-left: 5px;
   cursor: pointer;
 }
-
-
 
 nav#global-nav {
   bottom: 0;
