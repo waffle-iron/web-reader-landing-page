@@ -20,8 +20,16 @@ Run `go get -u github.com/NYPL-Simplified/webpub-exporter` to download and build
 * Run `git submodule init && git submodule update` to bring in the web reader.
 
 ## Usage
-bin/generate_landing_page <spreadsheet_file_name> <output_directory>
 
+```bash
+bin/generate_landing_page <publisher_asset_file_name> <book_spreadsheet> <output_directory>
+```
+
+|Argument                     |Description|
+|-----------------------------|           |
+|`<publisher_asset_file_name>`|"Dropbox URLs" sheet from [this spreadsheet](https://docs.google.com/spreadsheets/d/1TNykdmeY2zYOvWRcn46YBrF6ar31ZbLVzZANSoKASNk/edit?ts=58ece1d2#gid=1365026099)|
+|`<spreadsheet_file_name>`    |A files that contains the books, in order (e.g "RS Selections" sheet from [this spreadsheet](https://docs.google.com/spreadsheets/d/1TNykdmeY2zYOvWRcn46YBrF6ar31ZbLVzZANSoKASNk/edit?ts=58ece1d2#gid=0))|
+|`<output_directory>`         |Where to drop off build artifact|
 
 ### Uploading to S3
 

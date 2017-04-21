@@ -10,6 +10,12 @@ import shutil
 import subprocess
 import urllib2
 import json
+import shutil
+import zipfile
+
+# I am having SSL Cert problems
+import ssl
+ssl._create_default_https_context = ssl._create_unverified_context
 
 # Header Title Mappings
 SPREADSHEET_TITLE_HEADER    = "Title"
@@ -40,14 +46,20 @@ FILES_TO_COPY = ["index.css",
 
 class GenerateLandingPageScript:
 
-      def __init__(self, csv_file, output_file):
+      def __init__(self, publisher_asset_file, csv_file, output_dir):
+          self.publisher_asset_file = publisher_asset_file
           self.csv_file = csv_file
           self.output_dir = output_dir
+          self.workspace_path = os.path.join(package_dir, "workspace")
 
       def run(self):
+          self.clean_and_create_workspace()
+          self.download_and_extract_publisher_assets()
+
           if not os.path.exists(self.output_dir):
               os.mkdir(self.output_dir)
               os.mkdir(self.output_dir + "/books")
+              os.mkdir(self.output_dir + "/covers")
 
           # Prepare javascript to copy into the book directories later.
           npm_result = subprocess.call("npm install", cwd=os.path.abspath(os.path.join(package_dir, "webpub-viewer")), shell=True)
@@ -56,7 +68,7 @@ class GenerateLandingPageScript:
 
           books_html = []
 
-          with open(csv_file) as file:
+          with open(self.csv_file) as file:
               reader = csv.DictReader(file)
 
               for row in reader:
@@ -68,15 +80,37 @@ class GenerateLandingPageScript:
 
                   author = unicode(row.get(SPREADSHEET_AUTHOR_HEADER), 'utf-8')
                   cover = row.get(COVER_URL_HEADER)
-                  download = row.get(EPUB_URL_HEADER)
 
+                  # Get the cover, from either the workspace or the internet
+                  # and put it in output_dir/covers/originalfilename.ext
+                  local_path_to_cover = ""
+
+                  if "http" in cover or "https" in cover:
+                    remote_cover_content = urllib2.urlopen(cover).read()
+                    local_path_to_cover  = os.path.join(self.output_dir, 'covers', os.path.basename(cover))
+                    with open(local_path_to_cover, 'w') as local_cover:
+                      local_cover.write(remote_cover_content)
+                  else:
+                    # This cover was extracted in download_and_extract_publisher_assets()
+                    workspace_path_to_cover = os.path.join(self.workspace_path, cover)
+                    local_path_to_cover     = os.path.join(self.output_dir, 'covers', cover)
+                    shutil.copy(workspace_path_to_cover, local_path_to_cover)
+
+                  cover_src = "covers/" + os.path.basename(local_path_to_cover)
+                  download = row.get(EPUB_URL_HEADER)
+                  temp_file = ""
                   folder_name = (title + " - " + author).encode('ascii', 'ignore')
-                  print "Downloading %s." % download
-                  remote_epub = urllib2.urlopen(download)
-                  content = remote_epub.read()
-                  temp_file = os.path.abspath(os.path.join(package_dir, "temp.epub"))
-                  with open(temp_file, "w") as local_epub:
-                      local_epub.write(content)
+
+                  if "http" in download or "https" in download:
+                      print "Downloading %s." % download
+                      remote_epub = urllib2.urlopen(download)
+                      content = remote_epub.read()
+                      temp_file = os.path.abspath(os.path.join(package_dir, "temp.epub"))
+                      with open(temp_file, "w") as local_epub:
+                          local_epub.write(content)
+                  else:
+                      print "Looking for %s locally" % download
+                      temp_file = os.path.join(self.workspace_path, download)
 
                   book_dir = os.path.join(self.output_dir, "books/" + folder_name)
                   export_result = subprocess.call('$GOPATH/bin/webpub-exporter -f %s -o "%s"' % (temp_file, book_dir), shell=True)
@@ -98,7 +132,6 @@ class GenerateLandingPageScript:
                   with codecs.open(os.path.join(book_dir, 'call-to-action.html'), 'w', 'utf-8') as book_specific_call_to_action_file:
                     book_specific_call_to_action_file.write(call_to_action_string)
 
-                #   shutil.copy(os.path.join(package_dir, 'call-to-action.html'), os.path.join(book_dir, 'text'))
                   with codecs.open(manifest_path, 'w', 'utf-8') as manifest_file:
                       manifest_file.write(json.dumps(manifest_as_obj))
 
@@ -132,7 +165,7 @@ class GenerateLandingPageScript:
 
                   book_html = """
                   <a href="books/%(folder_name)s/index.html" title="%(title)s" class="%(class)s">
-                    <img src="%(cover)s" alt="%(title)s" />
+                    <img src="%(cover_src)s" alt="%(title)s" />
                     <div class="info">
                       <div class="title">%(title)s</div>
                       <div class="author">%(author)s</div>
@@ -141,7 +174,7 @@ class GenerateLandingPageScript:
                   """ % {
                       "title": title,
                       "author": author,
-                      "cover": cover,
+                      "cover_src": cover_src,
                       "folder_name": folder_name,
                       "class": "adult" if adult else ""
                   }
@@ -171,9 +204,40 @@ class GenerateLandingPageScript:
           with open(os.path.join(self.output_dir, "manifest.appcache"), "w") as output_file:
                 output_file.write(cacheManifest)
 
-if len(sys.argv) < 3:
-   raise Exception("Usage: bin/generate_landing_page <csv_file> <output_dir>")
+      def clean_and_create_workspace(self):
+          if os.path.exists(self.workspace_path):
+            shutil.rmtree(self.workspace_path)
+          print "Creating a fresh workspace"
+          os.mkdir(self.workspace_path)
 
-csv_file = sys.argv[1]
-output_dir = sys.argv[2]
-GenerateLandingPageScript(csv_file, output_dir).run()
+      def download_and_extract_publisher_assets(self):
+          print "Downloading ZIPs from %s" % self.publisher_asset_file
+          with open(self.publisher_asset_file) as file:
+              reader = csv.DictReader(file)
+              for row in reader:
+                  url = row["URL to ZIP containing EPUBs and covers"]
+                  basename = os.path.basename(url)
+
+                  print "downloading %s to workspace" % url
+                  content = urllib2.urlopen(url).read()
+                  zip_path = os.path.join(self.workspace_path, basename+".zip")
+
+                  # write local zip
+                  with open(zip_path, "w") as local_zip:
+                     local_zip.write(content)
+
+                  # defale zip into workspace
+                  print "...extracting"
+                  with zipfile.ZipFile(zip_path,"r") as zip_ref:
+                     zip_ref.extractall(self.workspace_path)
+
+
+if len(sys.argv) != 4:
+   raise Exception("Usage: bin/generate_landing_page <publisher_asset_file_name> <book_spreadsheet> <output_directory>")
+
+publisher_asset_file = sys.argv[1]
+book_csv_file        = sys.argv[2]
+output_dir           = sys.argv[3]
+
+
+GenerateLandingPageScript(publisher_asset_file, book_csv_file, output_dir).run()
