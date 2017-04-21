@@ -31,7 +31,7 @@
       </span>
     </button>
     <ul class="tabs">
-      <li><a href="/">Library Underground</a></li>
+      <li><a href=".">Library Underground</a></li>
       {{category_nav}}
     </ul>
     <div class="nav-simplye">
@@ -45,7 +45,7 @@
   </nav>
   <div class="wrapper">
     <header>
-      <a href="/" class="logo">
+      <a href="." class="logo">
         <img src="simplyE_logo.png" alt="SimplyE" />
       </a>
       <button aria-controls="global-nav" aria-haspopup="true" tabindex="2" id="menu-button-open">
