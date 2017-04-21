@@ -36,7 +36,6 @@ bin/generate_landing_page <publisher_asset_file_name> <book_spreadsheet> <output
 Follow the instructions at http://docs.aws.amazon.com/cli/latest/userguide/installing.html to install and configure the aws cli.
 
 To upload an output directory to an s3 bucket, run
-<<<<<<< HEAD
 
 `aws s3 cp output s3://bucket-name/ --recursive --acl public-read --cache-control max-age=300 --profile your-aws-cli-profile-name`
 
