@@ -11,6 +11,10 @@ import subprocess
 import urllib2
 import json
 
+# Had trouble with one of the descriptions decoding correctly
+reload(sys)
+sys.setdefaultencoding("utf-8")
+
 # Header Title Mappings
 SPREADSHEET_TITLE_HEADER    = "Title"
 SPREADSHEET_AUTHOR_HEADER   = "Author"
@@ -18,12 +22,15 @@ OKAY_FOR_12_AND_UNDER       = "OK for 12yo?"
 DESCRIPTION_HEADER          = "Description"
 COVER_URL_HEADER            = "Cover URL"
 EPUB_URL_HEADER             = "EPUB URL"
+MTA_CATEGORY_1              = "MTA Category 1"
 
 bin_dir = os.path.split(__file__)[0]
 package_dir = os.path.join(bin_dir, "..")
 
 INDEX_TEMPLATE = os.path.join(package_dir, "index.html.template")
 BOOK_INDEX_TEMPLATE = os.path.join(package_dir, "book_index.html.template")
+BOOK_DESC_TEMPLATE = os.path.join(package_dir, "book_desc.html.template")
+BOOK_CATEGORY_TEMPLATE = os.path.join(package_dir, "book_category.html.template")
 APP_CACHE_HTML = os.path.join(package_dir, "appcache.html")
 FILES_TO_COPY = ["index.css",
                  "simplyE_logo.png",
@@ -36,6 +43,7 @@ FILES_TO_COPY = ["index.css",
                  "webpub-viewer/node_modules/requirejs/require.js",
                  "webpub-viewer/node_modules/whatwg-fetch/fetch.js",
                  "webpub-viewer/dist/styles/css/main.css",
+                 "main.js"
                 ]
 
 class GenerateLandingPageScript:
@@ -48,6 +56,8 @@ class GenerateLandingPageScript:
           if not os.path.exists(self.output_dir):
               os.mkdir(self.output_dir)
               os.mkdir(self.output_dir + "/books")
+              os.mkdir(self.output_dir + "/book_desc")
+              os.mkdir(self.output_dir + "/category")
 
           # Prepare javascript to copy into the book directories later.
           npm_result = subprocess.call("npm install", cwd=os.path.abspath(os.path.join(package_dir, "webpub-viewer")), shell=True)
@@ -55,6 +65,8 @@ class GenerateLandingPageScript:
                 raise Exception("Failed to build javascript")
 
           books_html = []
+          all_books_description = {}
+          mta_category_dict = {}
 
           with open(csv_file) as file:
               reader = csv.DictReader(file)
@@ -69,7 +81,9 @@ class GenerateLandingPageScript:
                   author = unicode(row.get(SPREADSHEET_AUTHOR_HEADER), 'utf-8')
                   cover = row.get(COVER_URL_HEADER)
                   download = row.get(EPUB_URL_HEADER)
+                  description = row.get(DESCRIPTION_HEADER).encode('utf-8', 'ignore')
 
+                  # Generate the individual webreader for the book
                   folder_name = (title + " - " + author).encode('ascii', 'ignore')
                   print "Downloading %s." % download
                   remote_epub = urllib2.urlopen(download)
@@ -98,7 +112,6 @@ class GenerateLandingPageScript:
                   with codecs.open(os.path.join(book_dir, 'call-to-action.html'), 'w', 'utf-8') as book_specific_call_to_action_file:
                     book_specific_call_to_action_file.write(call_to_action_string)
 
-                #   shutil.copy(os.path.join(package_dir, 'call-to-action.html'), os.path.join(book_dir, 'text'))
                   with codecs.open(manifest_path, 'w', 'utf-8') as manifest_file:
                       manifest_file.write(json.dumps(manifest_as_obj))
 
@@ -109,6 +122,41 @@ class GenerateLandingPageScript:
                       out = template.replace("{{title}}", title).replace("{{cover}}", cover)
                       with codecs.open(os.path.join(book_dir, "index.html"), "w", "utf-8") as output_file:
                           output_file.write(out)
+
+                  # For the individual book description pages
+                  book_desc_dir = os.path.join(self.output_dir, "book_desc/")
+                  book_desc_html = """
+                      <div class="book-details">
+                        <img src="%(cover)s" alt="%(title)s" />
+                        <div class="info">
+                          <h2 class="title">%(title)s</h2>
+                          <div class="author">%(author)s</div>
+                        </div>
+                      </div>
+                      <a href="../books/%(folder_name)s/index.html" title="%(title)s" class="read-now">
+                        START READING
+                      </a>
+                      <div class="book_desc">
+                        <div class="read-time">4 hour read</div>
+                        <div class="social-media-share"></div>
+                        <div class="description-text">
+                          %(description)s
+                        </div>
+                      </div>
+                  """ % {
+                      "title": title,
+                      "author": author,
+                      "cover": cover,
+                      "folder_name": folder_name,
+                      "class": "adult" if adult else "",
+                      "description": description
+                  }
+
+                  # Adding individual book title and description to dictionary to render later
+                  all_books_description[title + " - " + author] = {
+                      "title": title,
+                      "book_desc_html": book_desc_html
+                  }
 
                   with open(APP_CACHE_HTML) as appcache_file:
                         html = appcache_file.read()
@@ -131,30 +179,147 @@ class GenerateLandingPageScript:
                         manifest_file.write(manifest)
 
                   book_html = """
-                  <a href="books/%(folder_name)s/index.html" title="%(title)s" class="%(class)s">
-                    <img src="%(cover)s" alt="%(title)s" />
-                    <div class="info">
-                      <div class="title">%(title)s</div>
-                      <div class="author">%(author)s</div>
-                    </div>
-                  </a>
+                      <a href="./book_desc/%(title)s - %(author)s.html" title="%(title)s" class="%(class)s">
+                        <img src="%(cover)s" alt="%(title)s" />
+                        <div class="info">
+                          <div class="title">%(title)s</div>
+                          <div class="author">%(author)s</div>
+                        </div>
+                      </a>
                   """ % {
                       "title": title,
                       "author": author,
                       "cover": cover,
                       "folder_name": folder_name,
-                      "class": "adult" if adult else ""
+                      "class": "adult"# if adult else ""
                   }
 
-                  books_html += book_html
+                  desc_book_html = """
+                      <a href="../book_desc/%(title)s - %(author)s.html" title="%(title)s" class="%(class)s">
+                        <img src="%(cover)s" alt="%(title)s" />
+                        <div class="info book_desc">
+                          <div class="title">%(title)s</div>
+                          <div class="author">%(author)s</div>
+                          <p>Short description</p>
+                          <div class="read-time">4 hour read</div>
+                          <div>
+                            <button>READ</button>
+                            Learn MORE
+                          </div>
+                        </div>
+                      </a>
+                  """ % {
+                      "title": title,
+                      "author": author,
+                      "cover": cover,
+                      "folder_name": folder_name,
+                      "class": "adult"# if adult else ""
+                  }
+
+                  # Organize the book by its category
+                  mta_category = row.get(MTA_CATEGORY_1)
+                  if mta_category in mta_category_dict:
+                      mta_category_dict[mta_category]["home"] += book_html
+                      mta_category_dict[mta_category]["desc"] += desc_book_html
+                  else:
+                      mta_category_dict[mta_category] = {
+                          "home": book_html,
+                          "desc": desc_book_html
+                      }
+
+          home_category_nav = []
+          category_nav = []
+          mta_category_page = {}
+          category_count = 0
+
+          # Generate the book lanes and insert a call to action for SimplyE
+          for category_key in mta_category_dict:
+              category_count += 1
+
+              if category_count == 3:
+                  books_html += """
+                    <div class="call-to-action">
+                      <p>Library Underground is a small collection from over 300,000 free eBooks
+                      available from SimplyE, a free app from The Public Libraries of New York City.</p>
+                      <p>Download for free</p>
+                      <div>
+                        <a href="https://itunes.apple.com/us/app/nypl-simplye/id1046583900?mt=8" title="Download on the App Store"><img src="apple_badge.png" alt="Download on the App Store"/></a>
+                        <a href="https://play.google.com/store/apps/details?id=org.nypl.simplified.simplye&hl=en" title="Get it on Google Play"><img src="google_badge.png" alt="Get it on Google Play"/></a>
+                      </div>
+                    </div>
+                  """
+
+              books_html += """
+                <div class="categories">
+                  <div class="category-header">
+                    <h2><a href="./category/%(category_key)s.html">%(category_key)s</a></h2>
+                    <span><a href="./category/%(category_key)s.html">See all &gt;</a></span>
+                  </div>
+                  <div class="category">
+                    <div class="books">
+                      %(books)s
+                    </div>
+                  </div>
+                </div>
+              """ % {
+                  "category_key": category_key,
+                  "books": mta_category_dict[category_key]["home"]
+              }
+
+              # Generate the main navigation from all the category titles
+              category_nav += """
+                <li><a href="../category/%(category_key)s.html">%(category_key)s</a></li>
+              """ % {
+                  "category_key": category_key
+              }
+
+              home_category_nav += """
+                <li><a href="./category/%(category_key)s.html">%(category_key)s</a></li>
+              """ % {
+                  "category_key": category_key
+              }
+
+              # Generate the individual category page and the books in it
+              category_page = """
+                <div class="category-details">
+                  <h2>%(category_key)s</h2>
+                </div>
+                <div class="books">
+                  %(books)s
+                </div>
+              """ % {
+                  "category_key": category_key,
+                  "books": mta_category_dict[category_key]["desc"]
+              }
+
+              mta_category_page[category_key] = category_page
 
           cacheManifest = "CACHE MANIFEST\n #timestamp "
           cacheManifest += str(datetime.datetime.utcnow())
           cacheManifest += "\n\n"
 
+          # Generate all individual category pages
+          book_category_dir = os.path.join(self.output_dir, "category/")
+          for category_key in mta_category_page:
+              with open(BOOK_CATEGORY_TEMPLATE) as template_file:
+                  template = template_file.read()
+                  out = template.replace("{{category}}", category_key).replace("{{category_nav}}", "".join(category_nav)).replace("{{book_category}}", "".join(mta_category_page[category_key]))
+
+                  with codecs.open(os.path.join(book_category_dir, category_key + ".html"), 'w', "utf-8") as output_file:
+                      output_file.write(out)
+
+          # Generate all individual book description pages
+          for book in all_books_description:
+              with open(BOOK_DESC_TEMPLATE) as template_file:
+                  template = template_file.read()
+                  out = template.replace("{{title}}", all_books_description[book]['title']).replace("{{book_desc_html}}", all_books_description[book]['book_desc_html']).replace("{{category_nav}}", "".join(category_nav))
+
+                  with codecs.open(os.path.join(book_desc_dir, book + ".html"), 'w', "utf-8") as output_file:
+                      output_file.write(out)
+
           with open(INDEX_TEMPLATE) as template_file:
               template = template_file.read()
-              out = template.replace("{{all_books}}", "".join(books_html))
+              out = template.replace("{{all_books}}", "".join(books_html)).replace("{{category_nav}}", "".join(home_category_nav))
 
               with codecs.open(os.path.join(self.output_dir, "index.html"), 'w', "utf-8") as output_file:
                   output_file.write(out)
