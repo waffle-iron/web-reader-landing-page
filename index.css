@@ -19,7 +19,7 @@ a {
 a:focus, a:hover, input:focus {
   outline-color: #8dc740;
   outline-style: solid;
-  outline-width: 3px; 
+  outline-width: 3px;
   outline-offset: 3px;
 }
 body {
@@ -34,11 +34,41 @@ body {
   height: 6px;
 }
 header {
-  padding: 20px;
+  padding: 5px 15px 0;
   text-align: center;
+  background: #f8f8f8;
+  color: #000;
+  height: 40px;
 }
 header h1 {
-  margin: 0;
+  margin: 10px;
+  display: inline-block;
+}
+a.logo {
+  float: left;
+  margin: 5px 0;
+}
+
+.logo img {
+  width: 65px;
+}
+nav {
+  display: inline-block;
+  float: right;
+}
+.banner {
+  padding: 0 15px 15px;
+  font-size: 1.1em;
+  background: #f8f8f8;
+  color: #000;
+  display: inline-block;
+}
+.learn-more-btn {
+  color: #fff;
+  border: 1px solid #fff;
+  text-align: center;
+  padding: 5px 15px;
+  border-radius: 25px;
 }
 .tabs {
   margin: 0;
@@ -46,12 +76,18 @@ header h1 {
 }
 .tabs li {
   display: inline-block;
-  margin: 0px 5px;
   cursor: pointer;
-  height: 20px;
-  padding: 5px;
   text-transform: uppercase;
   font-weight: bold;
+  width: 100%;
+  border-bottom: 1px solid #ccc;
+}
+.tabs li a {
+  color: black;
+  height: 20px;
+  text-decoration: none;
+  display: block;
+  padding: 10px 15px 5px;
 }
 .tabs li.active a {
   border-bottom: 3px solid black;
@@ -61,43 +97,71 @@ main {
   overflow: hidden;
 }
 .books {
-  display: inline-flex;
+  /*display: inline-flex;
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: center;
-  align-content: flex-start;
-  margin: 0px 10px;
+  align-content: flex-start;*/
 }
 .books a {
-  margin: 5px;
+  /*margin: 5px;
   cursor: pointer;
   width: 100px;
   overflow: hidden;
-  text-align: center;
+  text-align: center;*/
+}
+
+.books a {
+  width: 135px;
+  height: 120px;
+  display: table-cell;
+  vertical-align: top;
 }
 .books a .title {
   font-weight: bold;
 }
 .books .adult {
-  display: none;
+  /*display: none;*/
 }
 .books img {
-  width: 100px;
+  width: 120px;
 }
 .books .info {
-  position: relative;
+  margin-top: 5px;
 }
-.books .info::before {
-  content: "READ";
-  background-color: #113154;
-  color: white;
-  font-size: 0.7em;
-  font-weight: bold;
-  padding: 1px 30px;
-  border-radius: 3px;
+
+.book .book-details {
+  text-align: center;
+  padding-bottom: 30px;
+}
+.book-details img {
+  margin-top: 20px;
+  width: 200px;
+}
+.book-details h2 {
+  font-size: 1.4em;
+}
+.book .read-now {
+  display: inline-block;
+  border-radius: 5px;
+  background: #468028;
+  color: #fff;
+  padding: 10px;
+  width: 130px;
   position: absolute;
-  left: 7px;
-  top: -20px;
+  text-align: center;
+  left: 50%;
+  transform: translateY(-50%) translateX(-50%);
+}
+.book .book_desc {
+  padding: 60px 15px;
+}
+.book .read-time {
+  text-align: center;
+}
+.description-text {
+  line-height: 1.8em;
+  font-size: 1.1em;
 }
 .age-check {
   position: fixed;
@@ -150,13 +214,212 @@ main {
   margin-left: 5px;
   cursor: pointer;
 }
-footer p {
-  position: fixed;
+
+nav#global-nav {
   bottom: 0;
+  max-width: 300px;
+  overflow: auto;
+  position: fixed;
+  top: 0;
+  right: -300px;
   width: 100%;
+  z-index: 0;
+  -moz-transition: all 300ms;
+  -o-transition: all 300ms;
+  -webkit-transition: all 300ms;
+  transition: all 300ms;
+  background: #fff;
+  z-index: 100;
+}
+
+#global-nav h3 {
+  padding: 0 10px;
+}
+
+.nav-simplye {
+  margin: 20px 50px 0 15px;
+  font-size: 1.1em;
+}
+
+.nav-simplye img {
+  width: 100px;
+}
+
+#menu-button-open {
+  border: none;
+  background: #f8f8f8;
+  right: 0;
+  position: absolute;
+}
+#menu-button-close {
+  float: right;
+  background: #fff;
+  border: none;
+}
+
+.categories {
+  margin: 20px 15px 0;
+}
+
+.category {
+  width: 100%;
+  height: 260px;
+  overflow: auto;
+}
+
+.category-header {
+  margin: 0 0 10px;
+}
+
+.category-header h2 {
+  display: inline-block;
   margin: 0;
-  background-color: #252420;
-  color: #52524f;
+}
+
+.category-header span {
+  display: inline-block;
+  float: right;
+}
+
+.category-details {
+  padding: 15px;
+}
+.book-category a {
+  width: 100%;
+  border-top: 1px solid #ddd;
+  display: block;
+  padding: 15px;
+  height: 200px;
+}
+.book-category img {
+  display: inline-block;
+  width: 120px;
+}
+.book-category .info {
+  display: inline-block;
+  vertical-align: top;
+  margin: 0 15px;
+}
+.books {
+  display: table;
+  table-layout: fixed;
+  width: 100%;
+  padding-top: 10px;
+}
+
+.call-to-action {
+  height: 200px;
+  background: #f8f8f8;
   text-align: center;
-  padding: 5px;
+}
+
+.call-to-action p {
+  padding: 10px 50px;
+  margin: 0;
+  font-size: 1.2em;
+  line-height: 1.4em;
+}
+
+.call-to-action img {
+  width: 100px;
+}
+
+.call-to-action a {
+  display: inline-block;
+}
+
+body.active {
+  position: fixed;
+}
+
+body.active #global-nav {
+  -moz-transform: translateX(-300px);
+  -ms-transform: translateX(-300px);
+  -webkit-transform: translateX(-300px);
+  transform: translateX(-300px);
+}
+
+ul {
+  margin: 0;
+  padding: 1em 0 0;
+
+  li {
+    border-bottom: 1px solid #474747;
+    padding: 0;
+    margin: 0;
+    width: 100%;
+
+    a {
+      display: block;
+      color: #fff;
+      text-decoration: none;
+      padding: 1.5em 0 1.5em 2em;
+
+      &:hover,
+      &:focus {
+        background-color: #474747;
+      }
+      &:active {
+        color: #9fbf00;
+      }
+    }
+  }
+}
+
+
+#wrapper {
+  position: relative;
+  top: 0;
+  right: 0;
+  width: 100%;
+  -moz-transition: all 300ms;
+  -o-transition: all 300ms;
+  -webkit-transition: all 300ms;
+  transition: all 300ms;
+
+  // Important detail for mobile:
+  //   container must be positioned on top of nav
+  z-index: 1;
+
+  // slide out container when .active class is added by JS
+  body.active & {
+    -moz-transform: translateX(-220px);
+    -ms-transform: translateX(-220px);
+    -webkit-transform: translateX(-220px);
+    transform: translateX(-220px);
+  }
+}
+
+footer .share-app {
+  height: 120px;
+  background: #f8f8f8;
+  color: #000;
+}
+
+.share-app h2 {
+  padding: 20px 15px;
+  text-align: center;
+}
+
+footer .deep-footer {
+  background: #2e343b;
+  color: #fff;
+  text-align: center;
+}
+
+.deep-footer p {
+  margin: 0;
+  padding: 10px 15px;
+}
+
+/* Utilities */
+.visuallyhidden {
+  border: 0;
+  clip: rect(0 0 0 0);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  width: 1px
 }
