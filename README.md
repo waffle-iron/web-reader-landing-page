@@ -28,7 +28,7 @@ bin/generate_landing_page <spreadsheet_file_name> <output_directory>
 Follow the instructions at http://docs.aws.amazon.com/cli/latest/userguide/installing.html to install and configure the aws cli.
 
 To upload an output directory to an s3 bucket, run
-```aws s3 cp output s3://bucket-name/ --recursive --acl public-read --profile your-aws-cli-profile-name```
+```aws s3 cp output s3://bucket-name/ --recursive --acl --cache-control max-age=300 public-read --profile your-aws-cli-profile-name```
 
 Note this command is `cp`, not `sync`. This uploads any new or updated files, but does not remove deleted files. Any books that have been removed from the landing page will continue to be available to anyone who has started reading and bookmarked them.
 
