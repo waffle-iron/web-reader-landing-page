@@ -12,6 +12,7 @@ import urllib2
 import json
 import shutil
 import zipfile
+import uuid
 
 # I am having SSL Cert problems
 import ssl
@@ -95,20 +96,23 @@ class GenerateLandingPageScript:
 
                   # Get the cover, from either the workspace or the internet
                   # and put it in output_dir/covers/originalfilename.ext
-                  local_path_to_cover = ""
 
+                  #This UUID is helpful in cache-busting
+                  book_uuid = str(uuid.uuid4())
+                  local_path_to_cover = os.path.join(self.output_dir, 'covers', book_uuid)
+                  os.makedirs(local_path_to_cover)
                   if "http" in cover or "https" in cover:
                     remote_cover_content = urllib2.urlopen(cover).read()
-                    local_path_to_cover  = os.path.join(self.output_dir, 'covers', os.path.basename(cover))
+                    local_path_to_cover  = os.path.join(local_path_to_cover, os.path.basename(cover))
                     with open(local_path_to_cover, 'w') as local_cover:
                       local_cover.write(remote_cover_content)
                   else:
                     # This cover was extracted in download_and_extract_publisher_assets()
                     workspace_path_to_cover = os.path.join(self.workspace_path, cover)
-                    local_path_to_cover     = os.path.join(self.output_dir, 'covers', cover)
+                    local_path_to_cover     = os.path.join(local_path_to_cover, cover)
                     shutil.copy(workspace_path_to_cover, local_path_to_cover)
 
-                  cover_src = "covers/" + os.path.basename(local_path_to_cover)
+                  cover_src = os.path.join('covers', book_uuid, os.path.basename(local_path_to_cover))
                   download = row.get(EPUB_URL_HEADER)
                   temp_file = ""
 
