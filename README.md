@@ -26,7 +26,7 @@ bin/generate_landing_page <publisher_asset_file_name> <book_spreadsheet> <output
 ```
 
 |Argument                     |Description|
-|-----------------------------|           |
+|-----------------------------|-----------|
 |`<publisher_asset_file_name>`|"Dropbox URLs" sheet from [this spreadsheet](https://docs.google.com/spreadsheets/d/1TNykdmeY2zYOvWRcn46YBrF6ar31ZbLVzZANSoKASNk/edit?ts=58ece1d2#gid=1365026099)|
 |`<spreadsheet_file_name>`    |A files that contains the books, in order (e.g "RS Selections" sheet from [this spreadsheet](https://docs.google.com/spreadsheets/d/1TNykdmeY2zYOvWRcn46YBrF6ar31ZbLVzZANSoKASNk/edit?ts=58ece1d2#gid=0))|
 |`<output_directory>`         |Where to drop off build artifact|
