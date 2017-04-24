@@ -311,7 +311,7 @@ class GenerateLandingPageScript:
 
               # Generate the individual category page and the books in it
               category_page = """
-                <div class="category-details">
+                <div class="category-title">
                   <h2>%(category_key)s</h2>
                 </div>
                 <ul>
