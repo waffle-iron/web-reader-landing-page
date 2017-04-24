@@ -60,13 +60,13 @@
       </button>
     </header>
 
-    <div class="banner">
-      <h1>Library Underground</h1>
-      <p>A collection of over 300 free books and short reads curated by The Public
-      Libraries of New York City.</p>
-    </div>
-
     <main>
+      <div class="banner">
+        <h1>Library Underground</h1>
+        <p>A collection of over 300 free books and short reads curated by The Public
+        Libraries of New York City.</p>
+      </div>
+
       <div role="dialog" aria-labelledby="age-check-title" class="age-check" style="display: none">
         <div>
           <h2 id="age-check-title">You must be 13 or older to read all books.</h2>
