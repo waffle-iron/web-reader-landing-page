@@ -13,6 +13,8 @@ import json
 import shutil
 import zipfile
 import uuid
+import glob
+from PIL import Image
 
 # I am having SSL Cert problems
 import ssl
@@ -64,7 +66,6 @@ class GenerateLandingPageScript:
       def run(self):
           self.clean_and_create_workspace()
           self.download_and_extract_publisher_assets()
-
           if not os.path.exists(self.output_dir):
               os.mkdir(self.output_dir)
               os.mkdir(self.output_dir + "/books")
@@ -405,6 +406,15 @@ class GenerateLandingPageScript:
 
           with open(os.path.join(self.output_dir, "manifest.appcache"), "w") as output_file:
                 output_file.write(cacheManifest)
+
+          self.optimize_covers()
+
+      def optimize_covers(self):
+          print "...Optimizing book cover sizes"
+          for cover_path in glob.glob(self.output_dir + "/covers/**/*"):
+              image = Image.open(cover_path)
+              image.thumbnail([195,20000])
+              image.save(cover_path)
 
       def clean_and_create_workspace(self):
           if os.path.exists(self.workspace_path):
