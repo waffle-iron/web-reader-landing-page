@@ -248,6 +248,7 @@ nav#global-nav {
 /* Homepage */
 .category-lane {
   margin: 20px 15px 0;
+  list-style-type: none;
 }
 .category-header {
   margin: 0 0 5px;

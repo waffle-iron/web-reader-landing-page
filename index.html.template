@@ -78,7 +78,9 @@
         </div>
       </div>
 
-      {{all_books}}
+      <ul>
+        {{all_books}}
+      </ul>
     </main>
     <footer>
       <div class="share-app">

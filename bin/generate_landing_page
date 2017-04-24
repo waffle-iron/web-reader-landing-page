@@ -23,6 +23,17 @@ DESCRIPTION_HEADER          = "Description"
 COVER_URL_HEADER            = "Cover URL"
 EPUB_URL_HEADER             = "EPUB URL"
 MTA_CATEGORY_1              = "MTA Category 1"
+DOWNLOAD_SIMPLYE_SNIPPET    = """
+  <li class="call-to-action">
+    <p>Library Underground is a small collection from over 300,000 free eBooks
+    available from SimplyE, a free app from The Public Libraries of New York City.</p>
+    <p>Download for free</p>
+    <div>
+      <a href="https://itunes.apple.com/us/app/nypl-simplye/id1046583900?mt=8" title="Download on the App Store"><img src="apple_badge.png" alt="Download on the App Store"/></a>
+      <a href="https://play.google.com/store/apps/details?id=org.nypl.simplified.simplye&hl=en" title="Get it on Google Play"><img src="google_badge.png" alt="Get it on Google Play"/></a>
+    </div>
+  </li>
+"""
 
 bin_dir = os.path.split(__file__)[0]
 package_dir = os.path.join(bin_dir, "..")
@@ -128,7 +139,7 @@ class GenerateLandingPageScript:
                   book_desc_dir = os.path.join(self.output_dir, "book_desc/")
                   book_desc_html = """
                       <div class="book-details">
-                        <img src="%(cover)s" alt="%(title)s" />
+                        <img src="%(cover)s" alt="" />
                         <div class="info">
                           <h2 class="title">%(title)s</h2>
                           <div class="author">%(author)s</div>
@@ -186,7 +197,7 @@ class GenerateLandingPageScript:
                   book_html_home = """
                     <li>
                       <a href="./book_desc/%(title)s - %(author)s.html" title="%(title)s" class="%(class)s">
-                        <img src="%(cover)s" alt="%(title)s" />
+                        <img src="%(cover)s" alt="" />
                         <div class="info">
                           <div class="title">%(title)s</div>
                           <div class="author">%(author)s</div>
@@ -204,7 +215,7 @@ class GenerateLandingPageScript:
                   # This is the markup for a single book on a category page
                   book_html_category = """
                     <li>
-                      <img src="%(cover)s" alt="%(title)s" />
+                      <img src="%(cover)s" alt="" />
                       <div class="info book_desc">
                         <h2 class="title">%(title)s</h2>
                         <div class="author">%(author)s</div>
@@ -230,17 +241,7 @@ class GenerateLandingPageScript:
 
                   # Insert the call to action after the third book in each category
                   if mta_category in mta_category_dict and mta_category_dict[mta_category]["count"] == 2:
-                      book_html_category += """
-                        <li class="call-to-action">
-                          <p>Library Underground is a small collection from over 300,000 free eBooks
-                          available from SimplyE, a free app from The Public Libraries of New York City.</p>
-                          <p>Download for free</p>
-                          <div>
-                            <a href="https://itunes.apple.com/us/app/nypl-simplye/id1046583900?mt=8" title="Download on the App Store"><img src="../apple_badge.png" alt="Download on the App Store"/></a>
-                            <a href="https://play.google.com/store/apps/details?id=org.nypl.simplified.simplye&hl=en" title="Get it on Google Play"><img src="../google_badge.png" alt="Get it on Google Play"/></a>
-                          </div>
-                        </li>
-                      """
+                      book_html_category += DOWNLOAD_SIMPLYE_SNIPPET
 
                   # Organize the book by its category
                   if mta_category in mta_category_dict:
@@ -264,20 +265,10 @@ class GenerateLandingPageScript:
               category_count += 1
 
               if category_count == 3:
-                  books_html_home += """
-                    <div class="call-to-action">
-                      <p>Library Underground is a small collection from over 300,000 free eBooks
-                      available from SimplyE, a free app from The Public Libraries of New York City.</p>
-                      <p>Download for free</p>
-                      <div>
-                        <a href="https://itunes.apple.com/us/app/nypl-simplye/id1046583900?mt=8" title="Download on the App Store"><img src="apple_badge.png" alt="Download on the App Store"/></a>
-                        <a href="https://play.google.com/store/apps/details?id=org.nypl.simplified.simplye&hl=en" title="Get it on Google Play"><img src="google_badge.png" alt="Get it on Google Play"/></a>
-                      </div>
-                    </div>
-                  """
+                  books_html_home += DOWNLOAD_SIMPLYE_SNIPPET
 
               books_html_home += """
-                <div class="category-lane">
+                <li class="category-lane">
                   <div class="category-header">
                     <a href="./category/%(category_key)s.html">
                       <h2>%(category_key)s</h2>
@@ -289,7 +280,7 @@ class GenerateLandingPageScript:
                       %(books)s
                     </ul>
                   </div>
-                </div>
+                </li>
               """ % {
                   "category_key": category_key,
                   "books": mta_category_dict[category_key]["home"]
