@@ -26,9 +26,27 @@
 </script>
 </head>
 <body>
-  <div id="viewer">
+  <div id="tutorial1">
+    <img src="../../tutorial1.png" style="max-width: 100%; max-height: 800px;"/>
+  </div>
+  <div id="tutorial2" style="display: none">
+    <img src="../../tutorial2.png" style="max-width: 100%; max-height: 800px;"/>
+  </div>
+  <div id="viewer" style="display: none">
   </div>
   <script>
+    var tutorial1 = document.getElementById("tutorial1");
+    var tutorial2 = document.getElementById("tutorial2");
+    var viewer = document.getElementById("viewer");
+    tutorial1.addEventListener("click", function () {
+        tutorial1.style.display = "none";
+        tutorial2.style.display = "block";
+    });
+    tutorial2.addEventListener("click", function () {
+        tutorial2.style.display = "none";
+        viewer.style.display = "block";
+    });
+
     require(["LocalStorageStore", "ServiceWorkerCacher", "IFrameNavigator", "ColumnsPaginatedBookView", "ScrollingBookView", "LocalAnnotator", "BookSettings"],
             function (LocalStorageStore, ServiceWorkerCacher, IFrameNavigator, ColumnsPaginatedBookView, ScrollingBookView, LocalAnnotator, BookSettings) {
       var element = document.getElementById("viewer");
