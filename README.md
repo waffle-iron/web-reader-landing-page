@@ -20,21 +20,29 @@ Run `go get -u github.com/NYPL-Simplified/webpub-exporter` to download and build
 * Run `git submodule init && git submodule update` to bring in the web reader.
 
 ## Usage
-bin/generate_landing_page <spreadsheet_file_name> <output_directory>
 
+```bash
+bin/generate_landing_page <publisher_asset_file_name> <book_spreadsheet> <output_directory>
+```
+
+|Argument                     |Description|
+|-----------------------------|           |
+|`<publisher_asset_file_name>`|"Dropbox URLs" sheet from [this spreadsheet](https://docs.google.com/spreadsheets/d/1TNykdmeY2zYOvWRcn46YBrF6ar31ZbLVzZANSoKASNk/edit?ts=58ece1d2#gid=1365026099)|
+|`<spreadsheet_file_name>`    |A files that contains the books, in order (e.g "RS Selections" sheet from [this spreadsheet](https://docs.google.com/spreadsheets/d/1TNykdmeY2zYOvWRcn46YBrF6ar31ZbLVzZANSoKASNk/edit?ts=58ece1d2#gid=0))|
+|`<output_directory>`         |Where to drop off build artifact|
 
 ### Uploading to S3
 
 Follow the instructions at http://docs.aws.amazon.com/cli/latest/userguide/installing.html to install and configure the aws cli.
 
 To upload an output directory to an s3 bucket, run
-```aws s3 cp output s3://bucket-name/ --recursive --acl public-read --cache-control max-age=300 --profile your-aws-cli-profile-name```
+
+`aws s3 cp output s3://bucket-name/ --recursive --acl public-read --cache-control max-age=300 --profile your-aws-cli-profile-name`
 
 Note this command is `cp`, not `sync`. This uploads any new or updated files, but does not remove deleted files. Any books that have been removed from the landing page will continue to be available to anyone who has started reading and bookmarked them.
 
 ## License
 
-```
 Copyright © 2016 The New York Public Library, Astor, Lenox, and Tilden Foundations
 
 Licensed under the Apache License, Version 2.0 (the "License");

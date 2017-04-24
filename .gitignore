@@ -1,2 +1,8 @@
 env
+
 output
+
+# A temporary holding area where we download epubs, images
+workspace
+
+*.csv
