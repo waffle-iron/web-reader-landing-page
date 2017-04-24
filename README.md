@@ -17,6 +17,7 @@ Run `go get -u github.com/NYPL-Simplified/webpub-exporter` to download and build
 * Install [virtualenv](http://pythoncentral.io/how-to-install-virtualenv-python/).
 * Run `virtualenv env` to create the sandboxed virtualenv.
 * Run `source ./env/bin/activate`
+* Run `pip install -r requirements.txt`
 * Run `git submodule init && git submodule update` to bring in the web reader.
 
 ## Usage
