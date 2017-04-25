@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en" manifest="manifest.appcache">
+<head>
+  <title>Subway Reads | About</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="index.css" />
+  <link rel="icon" href="simplye.png" sizes="300x300" type="image/png"/>
+  <!-- Home screen icon in iOS -->
+  <link rel="apple-touch-icon" href="simplye.png" sizes="300x300" type="image/png"/>
+  <script>
+     (function(i,s,o,g,r,a,m){i['GoogleAnalyticsProxyObject']=r;i[r]=i[r]||function(){
+     (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+     m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+     })(window,document,'script','https://api.nypltech.org/api/v0.1/ga-proxy/javascript/gaproxy.js','gap');
+
+     gap('init', 'SubwayReads');
+     gap('create', 'UA-1420324-145', {
+       cookieExpires: 60 * 60 * 24 * 7 * 14 // 14 weeks
+     });
+     gap('send', 'pageview');
+  </script>
+</head>
+<body>
+  <nav id="global-nav" aria-label="Main navigation">
+    {{xIconBtn}}
+    <ul class="tabs">
+      <li><a href=".">Library Underground</a></li>
+      {{category_nav}}
+    </ul>
+    <div class="nav-simplye">
+      <p>Get free access to over 300,000 eBooks with SimplyE.</p>
+      <p>Download now</p>
+      <div>
+        <a href="https://itunes.apple.com/us/app/nypl-simplye/id1046583900?mt=8" title="Download on the App Store" onclick="gap('send', 'event', 'DownloadApp', 'iOS');"><img src="apple_badge.png" alt="Download on the App Store"/></a>
+        <a href="https://play.google.com/store/apps/details?id=org.nypl.simplified.simplye&hl=en" title="Get it on Google Play" onclick="gap('send', 'event', 'DownloadApp', 'Android');"><img src="google_badge.png" alt="Get it on Google Play"/></a>
+      </div>
+    </div>
+  </nav>
+  <div class="wrapper">
+    <header>
+      <a href="." class="logo">
+        {{logo}}
+        <h1>Subway Library</h1>
+      </a>
+      {{menuOpenBtn}}
+    </header>
+
+    <main>
+      <div class="description">
+        <h2>How it Works</h2>
+        <div class="box">
+          <span>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 111.8 111.8" preserveAspectRatio="xMidYMid" aria-labelledby="wireless-icon" role="img" >
+              <title id="wireless-icon">wireless icon</title>
+            <g>
+              <rect x="48.875" y="30.9375" width="14.0625" height="1"/>
+              <path d="M67.87695,24.87502H43.88281c-3.31006,0-6.00293,2.69287-6.00293,6.00293v47.99414
+                c0,3.30957,2.69287,6.00293,6.00293,6.00293h23.99414c3.30957,0,6.00293-2.69336,6.00293-6.00293V30.87794
+                C73.87988,27.56789,71.18652,24.87502,67.87695,24.87502z M43.88281,26.87502h23.99414c2.20703,0,4.00293,1.7959,4.00293,4.00293
+                v4.55957h-32v-4.55957C39.87988,28.67091,41.67578,26.87502,43.88281,26.87502z M71.87988,37.43752v34.9375h-32v-34.9375H71.87988z
+                 M67.87695,82.87502H43.88281c-2.20703,0-4.00293-1.7959-4.00293-4.00293v-4.49707h32v4.49707
+                C71.87988,81.07912,70.08398,82.87502,67.87695,82.87502z"/>
+              <path d="M55.87988,65.25c-1.99902,0-3.625-1.62598-3.625-3.625S53.88086,58,55.87988,58s3.625,1.62598,3.625,3.625
+                S57.87891,65.25,55.87988,65.25z M55.87988,59c-1.44727,0-2.625,1.17773-2.625,2.625s1.17773,2.625,2.625,2.625
+                s2.625-1.17773,2.625-2.625S57.32715,59,55.87988,59z"/>
+              <path d="M50.87012,56.15039l-0.86621-0.49951c0.06641-0.11572,1.67578-2.83838,5.77734-2.83838s5.71094,2.72266,5.77734,2.83838
+                l-0.86719,0.49756c-0.05469-0.09277-1.40918-2.33594-4.91016-2.33594S50.92578,56.05566,50.87012,56.15039z"/>
+              <path d="M47.79492,51.7207l-0.77734-0.62891c0.13818-0.1709,3.4458-4.17773,8.95947-4.17773
+                c5.53271,0,8.46436,4.03076,8.58643,4.20215l-0.81445,0.58057c-0.02637-0.0376-2.76855-3.78271-7.77197-3.78271
+                C50.93555,47.91406,47.82568,51.68262,47.79492,51.7207z"/>
+              <path d="M44.35254,47.69287l-0.83008-0.55762c0.17041-0.25391,4.27148-6.22852,12.25879-6.22852
+                c7.9707,0,12.3916,5.75928,12.5752,6.00439l-0.79883,0.60107c-0.04199-0.05615-4.31836-5.60547-11.77637-5.60547
+                C48.32178,41.90674,44.3916,47.63477,44.35254,47.69287z"/>
+            </g>
+            <path d="M55.9,2c29.72057,0,53.9,24.17944,53.9,53.9s-24.17944,53.9-53.9,53.9S2,85.62057,2,55.9S26.17944,2,55.9,2 M55.9,0
+              C25.02728,0,0,25.02728,0,55.9s25.02728,55.9,55.9,55.9s55.9-25.02728,55.9-55.9S86.77272,0,55.9,0L55.9,0z"/>
+            </svg>
+
+          </span>
+          <p>Just connect to free WiFi in more than 30 subway stations in NYC. You can access Subway Library as soon as you're connected.</p>
+        </div>
+        <div class="box">
+          <span>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 111.75977 111.75977" preserveAspectRatio="xMidYMid" aria-labelledby="books-icon" role="img">
+              <title id="books-icon">bookStackIcon</title>
+              <path d="M40.92676,82.80176H29.95313V32.94824H40.92676Zm-9.12012-1.85352h7.2666V34.80176h-7.2666Z" transform="translate(0 0.00195)"/>
+              <path d="M55.875,82.875H39v-57H55.875ZM41,80.875H53.875v-53H41Z" transform="translate(0 0.00195)"/>
+              <path d="M70.125,82.875H53.875V44.625h16.25Zm-14.25-2h12.25V46.625H55.875Z" transform="translate(0 0.00195)"/>
+              <path d="M78.832,82.64258,65.71094,32.95947l8.82813-2.33154L87.66113,80.31152ZM68.32227,34.48,80.35352,80.03125,85.0498,78.79,73.01758,33.24023Z" transform="translate(0 0.00195)"/>
+              <rect x="35.32324" y="41.06445" width="1.85352" height="33.6875"/>
+              <rect x="46.94824" y="31.93945" width="1.85352" height="30.75"/>
+              <rect x="61.07324" y="50.00195" width="1.85352" height="22.375"/>
+              <rect x="58.9375" y="75.5127" width="5.9375" height="1.85352"/>
+              <path d="M51.86426,77.98926h-7.916V66.01074h7.916Zm-6.0625-1.85352h4.209V67.86426h-4.209Z" transform="translate(0 0.00195)"/>
+              <path d="M55.87988,111.75781a55.87988,55.87988,0,1,1,55.87988-55.87988A55.94288,55.94288,0,0,1,55.87988,111.75781Zm0-109.75977a53.87988,53.87988,0,1,0,53.87988,53.87988A53.9409,53.9409,0,0,0,55.87988,1.998Z" transform="translate(0 0.00195)" opacity="0.8" style="isolation: isolate"/>
+            </svg>
+          </span>
+          <p>Subway Library is both short reads and full length books. All titles have been carefully curated by The Public Libraries of New York City.</p>
+        </div>
+        <div class="box">
+          <span>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 111.8 111.8" preserveAspectRatio="xMidYMid" aria-labelledby="down-arrow-icon" role="img">
+            <title id="down-arrow-icon">Down Arrow Icon</title>
+            <g>
+              <path d="M55.9,2c29.7,0,53.9,24.2,53.9,53.9s-24.2,53.9-53.9,53.9S2,85.6,2,55.9S26.2,2,55.9,2 M55.9,0C25,0,0,25,0,55.9
+                s25,55.9,55.9,55.9s55.9-25,55.9-55.9S86.8,0,55.9,0L55.9,0z"/>
+            </g>
+            <g>
+              <path d="M56,72.1c-0.6,0-0.7,0-0.9-0.2c-0.3-0.3-2.5-2.6-17.9-19c-0.4-0.4-0.4-1,0-1.4c0.4-0.4,1-0.4,1.4,0l16.1,17.2V26.9
+                c0-0.6,0.4-1,1-1s1,0.4,1,1v41.8l16-16.8c0.4-0.4,1-0.4,1.4,0l0,0l0,0c0,0,0,0,0,0c0.2,0.2,0.3,0.4,0.3,0.7s-0.1,0.5-0.3,0.7
+                C59.5,68.9,57,71.4,56.6,71.9C56.5,72.1,56.3,72.1,56,72.1z M74,52.2l-0.3,0.4c0,0,0,0,0,0l0,0L74,52.2z"/>
+            </g>
+            <path class="st0" d="M27.5,69.3"/>
+            <path class="st0" d="M83.5,69.3"/>
+            <path d="M76.5,82.3h-42c-4.4,0-8-3.6-8-8v-7h2v7c0,3.3,2.7,6,6,6h42c3.3,0,6-2.7,6-6v-7h2v7C84.5,78.7,80.9,82.3,76.5,82.3z"/>
+            </svg>
+          </span>
+          <p>Download the free SimplyE app for access to more than 300,000 completely free eBooks you can erad anywhere, anytime.</p>
+        </div>
+      </div>
+    </main>
+    <footer>
+      <div class="share-app">
+        <h2>Share Underground Library</h2>
+      </div>
+      <div class="deep-footer">
+        <div class="footer-logo">
+          <span>{{logo}}</span>
+          <span>Powered by SimplyE<br />The Library E-Reader App</span>
+        </div>
+        <p>Terms of Service | About Us</p>
+      </div>
+    </footer>
+  </div>
+  <script type="text/javascript" src="/main.js"></script>
+</body>
+</html>
