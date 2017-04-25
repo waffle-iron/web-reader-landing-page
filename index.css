@@ -27,7 +27,7 @@ body {
 }
 
 header {
-  padding: 5px 15px 0;
+  padding: 5px 15px;
   text-align: center;
   background: #f8f8f8;
   color: #000;
@@ -40,9 +40,11 @@ header h1 {
 
 a.logo {
   float: left;
-  margin: 5px 0;
+  margin: 5px 0 0;
 }
-
+a.logo svg {
+  height: 30px;
+}
 a.logo img {
   width: 65px;
 }
@@ -239,10 +241,18 @@ nav#global-nav {
   right: 0;
   position: absolute;
 }
+#menu-button-open svg {
+  height: 20px;
+  margin: 10px 5px;
+}
 #menu-button-close {
   float: right;
   background: #fff;
   border: none;
+}
+#menu-button-close svg {
+  height: 20px;
+  margin: 10px 10px 5px;
 }
 
 /* Homepage */
@@ -414,10 +424,19 @@ footer .deep-footer {
   background: #2e343b;
   color: #fff;
   text-align: center;
+  padding: 20px 15px;
+}
+footer .deep-footer svg {
+  height: 30px;
 }
 footer .deep-footer p {
   margin: 0;
   padding: 10px 15px;
+}
+footer .footer-logo span {
+  display: inline-block;
+  margin: 0 5px;
+  text-align: left;
 }
 
 /* Utilities */

@@ -35,12 +35,16 @@ MTA_CATEGORY_1              = "MTA Category 1"
 
 bin_dir = os.path.split(__file__)[0]
 package_dir = os.path.join(bin_dir, "..")
+template_dir = os.path.join(bin_dir, "../templates")
 
 INDEX_TEMPLATE = os.path.join(package_dir, "index.html.template")
 BOOK_INDEX_TEMPLATE = os.path.join(package_dir, "book_index.html.template")
 BOOK_DESC_TEMPLATE = os.path.join(package_dir, "book_desc.html.template")
 BOOK_CATEGORY_TEMPLATE = os.path.join(package_dir, "book_category.html.template")
 APP_CACHE_HTML = os.path.join(package_dir, "appcache.html")
+SIMPLYE_LOGO_TEMPLATE = os.path.join(template_dir, "se_logo.html.template")
+MENU_OPEN_BTN_TEMPLATE = os.path.join(template_dir, "menuOpenBtn.html.template")
+X_ICON_TEMPLATE = os.path.join(template_dir, "xIconBtn.html.template")
 FILES_TO_COPY = ["index.css",
                  "simplyE_logo.png",
                  "simplye.png",
@@ -54,6 +58,10 @@ FILES_TO_COPY = ["index.css",
                  "webpub-viewer/dist/styles/css/main.css",
                  "main.js"
                 ]
+
+logo = open(SIMPLYE_LOGO_TEMPLATE).read()
+menuOpenBtn = open(MENU_OPEN_BTN_TEMPLATE).read()
+xIconBtn = open(X_ICON_TEMPLATE).read()
 
 class GenerateLandingPageScript:
 
@@ -245,7 +253,7 @@ class GenerateLandingPageScript:
                   # This is the markup for a single book on a category page
                   book_html_category = """
                     <li>
-                      <img src="%(cover_src)s" alt="" />
+                      <img src="../%(cover_src)s" alt="" />
                       <div class="info book_desc">
                         <h2 class="title">%(title)s</h2>
                         <div class="author">%(author)s</div>
@@ -374,7 +382,7 @@ class GenerateLandingPageScript:
           for category_key in mta_category_page:
               with open(BOOK_CATEGORY_TEMPLATE) as template_file:
                   template = template_file.read()
-                  out = template.replace("{{category}}", category_key).replace("{{category_nav}}", "".join(category_nav)).replace("{{book_category}}", "".join(mta_category_page[category_key]))
+                  out = template.replace("{{category}}", category_key).replace("{{category_nav}}", "".join(category_nav)).replace("{{book_category}}", "".join(mta_category_page[category_key])).replace("{{logo}}", logo).replace("{{menuOpenBtn}}", menuOpenBtn).replace("{{xIconBtn}}", xIconBtn)
 
                   with codecs.open(os.path.join(book_category_dir, category_key + ".html"), 'w', "utf-8") as output_file:
                       output_file.write(out)
@@ -383,14 +391,14 @@ class GenerateLandingPageScript:
           for book in all_books_description:
               with open(BOOK_DESC_TEMPLATE) as template_file:
                   template = template_file.read()
-                  out = template.replace("{{title}}", all_books_description[book]['title']).replace("{{book_desc_html}}", all_books_description[book]['book_desc_html']).replace("{{category_nav}}", "".join(category_nav))
+                  out = template.replace("{{title}}", all_books_description[book]['title']).replace("{{book_desc_html}}", all_books_description[book]['book_desc_html']).replace("{{category_nav}}", "".join(category_nav)).replace("{{logo}}", logo).replace("{{menuOpenBtn}}", menuOpenBtn).replace("{{xIconBtn}}", xIconBtn)
 
                   with codecs.open(os.path.join(book_desc_dir, book + ".html"), 'w', "utf-8") as output_file:
                       output_file.write(out)
 
           with open(INDEX_TEMPLATE) as template_file:
               template = template_file.read()
-              out = template.replace("{{all_books}}", "".join(books_html_home)).replace("{{category_nav}}", "".join(category_nav_home))
+              out = template.replace("{{all_books}}", "".join(books_html_home)).replace("{{category_nav}}", "".join(category_nav_home)).replace("{{logo}}", logo).replace("{{menuOpenBtn}}", menuOpenBtn).replace("{{xIconBtn}}", xIconBtn)
 
               with codecs.open(os.path.join(self.output_dir, "index.html"), 'w', "utf-8") as output_file:
                   output_file.write(out)
