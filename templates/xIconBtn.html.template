@@ -6,4 +6,5 @@
       <path d="M2083.77,100.609l26.79,26.879a1.459,1.459,0,0,1-2.06,2.068l-26.79-26.879a1.483,1.483,0,0,1,0-2.068A1.453,1.453,0,0,1,2083.77,100.609Z" transform="translate(-2081.31 -100.188)"/>
     </svg>
   </span>
+  <span class="menu-text visuallyHidden">Close Menu</span>
 </button>
