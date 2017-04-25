@@ -245,7 +245,7 @@ class GenerateLandingPageScript:
                   # This is the markup for a single book on a category page
                   book_html_category = """
                     <li>
-                      <img src="%(cover_src)s" alt="" />
+                      <img src="../%(cover_src)s" alt="" />
                       <div class="info book_desc">
                         <h2 class="title">%(title)s</h2>
                         <div class="author">%(author)s</div>
