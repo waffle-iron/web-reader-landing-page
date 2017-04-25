@@ -78,7 +78,7 @@ class GenerateLandingPageScript:
           if npm_result != 0:
                 raise Exception("Failed to build javascript")
 
-          books_html = []
+          books_html_home = []
           all_books_description = {}
           mta_category_dict = {}
 
@@ -118,6 +118,7 @@ class GenerateLandingPageScript:
                   temp_file = ""
 
                   description = row.get(DESCRIPTION_HEADER).encode('utf-8', 'ignore')
+                  mta_category = row.get(MTA_CATEGORY_1)
 
                   # Generate the individual webreader for the book
                   folder_name = (title + " - " + author).encode('ascii', 'ignore')
@@ -168,7 +169,7 @@ class GenerateLandingPageScript:
                   book_desc_dir = os.path.join(self.output_dir, "book_desc/")
                   book_desc_html = """
                       <div class="book-details">
-                        <img src="../%(cover_src)s" alt="%(title)s" />
+                        <img src="../%(cover_src)s"  alt="" />
                         <div class="info">
                           <h2 class="title">%(title)s</h2>
                           <div class="author">%(author)s</div>
@@ -183,17 +184,20 @@ class GenerateLandingPageScript:
                         <div class="description-text">
                           %(description)s
                         </div>
+                        <a href="../category/%(mta_category)s.html" class="back-to-category">
+                          More %(mta_category)s &gt;
+                        </a>
                       </div>
                   """ % {
                       "title": title,
                       "author": author,
                       "cover_src": cover_src,
                       "folder_name": folder_name,
-                      "class": "adult" if adult else "",
-                      "description": description
+                      "description": description,
+                      "mta_category": mta_category
                   }
 
-                  # Adding individual book title and description to dictionary to render later
+                  # Adding individual book titles and descriptions to dictionary to render later
                   all_books_description[title + " - " + author] = {
                       "title": title,
                       "book_desc_html": book_desc_html
@@ -219,36 +223,17 @@ class GenerateLandingPageScript:
                   with open(os.path.join(book_dir, "manifest.appcache"), "w") as manifest_file:
                         manifest_file.write(manifest)
 
-                  book_html = """
-                   <a href="./book_desc/%(title)s - %(author)s.html" title="%(title)s" class="%(class)s">
-                    <img src="%(cover_src)s" alt="%(title)s" />
-                    <div class="info">
-                      <div class="title">%(title)s</div>
-                      <div class="author">%(author)s</div>
-                    </div>
-                  </a>
-                  """ % {
-                      "title": title,
-                      "author": author,
-                      "cover_src": cover_src,
-                      "folder_name": folder_name,
-                      "class": "adult"# if adult else ""
-                  }
-
-                  desc_book_html = """
-                      <a href="../book_desc/%(title)s - %(author)s.html" title="%(title)s" class="%(class)s">
-                        <img src="../%(cover_src)s" alt="%(title)s" />
-                        <div class="info book_desc">
+                  # This is the markup for a single book on the homepage
+                  book_html_home = """
+                    <li>
+                      <a href="./book_desc/%(title)s - %(author)s.html" title="%(title)s" class="%(class)s">
+                        <img src="%(cover_src)s" alt="" />
+                        <div class="info">
                           <div class="title">%(title)s</div>
                           <div class="author">%(author)s</div>
-                          <p>Short description</p>
-                          <div class="read-time">4 hour read</div>
-                          <div>
-                            <button>READ</button>
-                            Learn MORE
-                          </div>
                         </div>
                       </a>
+                    </li>
                   """ % {
                       "title": title,
                       "author": author,
@@ -257,29 +242,71 @@ class GenerateLandingPageScript:
                       "class": "adult"# if adult else ""
                   }
 
+                  # This is the markup for a single book on a category page
+                  book_html_category = """
+                    <li>
+                      <img src="../%(cover_src)s" alt="" />
+                      <div class="info book_desc">
+                        <h2 class="title">%(title)s</h2>
+                        <div class="author">%(author)s</div>
+                        <p>Short description</p>
+                        <div class="read-time">4 hour read</div>
+                        <div class="book-links">
+                          <a href="../books/%(folder_name)s/index.html" title="%(title)s">
+                            READ
+                          </a>
+                          <a href="../book_desc/%(title)s - %(author)s.html" title="%(title)s">
+                            LEARN MORE
+                          </a>
+                        </div>
+                      </div>
+                    </li>
+                  """ % {
+                      "title": title,
+                      "author": author,
+                      "cover_src": cover_src,
+                      "folder_name": folder_name,
+                      "class": "adult"# if adult else ""
+                  }
+
+                  # Insert the call to action after the third book in each category
+                  if mta_category in mta_category_dict and mta_category_dict[mta_category]["count"] == 2:
+                      book_html_category += """
+                        <li class="call-to-action">
+                          <p>Library Underground is a small collection from over 300,000 free eBooks
+                          available from SimplyE, a free app from The Public Libraries of New York City.</p>
+                          <p>Download for free</p>
+                          <div>
+                            <a href="https://itunes.apple.com/us/app/nypl-simplye/id1046583900?mt=8" title="Download on the App Store"><img src="../apple_badge.png" alt="Download on the App Store"/></a>
+                            <a href="https://play.google.com/store/apps/details?id=org.nypl.simplified.simplye&hl=en" title="Get it on Google Play"><img src="../google_badge.png" alt="Get it on Google Play"/></a>
+                          </div>
+                        </li>
+                      """
+
                   # Organize the book by its category
-                  mta_category = row.get(MTA_CATEGORY_1)
                   if mta_category in mta_category_dict:
-                      mta_category_dict[mta_category]["home"] += book_html
-                      mta_category_dict[mta_category]["desc"] += desc_book_html
+                      mta_category_dict[mta_category]["home"] += book_html_home
+                      mta_category_dict[mta_category]["category"] += book_html_category
+                      mta_category_dict[mta_category]["count"] += 1
                   else:
                       mta_category_dict[mta_category] = {
-                          "home": book_html,
-                          "desc": desc_book_html
+                          "home": book_html_home,
+                          "category": book_html_category,
+                          "count": 1
                       }
 
-          home_category_nav = []
+          category_nav_home = []
           category_nav = []
           mta_category_page = {}
           category_count = 0
 
-          # Generate the book lanes and insert a call to action for SimplyE
+          # Generate the book lanes and insert a call to action for SimplyE on the homepage
           for category_key in mta_category_dict:
               category_count += 1
 
               if category_count == 3:
-                  books_html += """
-                    <div class="call-to-action">
+                  books_html_home += """
+                    <li class="call-to-action">
                       <p>Library Underground is a small collection from over 300,000 free eBooks
                       available from SimplyE, a free app from The Public Libraries of New York City.</p>
                       <p>Download for free</p>
@@ -287,21 +314,23 @@ class GenerateLandingPageScript:
                         <a href="https://itunes.apple.com/us/app/nypl-simplye/id1046583900?mt=8" title="Download on the App Store"><img src="apple_badge.png" alt="Download on the App Store"/></a>
                         <a href="https://play.google.com/store/apps/details?id=org.nypl.simplified.simplye&hl=en" title="Get it on Google Play"><img src="google_badge.png" alt="Get it on Google Play"/></a>
                       </div>
-                    </div>
+                    </li>
                   """
 
-              books_html += """
-                <div class="categories">
+              books_html_home += """
+                <li class="category-lane">
                   <div class="category-header">
-                    <h2><a href="./category/%(category_key)s.html">%(category_key)s</a></h2>
-                    <span><a href="./category/%(category_key)s.html">See all &gt;</a></span>
+                    <a href="./category/%(category_key)s.html">
+                      <h2>%(category_key)s</h2>
+                      <span>See all &gt;</span>
+                    </a>
                   </div>
-                  <div class="category">
-                    <div class="books">
+                  <div class="lane-container">
+                    <ul class="books">
                       %(books)s
-                    </div>
+                    </ul>
                   </div>
-                </div>
+                </li>
               """ % {
                   "category_key": category_key,
                   "books": mta_category_dict[category_key]["home"]
@@ -314,7 +343,8 @@ class GenerateLandingPageScript:
                   "category_key": category_key
               }
 
-              home_category_nav += """
+              # Generate the main navigation for the homepage - different base directory
+              category_nav_home += """
                 <li><a href="./category/%(category_key)s.html">%(category_key)s</a></li>
               """ % {
                   "category_key": category_key
@@ -322,15 +352,15 @@ class GenerateLandingPageScript:
 
               # Generate the individual category page and the books in it
               category_page = """
-                <div class="category-details">
+                <div class="category-title">
                   <h2>%(category_key)s</h2>
                 </div>
-                <div class="books">
+                <ul>
                   %(books)s
-                </div>
+                </ul>
               """ % {
                   "category_key": category_key,
-                  "books": mta_category_dict[category_key]["desc"]
+                  "books": mta_category_dict[category_key]["category"]
               }
 
               mta_category_page[category_key] = category_page
@@ -360,7 +390,7 @@ class GenerateLandingPageScript:
 
           with open(INDEX_TEMPLATE) as template_file:
               template = template_file.read()
-              out = template.replace("{{all_books}}", "".join(books_html)).replace("{{category_nav}}", "".join(home_category_nav))
+              out = template.replace("{{all_books}}", "".join(books_html_home)).replace("{{category_nav}}", "".join(category_nav_home))
 
               with codecs.open(os.path.join(self.output_dir, "index.html"), 'w', "utf-8") as output_file:
                   output_file.write(out)
