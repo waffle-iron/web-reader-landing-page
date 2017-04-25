@@ -17,18 +17,22 @@ a {
   text-decoration: none;
 }
 a:focus, a:hover, input:focus {
-  outline-color: #8dc740;
+  /*outline-color: #8dc740;
   outline-style: solid;
   outline-width: 3px;
-  outline-offset: 3px;
+  outline-offset: 3px;*/
+  outline-color: none;
+  outline-style: none;
+  outline-width: 0;
+  outline-offset: 0;
 }
 body {
   overflow-x: hidden;
 }
 
 header {
-  padding: 5px 15px;
-  text-align: center;
+  padding: 5px 15px 15px;
+  text-align: left;
   background: #f8f8f8;
   color: #000;
   height: 40px;
@@ -36,11 +40,13 @@ header {
 header h1 {
   margin: 10px;
   display: inline-block;
+  vertical-align: super;
 }
 
 a.logo {
-  float: left;
+  /*float: left;*/
   margin: 5px 0 0;
+  display: inline-block;
 }
 a.logo svg {
   height: 30px;
@@ -94,12 +100,25 @@ main {
   display: inline-block;
   width: 100%;
 }
+.banner p {
+  font-weight: 100;
+  font-size: 2.25rem;
+  padding: 0;
+  width: 92%;
+  margin-top: 10px;
+}
 
 .books a {
   display: table-cell;
 }
 .books a .title {
-  font-weight: bold;
+  font-weight: 900;
+  font-size: 1.2em;
+  margin-bottom: .5rem;
+}
+.books a .author {
+  font-size: 1.2rem;
+  font-weight: 100;
 }
 .books .adult {
   /*display: none;*/
@@ -244,6 +263,8 @@ nav#global-nav {
 #menu-button-open svg {
   height: 20px;
   margin: 10px 5px;
+  color: #61a60e;
+  fill: #61a60e;
 }
 #menu-button-close {
   float: right;
@@ -253,6 +274,8 @@ nav#global-nav {
 #menu-button-close svg {
   height: 20px;
   margin: 10px 10px 5px;
+  color: #61a60e;
+  fill: #61a60e;
 }
 
 /* Homepage */
@@ -268,15 +291,20 @@ nav#global-nav {
 }
 .category-header h2 {
   display: inline-block;
+  font-size: 1.75rem;
   margin: 0;
 }
 .category-header span {
   display: inline-block;
   float: right;
+  text-transform: uppercase;
+  font-size: 110%;
+  font-weight: 900;
+  color: #61a60e;
 }
 .lane-container {
   width: 100%;
-  height: 260px;
+  height: 285px;
   overflow: auto;
 }
 
@@ -333,15 +361,16 @@ nav#global-nav {
 }
 
 .call-to-action {
-  height: 200px;
+  min-height: 380px;
   background: #f8f8f8;
   text-align: center;
 }
 .call-to-action p {
-  padding: 10px 50px;
+  padding: 10px 30px;
   margin: 0;
-  font-size: 1.2em;
-  line-height: 1.4em;
+  font-size: 2.25rem;
+  line-height: 1.5;
+  font-weight: 100;
 }
 .call-to-action img {
   width: 100px;

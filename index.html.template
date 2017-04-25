@@ -41,15 +41,14 @@
     <header>
       <a href="." class="logo">
         {{logo}}
+        <h1>Subway Library</h1>
       </a>
       {{menuOpenBtn}}
     </header>
 
     <main>
       <div class="banner">
-        <h1>Library Underground</h1>
-        <p>A collection of over 300 free books and short reads curated by The Public
-        Libraries of New York City.</p>
+        <p>Read books, excerpts, and short stories from NYC public libraries.</p>
       </div>
 
       <div role="dialog" aria-labelledby="age-check-title" class="age-check" style="display: none">
