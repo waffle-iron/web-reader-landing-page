@@ -35,12 +35,16 @@ MTA_CATEGORY_1              = "MTA Category 1"
 
 bin_dir = os.path.split(__file__)[0]
 package_dir = os.path.join(bin_dir, "..")
+template_dir = os.path.join(bin_dir, "../templates")
 
 INDEX_TEMPLATE = os.path.join(package_dir, "index.html.template")
 BOOK_INDEX_TEMPLATE = os.path.join(package_dir, "book_index.html.template")
 BOOK_DESC_TEMPLATE = os.path.join(package_dir, "book_desc.html.template")
 BOOK_CATEGORY_TEMPLATE = os.path.join(package_dir, "book_category.html.template")
 APP_CACHE_HTML = os.path.join(package_dir, "appcache.html")
+SIMPLYE_LOGO_TEMPLATE = os.path.join(template_dir, "se_logo.html.template")
+MENU_OPEN_BTN_TEMPLATE = os.path.join(template_dir, "menuOpenBtn.html.template")
+X_ICON_TEMPLATE = os.path.join(template_dir, "xIconBtn.html.template")
 FILES_TO_COPY = ["index.css",
                  "simplyE_logo.png",
                  "simplye.png",
@@ -54,6 +58,10 @@ FILES_TO_COPY = ["index.css",
                  "webpub-viewer/dist/styles/css/main.css",
                  "main.js"
                 ]
+
+logo = open(SIMPLYE_LOGO_TEMPLATE).read()
+menuOpenBtn = open(MENU_OPEN_BTN_TEMPLATE).read()
+xIconBtn = open(X_ICON_TEMPLATE).read()
 
 class GenerateLandingPageScript:
 
@@ -273,9 +281,8 @@ class GenerateLandingPageScript:
                   if mta_category in mta_category_dict and mta_category_dict[mta_category]["count"] == 2:
                       book_html_category += """
                         <li class="call-to-action">
-                          <p>Library Underground is a small collection from over 300,000 free eBooks
-                          available from SimplyE, a free app from The Public Libraries of New York City.</p>
-                          <p>Download for free</p>
+                          <p>Want more free e-books?</p>
+                          <p>Download SimplyE&mdash;the free e-reader app&mdash;for access to hundreds of thousands of library e-books.</p>
                           <div>
                             <a href="https://itunes.apple.com/us/app/nypl-simplye/id1046583900?mt=8" title="Download on the App Store"><img src="../apple_badge.png" alt="Download on the App Store"/></a>
                             <a href="https://play.google.com/store/apps/details?id=org.nypl.simplified.simplye&hl=en" title="Get it on Google Play"><img src="../google_badge.png" alt="Get it on Google Play"/></a>
@@ -307,9 +314,8 @@ class GenerateLandingPageScript:
               if category_count == 3:
                   books_html_home += """
                     <li class="call-to-action">
-                      <p>Library Underground is a small collection from over 300,000 free eBooks
-                      available from SimplyE, a free app from The Public Libraries of New York City.</p>
-                      <p>Download for free</p>
+                      <p>Want more free e-books?</p>
+                      <p>Download SimplyE&mdash;the free e-reader app&mdash;for access to hundreds of thousands of library e-books.</p>
                       <div>
                         <a href="https://itunes.apple.com/us/app/nypl-simplye/id1046583900?mt=8" title="Download on the App Store" onclick="gap('send', 'event', 'DownloadApp', 'iOS');"><img src="apple_badge.png" alt="Download on the App Store"/></a>
                         <a href="https://play.google.com/store/apps/details?id=org.nypl.simplified.simplye&hl=en" title="Get it on Google Play" onclick="gap('send', 'event', 'DownloadApp', 'Android');"><img src="google_badge.png" alt="Get it on Google Play"/></a>
@@ -322,7 +328,7 @@ class GenerateLandingPageScript:
                   <div class="category-header">
                     <a href="./category/%(category_key)s.html">
                       <h2>%(category_key)s</h2>
-                      <span>See all &gt;</span>
+                      <span>see all &gt;</span>
                     </a>
                   </div>
                   <div class="lane-container">
@@ -374,7 +380,7 @@ class GenerateLandingPageScript:
           for category_key in mta_category_page:
               with open(BOOK_CATEGORY_TEMPLATE) as template_file:
                   template = template_file.read()
-                  out = template.replace("{{category}}", category_key).replace("{{category_nav}}", "".join(category_nav)).replace("{{book_category}}", "".join(mta_category_page[category_key]))
+                  out = template.replace("{{category}}", category_key).replace("{{category_nav}}", "".join(category_nav)).replace("{{book_category}}", "".join(mta_category_page[category_key])).replace("{{logo}}", logo).replace("{{menuOpenBtn}}", menuOpenBtn).replace("{{xIconBtn}}", xIconBtn)
 
                   with codecs.open(os.path.join(book_category_dir, category_key + ".html"), 'w', "utf-8") as output_file:
                       output_file.write(out)
@@ -383,14 +389,14 @@ class GenerateLandingPageScript:
           for book in all_books_description:
               with open(BOOK_DESC_TEMPLATE) as template_file:
                   template = template_file.read()
-                  out = template.replace("{{title}}", all_books_description[book]['title']).replace("{{book_desc_html}}", all_books_description[book]['book_desc_html']).replace("{{category_nav}}", "".join(category_nav))
+                  out = template.replace("{{title}}", all_books_description[book]['title']).replace("{{book_desc_html}}", all_books_description[book]['book_desc_html']).replace("{{category_nav}}", "".join(category_nav)).replace("{{logo}}", logo).replace("{{menuOpenBtn}}", menuOpenBtn).replace("{{xIconBtn}}", xIconBtn)
 
                   with codecs.open(os.path.join(book_desc_dir, book + ".html"), 'w', "utf-8") as output_file:
                       output_file.write(out)
 
           with open(INDEX_TEMPLATE) as template_file:
               template = template_file.read()
-              out = template.replace("{{all_books}}", "".join(books_html_home)).replace("{{category_nav}}", "".join(category_nav_home))
+              out = template.replace("{{all_books}}", "".join(books_html_home)).replace("{{category_nav}}", "".join(category_nav_home)).replace("{{logo}}", logo).replace("{{menuOpenBtn}}", menuOpenBtn).replace("{{xIconBtn}}", xIconBtn)
 
               with codecs.open(os.path.join(self.output_dir, "index.html"), 'w', "utf-8") as output_file:
                   output_file.write(out)
