@@ -68,14 +68,9 @@
     </main>
     <footer>
       <div class="share-app">
-        <h2>Share Underground Library</h2>
-      </div>
-      <div class="deep-footer">
-        <div class="footer-logo">
-          <span>{{logo}}</span>
-          <span>Powered by SimplyE<br />The Library E-Reader App</span>
-        </div>
-        <p>Terms of Service | About Us</p>
+        {{footerLogos}}
+        <p>&copy; The New York Public Library<br /><br />
+        Terms of Service &bull; <a href="about.html">About Us</a></p>
       </div>
     </footer>
   </div>
