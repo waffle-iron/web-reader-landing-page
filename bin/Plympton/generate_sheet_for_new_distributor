@@ -1,0 +1,110 @@
+#!/usr/bin/python
+# Take a previously unseen set of books and generate a CSV file that can be
+# made into a new sheet in MTA Subway Reads Titles
+# https://docs.google.com/spreadsheets/d/1s5v-NJTmBfXAh8xBhBSA4ABQ2weaGu-j7Jy_5hbgfh4/edit#gid=605586782
+# Also generate an HTML file that can be used to look at the covers and the
+# indexes.
+#
+# Example: generate_sheet_for_new_distributor Distributor/
+#  will look inside ./Distributor/ for a .csv file
+#  will output ./Distributor.csv (a normalized .csv file)
+#  will output ./Distributor.html (a guide to the content)
+
+from pdb import set_trace
+import os
+from csv import reader, writer, DictReader
+import sys
+
+class Book(object):
+    def __init__(self, title, author, children_ok, fiction, short, description,
+                 bisacs, identifier, epub, cover, word_count, publisher):
+        self.title = title
+        self.author = author
+        self.children_ok = children_ok
+        self.fiction = fiction
+        self.short = short
+        self.description = description
+        self.identifier = identifier
+        self.epub = epub
+        self.cover = cover
+        self.bisac = ", ".join(bisacs)
+        self.word_count = word_count
+        self.publisher = publisher
+        
+    @property
+    def csv_row(self):
+        return [self.title, self.author, "", "", "", "", self.children_ok,
+                self.fiction, self.short, self.bisac, self.description,
+                self.identifier, self.epub, self.cover, self.word_count]
+
+    @property
+    def html_item(self):
+        return '<td><img src="%s/%s" height="300" width="225"><br><a href="%s/%s">%s</a><br>%s</td>\n' % (
+            self.publisher, self.cover, self.publisher, self.epub,
+            self.title, self.author
+        )
+
+    @classmethod
+    def from_plympton_row(cls, publisher, row):
+        epub = row['eBook File Name']
+        jpg = row['Jacket File Name']
+        isbn = row['eISBN (13 digit)']
+        description = row['Abstract/Blurb']
+        title = row['Title']
+        subtitle = row['Subtitle']
+        author = row['Contributor 1']
+        bisac1 = row['BISAC / Genre 1']
+        bisac2 = row['BISAC / Genre 2']
+        bisac3 = row['BISAC / Genre 3']
+        word_count = row['Word Count'].replace(",", "")
+        if word_count:
+            word_count = int(word_count)
+        else:
+            word_count = None
+        if subtitle:
+            title = title + ": " + subtitle
+        bisacs = [x for x in [bisac1, bisac2, bisac3] if x]
+        if any([x.startswith('FIC') for x in bisacs]):
+            fiction = 'Y'
+        else:
+            fiction = 'N'
+        if any([x.startswith('JUV') for x in bisacs]):
+            children_ok = 'Maybe'
+        else:
+            children_ok = 'N'
+        if word_count:
+            if word_count < 50000:
+                is_short = 'Y'
+            else:
+                is_short = 'N'
+        else:
+            is_short = ''
+        
+        return Book(title, author, children_ok, fiction, is_short,
+                    description, bisacs, isbn, epub, jpg, word_count, publisher)
+
+publisher = sys.argv[1]
+if publisher.endswith('/'):
+    publisher = publisher[:-1]
+[csv] = [x for x in os.listdir(publisher) if x.endswith(".csv")]
+csv_path = os.path.join(publisher, csv)
+csv_in = DictReader(open(csv_path))
+
+html_out = open("%s.html" % publisher, "w")
+html_out.write("<html><head><title>%s titles</title></head><body>\n" % publisher)
+html_out.write("<table><tr>\n")
+
+csv_out = writer(open("%s.csv" % publisher, "w"))
+csv_out.writerow(["Title", "Author Last, Author First", "MTA Category 1", "MTA Category 2", "Comment (for Lynn)", "Comment (for Leonard)", "OK for 12yo?", "Fiction", "Short", "BISAC", "Description", "Unique identifier", "EPUB URL", "Cover URL", "Word Count"])
+
+counter = 0
+for row in csv_in:
+    book = Book.from_plympton_row(publisher, row)
+    csv_out.writerow(book.csv_row)
+    html_out.write(book.html_item)
+    counter += 1
+    if counter == 5:
+        counter = 0
+        html_out.write("</tr><tr>")
+html_out.write("</tr></table></body></html>")
+
