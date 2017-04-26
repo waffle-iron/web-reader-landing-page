@@ -29,7 +29,7 @@
       {{category_nav}}
     </ul>
     <div class="nav-simplye">
-      <p>Download SimplyE&mdash;the Library e-reader app&mdash;for access to hundreds of thousands of library e-books.</p>
+      {{callOutText}}
       {{downloadAppBtns}}
     </div>
   </nav>
@@ -60,7 +60,7 @@
     <footer>
       <div class="call-to-action book-details-page">
         <p>Want more free e-books?</p>
-        <p>Download SimplyE&mdash;the Library e-reader app&mdash;for access to hundreds of thousands of library e-books.</p>
+        {{callOutText}}
         {{downloadAppBtns}}
         <div class="action-links">
           <p>Learn more about <a href="#">SimplyE</a>, <a href="#">Queens Library</a>, and

@@ -75,6 +75,8 @@ socialMedia = open(SOCIAL_MEDIA_TEMPLATE).read()
 footerSocialMedia = open(FOOTER_SOCIAL_MEDIA_TEMPLATE).read()
 downloadAppBtns = open(DOWNLOAD_APP_BTNS_TEMPLATE).read()
 
+callOutText = "<p>Download SimplyE&mdash;the library e-reader app&mdash;for access to hundreds of thousands of library e-books.</p>"
+
 class GenerateLandingPageScript:
 
       def __init__(self, publisher_asset_file, csv_file, output_dir):
@@ -369,6 +371,7 @@ class GenerateLandingPageScript:
                   out = out.replace("{{book_category}}", "".join(mta_category_page[category_key])).replace("{{logo}}", logo)
                   out = out.replace("{{menuOpenBtn}}", menuOpenBtn).replace("{{xIconBtn}}", xIconBtn).replace("{{footerLogos}}", footerLogos)
                   out = out.replace("{{footerSocialMedia}}", footerSocialMedia).replace("{{downloadAppBtns}}", downloadAppBtns)
+                  out = out.replace("{{callOutText}}", callOutText)
 
                   with codecs.open(os.path.join(book_category_dir, category_key + ".html"), 'w', "utf-8") as output_file:
                       output_file.write(out)
@@ -381,6 +384,7 @@ class GenerateLandingPageScript:
                   out = out.replace("{{book_desc_html}}", all_books_description[book]['book_desc_html']).replace("{{category_nav}}", "".join(category_nav))
                   out = out.replace("{{logo}}", logo).replace("{{menuOpenBtn}}", menuOpenBtn).replace("{{xIconBtn}}", xIconBtn).replace("{{footerLogos}}", footerLogos)
                   out = out.replace("{{footerSocialMedia}}", footerSocialMedia).replace("{{downloadAppBtns}}", downloadAppBtns)
+                  out = out.replace("{{callOutText}}", callOutText)
 
                   with codecs.open(os.path.join(book_desc_dir, book + ".html"), 'w', "utf-8") as output_file:
                       output_file.write(out)
@@ -390,6 +394,7 @@ class GenerateLandingPageScript:
               out = template.replace("{{all_books}}", "".join(books_html_home)).replace("{{category_nav}}", "".join(category_nav_home))
               out = out.replace("{{logo}}", logo).replace("{{menuOpenBtn}}", menuOpenBtn).replace("{{xIconBtn}}", xIconBtn).replace("{{footerLogos}}", footerLogos)
               out = out.replace("{{footerSocialMedia}}", footerSocialMedia).replace("{{downloadAppBtns}}", downloadAppBtns)
+              out = out.replace("{{callOutText}}", callOutText)
 
               with codecs.open(os.path.join(self.output_dir, "index.html"), 'w', "utf-8") as output_file:
                   output_file.write(out)
@@ -401,6 +406,7 @@ class GenerateLandingPageScript:
               out = template.replace("{{category_nav}}", "".join(category_nav_home)).replace("{{logo}}", logo)
               out = out.replace("{{menuOpenBtn}}", menuOpenBtn).replace("{{xIconBtn}}", xIconBtn).replace("{{footerLogos}}", footerLogos)
               out = out.replace("{{footerSocialMedia}}", footerSocialMedia).replace("{{downloadAppBtns}}", downloadAppBtns)
+              out = out.replace("{{callOutText}}", callOutText)
 
               with codecs.open(os.path.join(self.output_dir, "about.html"), 'w', "utf-8") as output_file:
                   output_file.write(out)
