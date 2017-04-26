@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 98 184" preserveAspectRatio="xMidYMid meet" class="icon" role="img" aria-labelledby="share-on-facebook" class="fb-icon">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 98 184" preserveAspectRatio="xMidYMid meet" role="img" aria-labelledby="share-on-facebook" class="fb-icon">
   <title id="share-on-face-book">fbIcon</title>
   <path d="M98,56H64V40c0-7.18127,4.64981-9,8-9H96V0H62C30.52743,0,24.08638,23.31847,24.08638,38.39755L24,56H0V87H24c0,41.77241.08638,96.82635.08638,96.82635L64,184V87H95Z"/>
 </svg>
