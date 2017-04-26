@@ -61,7 +61,9 @@ FILES_TO_COPY = ["index.css",
                  "webpub-viewer/node_modules/whatwg-fetch/fetch.js",
                  "webpub-viewer/dist/styles/css/main.css",
                  "main.js",
-                 "images/iphone_simplyE.png"
+                 "images/iphone_simplyE.png",
+                 "nyplprivacypolicy.html",
+                 "license.html"
                 ]
 
 logo = open(SIMPLYE_LOGO_TEMPLATE).read()

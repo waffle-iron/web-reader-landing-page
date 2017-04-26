@@ -69,17 +69,17 @@
           <a href="https://play.google.com/store/apps/details?id=org.nypl.simplified.simplye&hl=en" title="Get it on Google Play" onclick="gap('send', 'event', 'DownloadApp', 'Android');"><img src="../google_badge.png" alt="Get it on Google Play"/></a>
         </div>
         <div class="action-links">
-          <a href="#">Learn more about SimplyE &gt;</a>
-          <a href="#">Learn about The Queens Library app &gt;</a>
-          <a href="#">Read about Brooklyn Library app &gt;</a>
+          <a href="#">SimplyE &gt;</a>
+          <a href="#">Queens Library app &gt;</a>
+          <a href="#">Brooklyn Library app &gt;</a>
         </div>
       </div>
       <div class="deep-footer">
         {{footerLogos}}
         <p>&copy; The New York Public Library<br /><br />
-          <a href="">Terms and Condition</a> &bull;
+          <a href="../license.html">Terms and Conditions</a> &bull;
           <a href="../about.html">About Us</a> &bull;
-          <a href="">Privacy Policy</a>
+          <a href="../nyplprivacypolicy.html">Privacy Policy</a>
         </p>
       </div>
     </footer>

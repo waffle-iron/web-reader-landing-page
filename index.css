@@ -329,7 +329,7 @@ nav#global-nav {
 }
 .lane-container {
   width: 100%;
-  height: 285px;
+  height: 310px;
   overflow: auto;
 }
 
@@ -376,7 +376,6 @@ nav#global-nav {
   display: table;
   table-layout: fixed;
   width: 100%;
-  padding-top: 10px;
 }
 .books li {
   width: 120px;
