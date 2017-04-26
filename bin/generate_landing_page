@@ -30,7 +30,9 @@ SPREADSHEET_AUTHOR_HEADER   = "Author"
 OKAY_FOR_12_AND_UNDER       = "OK for 12yo?"
 DESCRIPTION_HEADER          = "Description"
 COVER_URL_HEADER            = "Cover URL"
+COVER_FILENAME_HEADER       = "Cover filename"
 EPUB_URL_HEADER             = "EPUB URL"
+EPUB_FILENAME_HEADER        = "EPUB filename"
 MTA_CATEGORY_1              = "MTA Category 1"
 
 bin_dir = os.path.split(__file__)[0]
@@ -101,7 +103,11 @@ class GenerateLandingPageScript:
                       adult = False
 
                   author = unicode(row.get(SPREADSHEET_AUTHOR_HEADER), 'utf-8')
-                  cover = row.get(COVER_URL_HEADER)
+
+                  if row.get(COVER_URL_HEADER) and (row.get(COVER_URL_HEADER).replace(' ', '') != ''):
+                    cover = row.get(COVER_URL_HEADER)
+                  else:
+                    cover = row.get(COVER_FILENAME_HEADER)
 
                   # Get the cover, from either the workspace or the internet
                   # and put it in output_dir/covers/originalfilename.ext
@@ -122,7 +128,12 @@ class GenerateLandingPageScript:
                     shutil.copy(workspace_path_to_cover, local_path_to_cover)
 
                   cover_src = os.path.join('covers', book_uuid, os.path.basename(local_path_to_cover))
-                  download = row.get(EPUB_URL_HEADER)
+
+                  if row.get(EPUB_URL_HEADER) and (row.get(EPUB_URL_HEADER).replace(' ', '') != ''):
+                    download = row.get(EPUB_URL_HEADER)
+                  else:
+                    download = row.get(EPUB_FILENAME_HEADER)
+
                   temp_file = ""
 
                   description = row.get(DESCRIPTION_HEADER).encode('utf-8', 'ignore')
