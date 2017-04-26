@@ -25,7 +25,7 @@
   <nav id="global-nav" aria-label="Main navigation">
     {{xIconBtn}}
     <ul class="tabs">
-      <li><a href=".">Library Underground</a></li>
+      <li><a href=".">Subway Library</a></li>
       {{category_nav}}
     </ul>
     <div class="nav-simplye">
@@ -35,11 +35,13 @@
   </nav>
   <div class="wrapper">
     <header>
-      <a href="." class="logo">
-        {{logo}}
-        <h1>Subway Library</h1>
-      </a>
-      {{menuOpenBtn}}
+      <div class="header-wrapper">
+        <a href="." class="logo">
+          {{logo}}
+          <h1>Subway Library</h1>
+        </a>
+        {{menuOpenBtn}}
+      </div>
     </header>
 
     <main>

@@ -362,6 +362,9 @@ class GenerateLandingPageScript:
           cacheManifest += str(datetime.datetime.utcnow())
           cacheManifest += "\n\n"
 
+          category_nav += "<li><a href='../about.html'>About</a></li>"
+          category_nav_home += "<li><a href='about.html'>About</a></li>"
+
           # Generate all individual category pages
           book_category_dir = os.path.join(self.output_dir, "category/")
           for category_key in mta_category_page:

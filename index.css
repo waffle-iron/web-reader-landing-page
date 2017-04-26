@@ -42,6 +42,11 @@ header h1 {
   display: inline-block;
   vertical-align: super;
 }
+.header-wrapper {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
 
 a.logo {
   /*float: left;*/
@@ -111,6 +116,24 @@ main {
   text-transform: uppercase;
   color: #61a60e;
   font-weight: 900;
+}
+@media (min-width: 960px) {
+  .banner p {
+    margin: 5px auto 0;
+    max-width: 940px;
+    width: 100%;
+  }
+  .banner a {
+    display: block;
+    margin: 20px auto 0;
+    max-width: 940px;
+  }
+  main ul,
+  main .book-category,
+  main .book {
+    max-width: 940px;
+    margin: 0 auto;
+  }
 }
 
 .books a {
@@ -283,8 +306,7 @@ nav#global-nav {
 #menu-button-open {
   border: none;
   background: #f8f8f8;
-  right: 0;
-  position: absolute;
+  float: right;
 }
 #menu-button-open svg {
   height: 20px;
@@ -510,6 +532,8 @@ main.about {
 }
 .about-container {
   padding: 0 30px;
+  max-width: 900px;
+  margin: 0 auto;
 }
 .about-container p {
   font-size: 1.3rem;
@@ -524,6 +548,12 @@ main.about {
   margin: 0 auto;
   display: block;
 }
+@media (min-width: 960px) {
+  .about-container .about-simplye {
+    width: 30%;
+  }
+}
+
 .about .about-download-app {
   display: inline-block;
   background: #f8f8f8;
@@ -586,6 +616,7 @@ footer .footer-logo span {
 footer .sponsors {
   height: 100%;
   margin: 20px auto;
+  max-width: 500px;
 }
 .about .sponsors .container,
 footer .sponsors .container {
