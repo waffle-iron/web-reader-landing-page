@@ -8,16 +8,17 @@ from csv import reader, writer, DictReader
 import sys
 
 output = writer(open("RS MTA Selections - New EPUB information.csv", "w"))
+output.writerow(['Title', 'Unique identifier', 'EPUB filename', 'Cover filename'])
 
 by_title = {}
 new_info = DictReader(open(sys.argv[1]))
 for row in new_info:
     title = row['Title']
     identifier = row['Unique identifier']
-    epub = row['EPUB URL']
-    cover = row['Cover URL']
+    epub = row['EPUB filename']
+    cover = row['Cover filename']
     by_title[title] = (title, identifier, epub, cover)
-    
+
 selection_input = DictReader(open("RS MTA Selections - Plympton - Sheet1.csv"))
 new = 0
 still_unknown = 0
@@ -29,8 +30,8 @@ for row in selection_input:
         new += 1
     else:
         identifier = row['Unique identifier']
-        epub = row['EPUB URL']
-        cover = row['Cover URL']
+        epub = row['EPUB filename']
+        cover = row['Cover filename']
         output.writerow((title, identifier, epub, cover))
         if any(x == 'MISSING' for x in [epub, identifier, cover]):
             still_unknown += 1
