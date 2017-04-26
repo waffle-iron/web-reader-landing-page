@@ -120,7 +120,7 @@ def dictreader(filename):
             yield d
    
 publisher = sys.argv[1]
-csv_in = dictreader(publisher)
+excel_in = dictreader(publisher)
 
 html_out = open(publisher.replace(".xlsx", ".html"), "w")
 html_out.write("<html><head><title>%s titles</title></head><body>\n" % publisher)
@@ -130,7 +130,7 @@ csv_out = writer(open(publisher.replace(".xlsx", ".csv"), "w"))
 csv_out.writerow(["Title", "Author Last, Author First", "MTA Category 1", "MTA Category 2", "Comment (for Lynn)", "Comment (for Leonard)", "OK for 12yo?", "Fiction", "Short", "BISAC", "Description", "Unique identifier", "EPUB URL", "Cover URL", "Word Count"])
 
 counter = 0
-for row in csv_in:
+for row in excel_in:
     book = Book.from_plympton_row(publisher, row)
     csv_out.writerow(book.csv_row)
     html_out.write(book.html_item)
