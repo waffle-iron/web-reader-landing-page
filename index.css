@@ -43,7 +43,7 @@ header h1 {
   vertical-align: super;
 }
 .header-wrapper {
-  max-width: 900px;
+  max-width: 87.5rem;
   margin: 0 auto;
 }
 
@@ -119,19 +119,22 @@ main {
 }
 @media (min-width: 960px) {
   .banner p {
-    margin: 5px auto 0;
-    max-width: 940px;
+    margin: 15px auto 0;
+    max-width: 70rem;
     width: 100%;
   }
   .banner a {
     display: block;
     margin: 20px auto 0;
-    max-width: 940px;
+    max-width: 70rem;
   }
   main ul,
-  main .book-category,
+  main .book-category {
+    max-width: 70rem;
+    margin: 0 auto;
+  }
   main .book {
-    max-width: 940px;
+    max-width: 60rem;
     margin: 0 auto;
   }
 }
@@ -415,6 +418,8 @@ nav#global-nav {
   text-align: center;
   margin: 0 0 -15px;
   padding: 20px 0;
+  max-width: 50rem;
+  margin: 0 auto;
 }
 .call-to-action p {
   line-height: 1.2em;
@@ -532,7 +537,7 @@ main.about {
 }
 .about-container {
   padding: 0 30px;
-  max-width: 900px;
+  max-width: 60rem;
   margin: 0 auto;
 }
 .about-container p {
@@ -548,9 +553,19 @@ main.about {
   margin: 0 auto;
   display: block;
 }
+.about-container .about-simplye.desktop {
+  display: none;
+}
 @media (min-width: 960px) {
   .about-container .about-simplye {
     width: 30%;
+    display: inline-block;
+    left: 20%;
+    position: relative;
+    margin-bottom: -10px;
+  }
+  .about-container .about-simplye.desktop {
+    display: inline-block;
   }
 }
 
@@ -560,7 +575,10 @@ main.about {
   padding: 10px 30px;
   font-size: 1.3rem;
 }
-
+footer {
+  background: #f8f8f8;
+  width: 100%;
+}
 footer .share-app {
   background: #f8f8f8;
   color: #000;
@@ -612,11 +630,16 @@ footer .footer-logo span {
   margin: 0 5px;
   text-align: left;
 }
-.about .sponsors,
+.about .sponsors {
+  height: 100%;
+  margin: 20px auto;
+  max-width: 50rem;
+}
+
 footer .sponsors {
   height: 100%;
   margin: 20px auto;
-  max-width: 500px;
+  max-width: 70rem;
 }
 .about .sponsors .container,
 footer .sponsors .container {
@@ -635,6 +658,22 @@ footer .sponsors span {
   width: calc(100% * (1/3) - 15px);
   padding: 10px 5px;
 }
+@media (min-width: 960px) {
+  footer .sponsors span {
+    width: calc(100% * (1/6) - 15px);
+  }
+  footer .sponsors span:first-child,
+  footer .sponsors span:nth-child(2),
+  footer .sponsors span:nth-child(3) {
+    border-bottom: none !important;
+  }
+  footer .sponsors span:nth-child(3) {
+    border-right: 1px solid #DEDEDE !important;
+  }
+  footer .sponsors span:nth-child(6) {
+    padding-left: 20px;
+  }
+}
 .about .sponsors span {
   padding: 10px 0;
 }
@@ -642,35 +681,35 @@ footer .sponsors span {
 footer .sponsors svg {
   height: 40px;
   width: 100%;
-  fill: #ccc;
+  fill: #DEDEDE;
   margin: 5px 0;
 }
 .about .sponsors svg {
   fill: #333;
 }
 footer .sponsors span:first-child {
-  border-bottom: 1px solid #ccc;
+  border-bottom: 1px solid #DEDEDE;
 }
 .about .sponsors span:nth-child(2) {
-  border-left: 1px solid #333;
-  border-right: 1px solid #333;
+  border-left: 1px solid #DEDEDE;
+  border-right: 1px solid #DEDEDE;
   padding: 10px 15px;
 }
 footer .sponsors span:nth-child(2) {
-  border-left: 1px solid #ccc;
-  border-bottom: 1px solid #ccc;
-  border-right: 1px solid #ccc;
+  border-left: 1px solid #DEDEDE;
+  border-bottom: 1px solid #DEDEDE;
+  border-right: 1px solid #DEDEDE;
 }
 footer .sponsors span:nth-child(2) svg {
   height: 25px;
   padding-top: 10px;
 }
 footer .sponsors span:nth-child(3) {
-  border-bottom: 1px solid #ccc;
+  border-bottom: 1px solid #DEDEDE;
 }
 footer .sponsors span:nth-child(5) {
-  border-left: 1px solid #ccc;
-  border-right: 1px solid #ccc;
+  border-left: 1px solid #DEDEDE;
+  border-right: 1px solid #DEDEDE;
 }
 footer .sponsors span:nth-child(5) svg {
   height: 28px;
