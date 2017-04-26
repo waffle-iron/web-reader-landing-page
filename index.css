@@ -354,22 +354,30 @@ nav#global-nav {
   padding-top: 10px;
 }
 .books li {
-  width: 135px;
+  width: 120px;
   height: 120px;
   display: table-cell;
   vertical-align: top;
+  padding-right: 10px;
 }
 
 .call-to-action {
-  min-height: 380px;
   background: #f8f8f8;
   text-align: center;
+  margin: 0 0 -15px;
+  padding: 20px 0;
 }
 .call-to-action p {
-  padding: 10px 30px;
+  line-height: 1.2em;
+  padding: 5px 25px;
   margin: 0;
-  font-size: 2.25rem;
-  line-height: 1.5;
+}
+.call-to-action p:nth-child(1) {
+  font-size: 1.8rem;
+  font-weight: 900;
+}
+.call-to-action p:nth-child(2) {
+  font-size: 1.4rem;
   font-weight: 100;
 }
 .call-to-action img {
@@ -377,6 +385,17 @@ nav#global-nav {
 }
 .call-to-action a {
   display: inline-block;
+}
+.call-to-action .download-link {
+  margin: 10px 0;
+}
+.call-to-action .action-links {
+  text-align: center;
+}
+.call-to-action .action-links a {
+  padding: 10px;
+  font-weight: 900;
+  display: block;
 }
 
 body.active {
@@ -442,6 +461,7 @@ ul {
 
 main.about {
   padding: 0;
+  line-height: 2rem;
   /* Not a fan of this: */
   margin: 0 0 -15px;
 }
@@ -473,13 +493,14 @@ main.about {
 }
 
 footer .share-app {
-  height: 180px;
+  height: 160px;
   background: #f8f8f8;
   color: #000;
   text-align: center;
 }
 footer .share-app h2 {
   padding: 20px 15px;
+  font-size: 1.4rem;
 }
 footer .share-app ul {
   padding: 0;
@@ -494,8 +515,8 @@ footer .share-app a {
   display: block;
 }
 footer .share-app svg {
-  width: 50px;
-  height: 50px;
+  width: 40px;
+  height: 40px;
   fill: #61a60e;
 }
 footer .deep-footer {

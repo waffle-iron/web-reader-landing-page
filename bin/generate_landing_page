@@ -280,52 +280,22 @@ class GenerateLandingPageScript:
                       "class": "adult"# if adult else ""
                   }
 
-                  # Insert the call to action after the third book in each category
-                  if mta_category in mta_category_dict and mta_category_dict[mta_category]["count"] == 2:
-                      book_html_category += """
-                        <li class="call-to-action">
-                          <p>Want more free e-books?</p>
-                          <p>Download SimplyE&mdash;the free e-reader app&mdash;for access to hundreds of thousands of library e-books.</p>
-                          <div>
-                            <a href="https://itunes.apple.com/us/app/nypl-simplye/id1046583900?mt=8" title="Download on the App Store"><img src="../apple_badge.png" alt="Download on the App Store"/></a>
-                            <a href="https://play.google.com/store/apps/details?id=org.nypl.simplified.simplye&hl=en" title="Get it on Google Play"><img src="../google_badge.png" alt="Get it on Google Play"/></a>
-                          </div>
-                        </li>
-                      """
-
                   # Organize the book by its category
                   if mta_category in mta_category_dict:
                       mta_category_dict[mta_category]["home"] += book_html_home
                       mta_category_dict[mta_category]["category"] += book_html_category
-                      mta_category_dict[mta_category]["count"] += 1
                   else:
                       mta_category_dict[mta_category] = {
                           "home": book_html_home,
-                          "category": book_html_category,
-                          "count": 1
+                          "category": book_html_category
                       }
 
           category_nav_home = []
           category_nav = []
           mta_category_page = {}
-          category_count = 0
 
           # Generate the book lanes and insert a call to action for SimplyE on the homepage
           for category_key in mta_category_dict:
-              category_count += 1
-
-              if category_count == 3:
-                  books_html_home += """
-                    <li class="call-to-action">
-                      <p>Want more free e-books?</p>
-                      <p>Download SimplyE&mdash;the free e-reader app&mdash;for access to hundreds of thousands of library e-books.</p>
-                      <div>
-                        <a href="https://itunes.apple.com/us/app/nypl-simplye/id1046583900?mt=8" title="Download on the App Store" onclick="gap('send', 'event', 'DownloadApp', 'iOS');"><img src="apple_badge.png" alt="Download on the App Store"/></a>
-                        <a href="https://play.google.com/store/apps/details?id=org.nypl.simplified.simplye&hl=en" title="Get it on Google Play" onclick="gap('send', 'event', 'DownloadApp', 'Android');"><img src="google_badge.png" alt="Get it on Google Play"/></a>
-                      </div>
-                    </li>
-                  """
-
               books_html_home += """
                 <li class="category-lane">
                   <div class="category-header">
