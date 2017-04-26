@@ -112,11 +112,11 @@
           </div>
 
           <p>To celebrate cell service and free Wi-Fi in all underground subway stations, NYC’s libraries, MTA, and Transit Wireless have partnered to bring you Subway Library.</p>
-          <p>Simply connect to TransitWireless Wi-Fi in any MTA station. Browse and read free books, excerpts, and short stories, all provided by NYC’s public libraries.</p>
-          <p>Subway Library is powered by SimplyE, the free library e-reader app that lets you browse, borrow, and read thousands more  library e-books instantly—anywhere, anytime.</p>
+          <p>Simply connect to TransitWireless Wi-Fi in any MTA station. Once you're connected, you can read free books, excerpts, and short stories, all provided by NYC’s public libraries.</p>
+          <p>Subway Library is powered by SimplyE, the free library e-reader app that lets you browse, borrow, and read thousands of library e-books instantly—anywhere, anytime.</p>
 
           <h3>SimplyE</h3>
-          <img src="iphone_simplyE.png" class="about-simplye" />
+          <img src="iphone_simplyE.png" class="about-simplye" alt="" />
         </div>
       </div>
     </main>

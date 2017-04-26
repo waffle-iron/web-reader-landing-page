@@ -5,7 +5,6 @@ function hideDownloadButtons() {
   var android = navigator.userAgent.match(/Android/i);
   if (ios) {
     var elements = document.querySelectorAll(".hide-on-ios");
-    console.log(elements)
     for (var i = 0; i < elements.length; i++) {
       elements[i].style.display = "none";
     }
