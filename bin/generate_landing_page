@@ -107,7 +107,7 @@ class GenerateLandingPageScript:
                   cover = row.get(COVER_URL_HEADER)
 
                   book_hash = base64.b64encode(author+title)
-                  book_hash = re.sub('[^0-9a-zA-Z]+', '', book_hash)[0:50]
+                  book_hash = re.sub('[^0-9a-zA-Z]+', '', book_hash)
 
                   local_path_to_cover = os.path.join(self.output_dir, 'covers', book_hash)
                   os.makedirs(local_path_to_cover)
