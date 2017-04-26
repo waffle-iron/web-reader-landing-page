@@ -110,6 +110,7 @@ main {
 .banner a {
   text-transform: uppercase;
   color: #61a60e;
+  font-weight: 900;
 }
 
 .books a {
@@ -384,7 +385,9 @@ nav#global-nav {
   vertical-align: top;
   padding-right: 10px;
 }
-
+.call-to-action.book-details-page {
+  padding-bottom: 70px;
+}
 .call-to-action {
   background: #f8f8f8;
   text-align: center;
@@ -410,6 +413,19 @@ nav#global-nav {
 .call-to-action a {
   display: inline-block;
 }
+
+.download-link svg {
+  width: 150px;
+}
+.google-badge .badge,
+.apple-badge .badge {
+  fill: #538e0c;
+}
+.google-badge .mark,
+.apple-badge .mark > path {
+  fill: #fff;
+}
+
 .call-to-action .download-link {
   margin: 10px 0;
 }
@@ -417,9 +433,8 @@ nav#global-nav {
   text-align: center;
 }
 .call-to-action .action-links a {
-  padding: 10px;
   font-weight: 900;
-  display: block;
+  text-decoration: underline;
 }
 
 body.active {
@@ -545,21 +560,21 @@ footer .share-app svg {
 }
 footer .deep-footer {
   background: #2e343b;
-  color: #ccc;
+  color: #DEDEDE;
   text-align: center;
   padding: 20px 15px;
   font-size: 1.1rem;
 }
 footer .deep-footer svg {
   height: 30px;
-  fill: #ccc;
+  fill: #DEDEDE;
 }
 footer .deep-footer p {
   margin: 0;
   padding: 10px 15px;
 }
 footer .deep-footer a {
-  color: #ccc;
+  color: #DEDEDE;
   display: inline;
 }
 footer .footer-logo span {

@@ -45,6 +45,7 @@ BOOK_CATEGORY_TEMPLATE = os.path.join(package_dir, "book_category.html.template"
 FOOTER_LOGOS_TEMPLATE = os.path.join(template_dir, "footer-logos.html.template")
 SOCIAL_MEDIA_TEMPLATE = os.path.join(template_dir, "bookSocialMedia.html.template")
 FOOTER_SOCIAL_MEDIA_TEMPLATE = os.path.join(template_dir, "footerSocialMedia.html.template")
+DOWNLOAD_APP_BTNS_TEMPLATE = os.path.join(template_dir, "downloadAppBtns.html.template")
 APP_CACHE_HTML = os.path.join(package_dir, "appcache.html")
 SIMPLYE_LOGO_TEMPLATE = os.path.join(template_dir, "se_logo.html.template")
 MENU_OPEN_BTN_TEMPLATE = os.path.join(template_dir, "menuOpenBtn.html.template")
@@ -72,6 +73,9 @@ xIconBtn = open(X_ICON_TEMPLATE).read()
 footerLogos = open(FOOTER_LOGOS_TEMPLATE).read()
 socialMedia = open(SOCIAL_MEDIA_TEMPLATE).read()
 footerSocialMedia = open(FOOTER_SOCIAL_MEDIA_TEMPLATE).read()
+downloadAppBtns = open(DOWNLOAD_APP_BTNS_TEMPLATE).read()
+
+callOutText = "<p>Download SimplyE&mdash;the library e-reader app&mdash;for access to hundreds of thousands of library e-books.</p>"
 
 class GenerateLandingPageScript:
 
@@ -366,7 +370,8 @@ class GenerateLandingPageScript:
                   out = template.replace("{{category}}", category_key).replace("{{category_nav}}", "".join(category_nav))
                   out = out.replace("{{book_category}}", "".join(mta_category_page[category_key])).replace("{{logo}}", logo)
                   out = out.replace("{{menuOpenBtn}}", menuOpenBtn).replace("{{xIconBtn}}", xIconBtn).replace("{{footerLogos}}", footerLogos)
-                  out = out.replace("{{footerSocialMedia}}", footerSocialMedia)
+                  out = out.replace("{{footerSocialMedia}}", footerSocialMedia).replace("{{downloadAppBtns}}", downloadAppBtns)
+                  out = out.replace("{{callOutText}}", callOutText)
 
                   with codecs.open(os.path.join(book_category_dir, category_key + ".html"), 'w', "utf-8") as output_file:
                       output_file.write(out)
@@ -378,7 +383,8 @@ class GenerateLandingPageScript:
                   out = template.replace("{{title}}", all_books_description[book]['title'])
                   out = out.replace("{{book_desc_html}}", all_books_description[book]['book_desc_html']).replace("{{category_nav}}", "".join(category_nav))
                   out = out.replace("{{logo}}", logo).replace("{{menuOpenBtn}}", menuOpenBtn).replace("{{xIconBtn}}", xIconBtn).replace("{{footerLogos}}", footerLogos)
-                  out = out.replace("{{footerSocialMedia}}", footerSocialMedia)
+                  out = out.replace("{{footerSocialMedia}}", footerSocialMedia).replace("{{downloadAppBtns}}", downloadAppBtns)
+                  out = out.replace("{{callOutText}}", callOutText)
 
                   with codecs.open(os.path.join(book_desc_dir, book + ".html"), 'w', "utf-8") as output_file:
                       output_file.write(out)
@@ -387,7 +393,8 @@ class GenerateLandingPageScript:
               template = template_file.read()
               out = template.replace("{{all_books}}", "".join(books_html_home)).replace("{{category_nav}}", "".join(category_nav_home))
               out = out.replace("{{logo}}", logo).replace("{{menuOpenBtn}}", menuOpenBtn).replace("{{xIconBtn}}", xIconBtn).replace("{{footerLogos}}", footerLogos)
-              out = out.replace("{{footerSocialMedia}}", footerSocialMedia)
+              out = out.replace("{{footerSocialMedia}}", footerSocialMedia).replace("{{downloadAppBtns}}", downloadAppBtns)
+              out = out.replace("{{callOutText}}", callOutText)
 
               with codecs.open(os.path.join(self.output_dir, "index.html"), 'w', "utf-8") as output_file:
                   output_file.write(out)
@@ -398,7 +405,8 @@ class GenerateLandingPageScript:
               template = template_file.read()
               out = template.replace("{{category_nav}}", "".join(category_nav_home)).replace("{{logo}}", logo)
               out = out.replace("{{menuOpenBtn}}", menuOpenBtn).replace("{{xIconBtn}}", xIconBtn).replace("{{footerLogos}}", footerLogos)
-              out = out.replace("{{footerSocialMedia}}", footerSocialMedia)
+              out = out.replace("{{footerSocialMedia}}", footerSocialMedia).replace("{{downloadAppBtns}}", downloadAppBtns)
+              out = out.replace("{{callOutText}}", callOutText)
 
               with codecs.open(os.path.join(self.output_dir, "about.html"), 'w', "utf-8") as output_file:
                   output_file.write(out)
