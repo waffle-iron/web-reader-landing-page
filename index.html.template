@@ -48,6 +48,7 @@
     <main>
       <div class="banner">
         <p>Read books, excerpts, and short stories from NYC public libraries.</p>
+        <a href="about.html">Learn more &gt;</a>
       </div>
 
       <div role="dialog" aria-labelledby="age-check-title" class="age-check" style="display: none">
@@ -79,7 +80,8 @@
           <a href="#">Read about Brooklyn Library app &gt;</a>
         </div>
       </div>
-      <div class="share-app">
+      {{footerSocialMedia}}
+      <div class="deep-footer">
         {{footerLogos}}
         <p>&copy; The New York Public Library<br /><br />
           <a href="">Terms and Condition</a> &bull;

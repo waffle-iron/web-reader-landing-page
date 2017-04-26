@@ -64,12 +64,17 @@
       <div class="call-to-action">
         <p>Want more free e-books?</p>
         <p>Download SimplyE&mdash;the free e-reader app&mdash;for access to hundreds of thousands of library e-books.</p>
-        <div>
+        <div class="download-link">
           <a href="https://itunes.apple.com/us/app/nypl-simplye/id1046583900?mt=8" title="Download on the App Store" onclick="gap('send', 'event', 'DownloadApp', 'iOS');"><img src="../apple_badge.png" alt="Download on the App Store"/></a>
           <a href="https://play.google.com/store/apps/details?id=org.nypl.simplified.simplye&hl=en" title="Get it on Google Play" onclick="gap('send', 'event', 'DownloadApp', 'Android');"><img src="../google_badge.png" alt="Get it on Google Play"/></a>
         </div>
+        <div class="action-links">
+          <a href="#">Learn more about SimplyE &gt;</a>
+          <a href="#">Learn about The Queens Library app &gt;</a>
+          <a href="#">Read about Brooklyn Library app &gt;</a>
+        </div>
       </div>
-      <div class="share-app">
+      <div class="deep-footer">
         {{footerLogos}}
         <p>&copy; The New York Public Library<br /><br />
           <a href="">Terms and Condition</a> &bull;

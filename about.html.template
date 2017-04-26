@@ -120,7 +120,7 @@
           <p>Subway Library is powered by SimplyE, the free library e-reader app that lets you browse, borrow, and read thousands more  library e-books instantly—anywhere, anytime.</p>
 
           <h3>SimplyE</h3>
-          <img src="../images/iphone_simplyE.png" class="about-simplye" />
+          <img src="iphone_simplyE.png" class="about-simplye" />
         </div>
         <div class="about-download-app">
           <p>
@@ -139,10 +139,14 @@
       </div>
     </main>
     <footer>
-      <div class="share-app">
+      {{footerSocialMedia}}
+      <div class="deep-footer">
         {{footerLogos}}
         <p>&copy; The New York Public Library<br /><br />
-        Terms of Service &bull; <a href="about.html">About Us</a></p>
+          <a href="">Terms and Condition</a> &bull;
+          <a href="about.html">About Us</a> &bull;
+          <a href="">Privacy Policy</a>
+        </p>
       </div>
     </footer>
   </div>
