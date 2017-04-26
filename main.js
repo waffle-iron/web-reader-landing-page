@@ -64,22 +64,20 @@ var MS = {};
 MS.App = (function() {
 
   var ESCAPE_CODE = 27;
-
-  var navButton = document.querySelector('#menu-button-open'),
-      navButtonClose = document.querySelector('#menu-button-close'),
-      navMenu = document.querySelector('#global-nav');
-
+  var navButton = document.querySelector('#menu-button-open');
+  var navButtonClose = document.querySelector('#menu-button-close');
+  var navMenu = document.querySelector('#global-nav');
   var navLinks = navMenu.querySelectorAll('a');
 
   function initApp() {
-    navMenu.addEventListener('keydown', handleKeydown);
+    document.body.addEventListener('keydown', handleKeydown);
     navButton.addEventListener('click', handleClick);
     navButtonClose.addEventListener('click', handleClick);
     disableNavLinks();
   }
   function handleKeydown(event) {
-    if (event.keyCode === ESCAPE_CODE) {
-      document.body.classList.toggle('active');
+    if (event.keyCode === ESCAPE_CODE && document.body.classList.contains('active')) {
+      document.body.classList.remove('active');
       disableNavLinks();
       navButton.focus();
     }
@@ -92,18 +90,16 @@ MS.App = (function() {
     else {
       document.body.classList.add('active');
       enableNavLinks();
-      /*navLinks.eq(0).focus();*/
+      navLinks[0].focus();
     }
   }
   function enableNavLinks() {
-    /*navButton.attr('aria-label', 'Menu expanded');*/
-    /*navMenu.removeAttr('aria-hidden');
-    navLinks.removeAttr('tabIndex');*/
+    navMenu.removeAttribute('aria-hidden');
+    navMenu.removeAttribute('tabIndex');
   }
   function disableNavLinks() {
-    /*navButton.attr('aria-label', 'Menu collapsed');*/
-    /*navMenu.attr('aria-hidden', 'true');
-    navLinks.attr('tabIndex', '-1');*/
+    navMenu.setAttribute('aria-hidden', 'true');
+    navMenu.setAttribute('tabIndex', '-1');
   }
 
   return {

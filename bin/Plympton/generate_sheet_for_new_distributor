@@ -17,7 +17,7 @@ import sys
 
 class Book(object):
     def __init__(self, title, author, children_ok, fiction, short, description,
-                 bisacs, identifier, epub, cover, word_count, publisher):
+                 bisacs, identifier, epub, cover, word_count):
         self.title = title
         self.author = author
         self.children_ok = children_ok
@@ -29,8 +29,7 @@ class Book(object):
         self.cover = cover
         self.bisac = ", ".join(bisacs)
         self.word_count = word_count
-        self.publisher = publisher
-        
+
     @property
     def csv_row(self):
         return map(self.output_ready,
@@ -44,17 +43,9 @@ class Book(object):
         if isinstance(value, unicode):
             value = value.encode("utf8")
         return value
-    
-    @property
-    def html_item(self):
-        value = u'<td><img src="%s/%s" height="300" width="225"><br><a href="%s/%s">%s</a><br>%s</td>\n' % (
-            self.publisher, self.cover, self.publisher, self.epub,
-            self.title, self.author
-        )
-        return value.encode("utf8")
 
     @classmethod
-    def from_plympton_row(cls, publisher, row):
+    def from_plympton_row(cls, row):
         epub = row['eBook File Name']
         jpg = row['Jacket File Name']
         isbn = row['eISBN (13 digit)']
@@ -90,9 +81,9 @@ class Book(object):
                 is_short = 'N'
         else:
             is_short = ''
-        
+
         return Book(title, author, children_ok, fiction, is_short,
-                    description, bisacs, isbn, epub, jpg, word_count, publisher)
+                    description, bisacs, isbn, epub, jpg, word_count)
 
 def dictreader(filename):
     """Load a single-sheet Excel spreadsheet into a generator sequence of
@@ -119,25 +110,13 @@ def dictreader(filename):
         else:
             # We're done with one of the other rows
             yield d
-   
-publisher = sys.argv[1]
-excel_in = dictreader(publisher)
 
-html_out = open(publisher.replace(".xlsx", ".html"), "w")
-html_out.write("<html><head><title>%s titles</title></head><body>\n" % publisher)
-html_out.write("<table><tr>\n")
+excel_filename = sys.argv[1]
+excel_in = dictreader(excel_filename)
 
-csv_out = writer(open(publisher.replace(".xlsx", ".csv"), "w"))
+csv_out = writer(open(excel_filename.replace(".xlsx", ".csv"), "w"))
 csv_out.writerow(["Source", "Title", "Author Last, Author First", "MTA Category 1", "MTA Category 2", "Comment (for RS)", "Comment (for Engineering)", "OK for 12yo?", "Fiction", "Short", "BISAC", "Description", "Word Count", "Unique identifier", "EPUB URL", "Cover URL", "EPUB filename", "Cover filename", "EPUB content"])
 
-counter = 0
 for row in excel_in:
-    book = Book.from_plympton_row(publisher, row)
+    book = Book.from_plympton_row(row)
     csv_out.writerow(book.csv_row)
-    html_out.write(book.html_item)
-    counter += 1
-    if counter == 5:
-        counter = 0
-        html_out.write("</tr><tr>")
-html_out.write("</tr></table></body></html>")
-

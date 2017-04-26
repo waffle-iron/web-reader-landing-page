@@ -2,4 +2,8 @@ TextBlob
 openpyxl
 requests
 pysftp
+<<<<<<< HEAD
 beautifulsoup4
+=======
+Pillow == 4.1.0
+>>>>>>> master

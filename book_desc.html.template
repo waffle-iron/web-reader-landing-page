@@ -23,41 +23,26 @@
 </head>
 <body>
   <nav id="global-nav" aria-label="Main navigation">
-    <button aria-controls="global-nav" aria-haspopup="true" tabindex="2" id="menu-button-close">
-      <span class="menu-icon" aria-hidden="true">
-        <svg width="32" height="32" viewBox="0 0 32 32" class="svgIcon">
-        <path d="M17.91272,15.97339l5.65689-5.65689A1.32622,1.32622,0,0,0,21.694,8.44093L16.04938,14.0856l-5.65082-5.725A1.32671,1.32671,0,1,0,8.51,10.22454l5.66329,5.73712L8.43038,21.7046a1.32622,1.32622,0,1,0,1.87557,1.87557l5.73088-5.73088,5.65074,5.72441a1.32626,1.32626,0,1,0,1.88852-1.86261Z"/>
-        </svg>
-      </span>
-    </button>
+    {{xIconBtn}}
     <ul class="tabs">
       <li><a href="../">Library Underground</a></li>
       {{category_nav}}
     </ul>
     <div class="nav-simplye">
-      <p>Get free access to over 300,000 eBooks with SimplyE.</p>
-      <p>Download now</p>
+      <p>Download SimplyE&mdash;the free e-reader app&mdash;for access to hundreds of thousands of library e-books.</p>
       <div>
-        <a href="https://itunes.apple.com/us/app/nypl-simplye/id1046583900?mt=8" title="Download on the App Store"><img src="../apple_badge.png" alt="Download on the App Store"/></a>
-        <a href="https://play.google.com/store/apps/details?id=org.nypl.simplified.simplye&hl=en" title="Get it on Google Play"><img src="../google_badge.png" alt="Get it on Google Play"/></a>
+        <a href="https://itunes.apple.com/us/app/nypl-simplye/id1046583900?mt=8" title="Download on the App Store" onclick="gap('send', 'event', 'DownloadApp', 'iOS');"><img src="../apple_badge.png" alt="Download on the App Store"/></a>
+        <a href="https://play.google.com/store/apps/details?id=org.nypl.simplified.simplye&hl=en" title="Get it on Google Play" onclick="gap('send', 'event', 'DownloadApp', 'Android');"><img src="../google_badge.png" alt="Get it on Google Play"/></a>
       </div>
     </div>
   </nav>
   <div class="wrapper">
     <header>
       <a href="../" class="logo">
-        <img src="../simplyE_logo.png" alt="SimplyE" />
+        {{logo}}
+        <h1>Subway Library</h1>
       </a>
-      <button aria-controls="global-nav" aria-haspopup="true" tabindex="2" id="menu-button-open">
-        <span class="menu-icon" aria-hidden="true">
-          <svg width="32" height="32" viewBox="0 0 32 32" class="svgIcon">
-            <path d="M26.22029,10.40244H5.77971a1.09221,1.09221,0,1,1,0-2.18441H26.22029A1.09221,1.09221,0,1,1,26.22029,10.40244Z"/>
-            <path d="M26.22029,16.95568H5.77971a1.09221,1.09221,0,0,1,0-2.18441H26.22029A1.09221,1.09221,0,0,1,26.22029,16.95568Z"/>
-            <path d="M26.22029,23.782H5.77971a1.09221,1.09221,0,1,1,0-2.18441H26.22029A1.09221,1.09221,0,1,1,26.22029,23.782Z"/>
-          </svg>
-        </span>
-        <!-- <span class="menu-text visuallyHidden">Menu</span> -->
-      </button>
+      {{menuOpenBtn}}
     </header>
 
     <main>
@@ -76,10 +61,26 @@
       </div>
     </main>
     <footer>
+      <div class="call-to-action">
+        <p>Want more free e-books?</p>
+        <p>Download SimplyE&mdash;the free e-reader app&mdash;for access to hundreds of thousands of library e-books.</p>
+        <div class="download-link">
+          <a href="https://itunes.apple.com/us/app/nypl-simplye/id1046583900?mt=8" title="Download on the App Store" onclick="gap('send', 'event', 'DownloadApp', 'iOS');"><img src="../apple_badge.png" alt="Download on the App Store"/></a>
+          <a href="https://play.google.com/store/apps/details?id=org.nypl.simplified.simplye&hl=en" title="Get it on Google Play" onclick="gap('send', 'event', 'DownloadApp', 'Android');"><img src="../google_badge.png" alt="Get it on Google Play"/></a>
+        </div>
+        <div class="action-links">
+          <a href="#">SimplyE &gt;</a>
+          <a href="#">Queens Library app &gt;</a>
+          <a href="#">Brooklyn Library app &gt;</a>
+        </div>
+      </div>
       <div class="deep-footer">
-        <p>Powered by SimplyE</p>
-        <p>&copy; The New York Public Library</p>
-        <p>Terms of Service | About Us</p>
+        {{footerLogos}}
+        <p>&copy; The New York Public Library<br /><br />
+          <a href="../license.html">Terms and Conditions</a> &bull;
+          <a href="../about.html">About Us</a> &bull;
+          <a href="../nyplprivacypolicy.html">Privacy Policy</a>
+        </p>
       </div>
     </footer>
   </div>
