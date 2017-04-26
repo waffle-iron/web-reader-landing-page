@@ -1,0 +1,39 @@
+#!/usr/bin/env python
+# Take a CSV version of the "RS MTA Selections - Plympton" spreadsheet,
+# and generate new "Unique identifier", "EPUB URL", and "Cover URL" columns
+# based on the output of 1-new-sheet.py.
+from pdb import set_trace
+import os
+from csv import reader, writer, DictReader
+import sys
+
+output = writer(open("RS MTA Selections - New EPUB information.csv", "w"))
+output.writerow(['Title', 'Unique identifier', 'EPUB filename', 'Cover filename'])
+
+by_title = {}
+new_info = DictReader(open(sys.argv[1]))
+for row in new_info:
+    title = row['Title']
+    identifier = row['Unique identifier']
+    epub = row['EPUB filename']
+    cover = row['Cover filename']
+    by_title[title] = (title, identifier, epub, cover)
+
+selection_input = DictReader(open("RS MTA Selections - Plympton - Sheet1.csv"))
+new = 0
+still_unknown = 0
+for row in selection_input:
+    title = row['Title']
+    if title in by_title:
+        print "NEW DATA:", by_title[title]
+        output.writerow(by_title[title])
+        new += 1
+    else:
+        identifier = row['Unique identifier']
+        epub = row['EPUB filename']
+        cover = row['Cover filename']
+        output.writerow((title, identifier, epub, cover))
+        if any(x == 'MISSING' for x in [epub, identifier, cover]):
+            still_unknown += 1
+
+print "%d filled in, %d still unknown." % (new, still_unknown)

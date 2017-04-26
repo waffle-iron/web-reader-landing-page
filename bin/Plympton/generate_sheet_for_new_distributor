@@ -1,0 +1,122 @@
+#!/usr/bin/env python
+# Take a previously unseen set of books and generate a CSV file that can be
+# made into a new sheet in MTA Subway Reads Titles
+# https://docs.google.com/spreadsheets/d/1s5v-NJTmBfXAh8xBhBSA4ABQ2weaGu-j7Jy_5hbgfh4/edit#gid=605586782
+# Also generate an HTML file that can be used to look at the covers and the
+# indexes.
+#
+# Example: generate_sheet_for_new_distributor Distributor.xlsx
+#  will output Distributor.csv (a normalized .csv file)
+#  will output Distributor.html (a guide to the content)
+
+from openpyxl import load_workbook
+from pdb import set_trace
+import os
+from csv import reader, writer, DictReader
+import sys
+
+class Book(object):
+    def __init__(self, title, author, children_ok, fiction, short, description,
+                 bisacs, identifier, epub, cover, word_count):
+        self.title = title
+        self.author = author
+        self.children_ok = children_ok
+        self.fiction = fiction
+        self.short = short
+        self.description = description
+        self.identifier = identifier
+        self.epub = epub
+        self.cover = cover
+        self.bisac = ", ".join(bisacs)
+        self.word_count = word_count
+
+    @property
+    def csv_row(self):
+        return map(self.output_ready,
+                   ["Plympton", self.title, self.author, "", "", "", "",
+                    self.children_ok,
+                    self.fiction, self.short, self.bisac, self.description,
+                    self.word_count, self.identifier, "", "", self.epub, self.cover, ""]
+        )
+
+    def output_ready(self, value):
+        if isinstance(value, unicode):
+            value = value.encode("utf8")
+        return value
+
+    @classmethod
+    def from_plympton_row(cls, row):
+        epub = row['eBook File Name']
+        jpg = row['Jacket File Name']
+        isbn = row['eISBN (13 digit)']
+        description = row['Abstract/Blurb']
+        title = row['Title']
+        subtitle = row['Subtitle']
+        author = row['Contributor 1']
+        bisac1 = row['BISAC / Genre 1']
+        bisac2 = row['BISAC / Genre 2']
+        bisac3 = row['BISAC / Genre 3']
+        word_count = row['Word Count']
+        if isinstance(word_count, basestring):
+            word_count = word_count.replace(",", "")
+        if word_count:
+            word_count = int(word_count)
+        else:
+            word_count = None
+        if subtitle:
+            title = title + ": " + subtitle
+        bisacs = [x for x in [bisac1, bisac2, bisac3] if x]
+        if any([x.startswith('FIC') for x in bisacs]):
+            fiction = 'Y'
+        else:
+            fiction = 'N'
+        if any([x.startswith('JUV') for x in bisacs]):
+            children_ok = 'Maybe'
+        else:
+            children_ok = 'N'
+        if word_count:
+            if word_count < 50000:
+                is_short = 'Y'
+            else:
+                is_short = 'N'
+        else:
+            is_short = ''
+
+        return Book(title, author, children_ok, fiction, is_short,
+                    description, bisacs, isbn, epub, jpg, word_count)
+
+def dictreader(filename):
+    """Load a single-sheet Excel spreadsheet into a generator sequence of
+    dictionaries.
+
+    Each dictionary represents a row of the spreadsheet. The values of the
+    first row are used for the key names.
+    """
+    wb = load_workbook(filename)
+    [sheet] = wb.sheetnames
+    sheet = wb.get_sheet_by_name(sheet)
+    keys = []
+    first_row = True
+    d = {}
+    for row in sheet.rows:
+        for i, cell in enumerate(row):
+            if first_row:
+                keys.append(cell.value)
+            else:
+                d[keys[i]] = cell.value
+        if first_row:
+            # We're done with the first row.
+            first_row = False
+        else:
+            # We're done with one of the other rows
+            yield d
+
+excel_filename = sys.argv[1]
+excel_in = dictreader(excel_filename)
+
+csv_out = writer(open(excel_filename.replace(".xlsx", ".csv"), "w"))
+csv_out.writerow(["Source", "Title", "Author Last, Author First", "MTA Category 1", "MTA Category 2", "Comment (for Lynn)", "Comment (for Leonard)", "OK for 12yo?", "Fiction", "Short", "BISAC", "Description", "Word Count", "Unique identifier", "EPUB URL", "Cover URL", "EPUB filename", "Cover filename", "EPUB content"])
+
+for row in excel_in:
+    book = Book.from_plympton_row(row)
+    csv_out.writerow(book.csv_row)
