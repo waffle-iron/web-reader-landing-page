@@ -1,27 +1,25 @@
 #!/usr/bin/env python
-import requests
-from pdb import set_trace
-import os
-
-import json
-
-data = json.load(open("ebooks2.json"))
 from bs4 import BeautifulSoup
 from textblob import TextBlob
+import requests
+from pdb import set_trace
+import csv
+import os
+import json
+import sys
 
 class Client(object):
 
-     def __init__(self,
+     def __init__(self, api_key,
                   cache_dir = "penguin-cache",
                   base="https://api.penguinrandomhouse.com/resources/v2/",
-                  api_key
      ):
           self.base = base
           self.api_key = api_key
           self.cache_dir = cache_dir
           if not os.path.exists(self.cache_dir):
                os.makedirs(cache_dir)
-
+               
      def request(self, url):
           if url.startswith('/'):
                url = url[1:]
@@ -82,7 +80,7 @@ class Client(object):
 
      def word_count(self, content):
           """Count the words in sample content."""
-          words = self.excerpt(content)
+          text = self.excerpt(content)
           return len(TextBlob(text).words)
 
      def excerpt(self, content):
@@ -94,3 +92,53 @@ class Client(object):
                return ''
           return ' '.join(BeautifulSoup(html, 'lxml').strings)
 
+class Processor(object):
+     def __init__(self, client, output_file):
+          self.client = client
+          self.output = csv.writer(open(output_file, 'w'))
+          self.output.writerow(
+               ["Source", "Title", "Author", "MTA Category 1", "MTA Category 2", "Comment (for RS)", "Comment (for Engineering)", "OK for 12yo?", "Fiction", "Short", "BISAC", "Description", "Word Count", "Unique identifier", "EPUB URL", "Cover URL", "EPUB filename", "Cover filename", "EPUB content"]
+          )
+
+     def clean(self, value):
+          if isinstance(value, unicode):
+               value = value.encode("utf8")
+          return value
+          
+     def process(self, isbns):
+          for isbn in isbns:
+               self.output.writerow(map(self.clean, self.row_for_isbn(isbn)))
+          
+     def row_for_isbn(self, isbn):
+          """Look up an ISBN and turn it into a CSV row."""
+          source = 'Penguin Random House'
+          metadata = self.client.lookup(isbn)['data']['titles'][0]
+          title_content = self.client.title_content(isbn)
+          word_count = self.client.word_count(title_content)
+          actual_content = title_content['data']['content']
+          excerpt = actual_content['excerpt']
+          description = actual_content['flapcopy']
+          title = metadata['title']
+          isbn = metadata['isbn']
+          author = metadata['author']
+          cover_url = "https://images.randomhouse.com/cover/%s" % isbn
+          bisacs = [subject['code'] for subject in metadata['subjects']]
+          if any([x.startswith('FIC') for x in bisacs]):
+               fiction = 'Y'
+          else:
+               fiction = 'N'
+          if any([x.startswith('JUV') for x in bisacs]):
+               children_ok = 'Maybe'
+          else:
+               children_ok = 'N'
+          is_short = 'Y'
+          return [source, title, author, "", "", "", "", children_ok,
+                  fiction, is_short, ", ".join(bisacs),
+                  description, word_count, isbn, "", cover_url, "", "", excerpt
+          ]
+          
+key = sys.argv[1]
+isbns = sys.argv[2:]
+client = Client(api_key=key)
+processor = Processor(client, "Penguin Random House.csv")
+processor.process(isbns)

@@ -128,7 +128,7 @@ html_out.write("<html><head><title>%s titles</title></head><body>\n" % publisher
 html_out.write("<table><tr>\n")
 
 csv_out = writer(open(publisher.replace(".xlsx", ".csv"), "w"))
-csv_out.writerow(["Source", "Title", "Author Last, Author First", "MTA Category 1", "MTA Category 2", "Comment (for Lynn)", "Comment (for Leonard)", "OK for 12yo?", "Fiction", "Short", "BISAC", "Description", "Word Count", "Unique identifier", "EPUB URL", "Cover URL", "EPUB filename", "Cover filename", "EPUB content"])
+csv_out.writerow(["Source", "Title", "Author Last, Author First", "MTA Category 1", "MTA Category 2", "Comment (for RS)", "Comment (for Engineering)", "OK for 12yo?", "Fiction", "Short", "BISAC", "Description", "Word Count", "Unique identifier", "EPUB URL", "Cover URL", "EPUB filename", "Cover filename", "EPUB content"])
 
 counter = 0
 for row in excel_in:
