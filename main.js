@@ -1,17 +1,20 @@
 'use strict';
 
-var ios = navigator.userAgent.match(/iPhone|iPad|iPod/i);
-var android = navigator.userAgent.match(/Android/i);
-if (ios) {
-  var elements = document.querySelectorAll(".hide-on-ios");
-  for (var i = 0; i < elements.length; i++) {
-    elements[i].style.display = "none";
+function hideDownloadButtons() {
+  var ios = navigator.userAgent.match(/iPhone|iPad|iPod/i);
+  var android = navigator.userAgent.match(/Android/i);
+  if (ios) {
+    var elements = document.querySelectorAll(".hide-on-ios");
+    console.log(elements)
+    for (var i = 0; i < elements.length; i++) {
+      elements[i].style.display = "none";
+    }
   }
-}
-if (android) {
-  var elements = document.querySelectorAll(".hide-on-android");
-  for (var i = 0; i < elements.length; i++) {
-    elements[i].style.display = "none";
+  if (android) {
+    var elements = document.querySelectorAll(".hide-on-android");
+    for (var i = 0; i < elements.length; i++) {
+      elements[i].style.display = "none";
+    }
   }
 }
 
@@ -110,5 +113,6 @@ MS.App = (function() {
 })();
 
 document.addEventListener("DOMContentLoaded", function() {
+  hideDownloadButtons();
   new MS.App.init();
 });

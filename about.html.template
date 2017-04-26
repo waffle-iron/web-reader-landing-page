@@ -31,10 +31,7 @@
     <div class="nav-simplye">
       <p>Get free access to over 300,000 eBooks with SimplyE.</p>
       <p>Download now</p>
-      <div>
-        <a href="https://itunes.apple.com/us/app/nypl-simplye/id1046583900?mt=8" title="Download on the App Store" onclick="gap('send', 'event', 'DownloadApp', 'iOS');"><img src="apple_badge.png" alt="Download on the App Store"/></a>
-        <a href="https://play.google.com/store/apps/details?id=org.nypl.simplified.simplye&hl=en" title="Get it on Google Play" onclick="gap('send', 'event', 'DownloadApp', 'Android');"><img src="google_badge.png" alt="Get it on Google Play"/></a>
-      </div>
+      {{downloadAppBtns}}
     </div>
   </nav>
   <div class="wrapper">
@@ -128,7 +125,7 @@
       {{footerSocialMedia}}
       <div class="deep-footer">
         {{footerLogos}}
-        <p>&copy; The New York Public Library<br /><br />
+        <p>The New York Public Library<br /><br />
           <a href="license.html">Terms and Conditions</a> &bull;
           <a href="about.html">About Us</a> &bull;
           <a href="nyplprivacypolicy.html">Privacy Policy</a>
