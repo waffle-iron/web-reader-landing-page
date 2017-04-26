@@ -2,3 +2,4 @@ TextBlob
 openpyxl
 requests
 pysftp
+beautifulsoup4

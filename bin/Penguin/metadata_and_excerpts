@@ -1,0 +1,96 @@
+#!/usr/bin/env python
+import requests
+from pdb import set_trace
+import os
+
+import json
+
+data = json.load(open("ebooks2.json"))
+from bs4 import BeautifulSoup
+from textblob import TextBlob
+
+class Client(object):
+
+     def __init__(self,
+                  cache_dir = "penguin-cache",
+                  base="https://api.penguinrandomhouse.com/resources/v2/",
+                  api_key
+     ):
+          self.base = base
+          self.api_key = api_key
+          self.cache_dir = cache_dir
+          if not os.path.exists(self.cache_dir):
+               os.makedirs(cache_dir)
+
+     def request(self, url):
+          if url.startswith('/'):
+               url = url[1:]
+          url = self.base + url
+          if '?' in url:
+               url += '&'
+          else:
+               url += '?'
+          url += 'api_key=%s' % self.api_key
+          response = requests.get(url)
+          return response.content
+
+     def cache_path(self, filename):
+          """Return the path to the given filename in the cache
+          directory."""
+          return os.path.join(self.cache_dir, filename)
+   
+     def title_list(self, start, limit):
+          """Retrieve a list of titles in a semi-random order."""
+          cache = self.cache_path("titles.%s-%s.json" % (start, limit))
+          if os.path.exists(cache):
+               content = json.load(open(cache))
+          else:
+               url = "/title/domains/PRH.US/titles?start=%s&rows=%s&formatFamily=Ebook" % (
+                    self.start, self.limit
+               )
+               content = self.request(url)
+               with open(cache, "w") as output:
+                    output.write(content)
+               content = json.loads(content)
+          return content
+
+     def lookup(self, isbn):
+          """Retrieve metadata for a specific ISBN."""
+          cache = self.cache_path("metadata.%s.json" % isbn)
+          if os.path.exists(cache):
+               content = json.load(open(cache))
+          else:
+               url = "title/domains/PRH.US/titles/%s" % isbn
+               content = self.request(url)
+               with open(cache, "w") as output:
+                    output.write(content)
+               content = json.loads(content)
+          return content
+          
+     def title_content(self, isbn):
+          """Retrieve the sample content for a specific ISBN."""
+          cache = self.cache_path("content.%s.json" % isbn)
+          if os.path.exists(cache):
+               content = json.load(open(cache))
+          else:
+               url = "title/domains/PRH.US/titles/%s/content" % isbn
+               content = self.request(url)
+               with open(cache, "w") as output:
+                    output.write(content)
+               content = json.loads(content)
+          return content
+
+     def word_count(self, content):
+          """Count the words in sample content."""
+          words = self.excerpt(content)
+          return len(TextBlob(text).words)
+
+     def excerpt(self, content):
+          """Retrieve the text of a sample content."""
+          if not 'data' in content:
+               return ''
+          html = content['data']['content']['excerpt']
+          if not html:
+               return ''
+          return ' '.join(BeautifulSoup(html, 'lxml').strings)
+
