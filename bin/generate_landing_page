@@ -32,7 +32,9 @@ SPREADSHEET_AUTHOR_HEADER   = "Author"
 OKAY_FOR_12_AND_UNDER       = "OK for 12yo?"
 DESCRIPTION_HEADER          = "Description"
 COVER_URL_HEADER            = "Cover URL"
+COVER_FILENAME_HEADER       = "Cover filename"
 EPUB_URL_HEADER             = "EPUB URL"
+EPUB_FILENAME_HEADER        = "EPUB filename"
 MTA_CATEGORY_1              = "MTA Category 1"
 
 bin_dir = os.path.split(__file__)[0]
@@ -40,9 +42,14 @@ package_dir = os.path.join(bin_dir, "..")
 template_dir = os.path.join(bin_dir, "../templates")
 
 INDEX_TEMPLATE = os.path.join(package_dir, "index.html.template")
+ABOUT_PAGE_TEMPLATE = os.path.join(package_dir, "about.html.template")
 BOOK_INDEX_TEMPLATE = os.path.join(package_dir, "book_index.html.template")
 BOOK_DESC_TEMPLATE = os.path.join(package_dir, "book_desc.html.template")
 BOOK_CATEGORY_TEMPLATE = os.path.join(package_dir, "book_category.html.template")
+FOOTER_LOGOS_TEMPLATE = os.path.join(template_dir, "footer-logos.html.template")
+SOCIAL_MEDIA_TEMPLATE = os.path.join(template_dir, "bookSocialMedia.html.template")
+FOOTER_SOCIAL_MEDIA_TEMPLATE = os.path.join(template_dir, "footerSocialMedia.html.template")
+DOWNLOAD_APP_BTNS_TEMPLATE = os.path.join(template_dir, "downloadAppBtns.html.template")
 APP_CACHE_HTML = os.path.join(package_dir, "appcache.html")
 SIMPLYE_LOGO_TEMPLATE = os.path.join(template_dir, "se_logo.html.template")
 MENU_OPEN_BTN_TEMPLATE = os.path.join(template_dir, "menuOpenBtn.html.template")
@@ -58,12 +65,21 @@ FILES_TO_COPY = ["index.css",
                  "webpub-viewer/node_modules/requirejs/require.js",
                  "webpub-viewer/node_modules/whatwg-fetch/fetch.js",
                  "webpub-viewer/dist/styles/css/main.css",
-                 "main.js"
+                 "main.js",
+                 "images/iphone_simplyE.png",
+                 "nyplprivacypolicy.html",
+                 "license.html"
                 ]
 
 logo = open(SIMPLYE_LOGO_TEMPLATE).read()
 menuOpenBtn = open(MENU_OPEN_BTN_TEMPLATE).read()
 xIconBtn = open(X_ICON_TEMPLATE).read()
+footerLogos = open(FOOTER_LOGOS_TEMPLATE).read()
+socialMedia = open(SOCIAL_MEDIA_TEMPLATE).read()
+footerSocialMedia = open(FOOTER_SOCIAL_MEDIA_TEMPLATE).read()
+downloadAppBtns = open(DOWNLOAD_APP_BTNS_TEMPLATE).read()
+
+callOutText = "<p>Download SimplyE&mdash;the library e-reader app&mdash;for access to hundreds of thousands of library e-books.</p>"
 
 class GenerateLandingPageScript:
 
@@ -104,7 +120,11 @@ class GenerateLandingPageScript:
                       adult = False
 
                   author = unicode(row.get(SPREADSHEET_AUTHOR_HEADER), 'utf-8')
-                  cover = row.get(COVER_URL_HEADER)
+
+                  if row.get(COVER_URL_HEADER) and (row.get(COVER_URL_HEADER).replace(' ', '') != ''):
+                    cover = row.get(COVER_URL_HEADER)
+                  else:
+                    cover = row.get(COVER_FILENAME_HEADER)
 
                   book_hash = base64.b64encode(author+title)
                   book_hash = re.sub('[^0-9a-zA-Z]+', '', book_hash)
@@ -122,8 +142,13 @@ class GenerateLandingPageScript:
                     local_path_to_cover     = os.path.join(local_path_to_cover, cover)
                     shutil.copy(workspace_path_to_cover, local_path_to_cover)
 
-                  cover_src = os.path.join('covers', book_hash, os.path.basename(local_path_to_cover))
-                  download = row.get(EPUB_URL_HEADER)
+                  cover_src = os.path.join('covers', book_uuid, os.path.basename(local_path_to_cover))
+
+                  if row.get(EPUB_URL_HEADER) and (row.get(EPUB_URL_HEADER).replace(' ', '') != ''):
+                    download = row.get(EPUB_URL_HEADER)
+                  else:
+                    download = row.get(EPUB_FILENAME_HEADER)
+
                   temp_file = ""
 
                   description = row.get(DESCRIPTION_HEADER).encode('utf-8', 'ignore')
@@ -179,14 +204,16 @@ class GenerateLandingPageScript:
                         <div class="info">
                           <h2 class="title">%(title)s</h2>
                           <div class="author">%(author)s</div>
+                          <div class="read-time">2 hour read</div>
                         </div>
                       </div>
                       <a href="../books/%(book_hash)s/index.html" title="%(title)s" class="read-now">
                         START READING
                       </a>
                       <div class="book_desc">
-                        <div class="read-time">4 hour read</div>
-                        <div class="social-media-share"></div>
+                        <div class="social-media-share">
+                          %(socialMedia)s
+                        </div>
                         <div class="description-text">
                           %(description)s
                         </div>
@@ -200,7 +227,8 @@ class GenerateLandingPageScript:
                       "cover_src": cover_src,
                       "book_hash": book_hash,
                       "description": description,
-                      "mta_category": mta_category
+                      "mta_category": mta_category,
+                      "socialMedia": socialMedia
                   }
 
                   # Adding individual book titles and descriptions to dictionary to render later
@@ -276,52 +304,22 @@ class GenerateLandingPageScript:
                       "class": "adult"# if adult else ""
                   }
 
-                  # Insert the call to action after the third book in each category
-                  if mta_category in mta_category_dict and mta_category_dict[mta_category]["count"] == 2:
-                      book_html_category += """
-                        <li class="call-to-action">
-                          <p>Want more free e-books?</p>
-                          <p>Download SimplyE&mdash;the free e-reader app&mdash;for access to hundreds of thousands of library e-books.</p>
-                          <div>
-                            <a href="https://itunes.apple.com/us/app/nypl-simplye/id1046583900?mt=8" title="Download on the App Store"><img src="../apple_badge.png" alt="Download on the App Store"/></a>
-                            <a href="https://play.google.com/store/apps/details?id=org.nypl.simplified.simplye&hl=en" title="Get it on Google Play"><img src="../google_badge.png" alt="Get it on Google Play"/></a>
-                          </div>
-                        </li>
-                      """
-
                   # Organize the book by its category
                   if mta_category in mta_category_dict:
                       mta_category_dict[mta_category]["home"] += book_html_home
                       mta_category_dict[mta_category]["category"] += book_html_category
-                      mta_category_dict[mta_category]["count"] += 1
                   else:
                       mta_category_dict[mta_category] = {
                           "home": book_html_home,
-                          "category": book_html_category,
-                          "count": 1
+                          "category": book_html_category
                       }
 
           category_nav_home = []
           category_nav = []
           mta_category_page = {}
-          category_count = 0
 
           # Generate the book lanes and insert a call to action for SimplyE on the homepage
           for category_key in mta_category_dict:
-              category_count += 1
-
-              if category_count == 3:
-                  books_html_home += """
-                    <li class="call-to-action">
-                      <p>Want more free e-books?</p>
-                      <p>Download SimplyE&mdash;the free e-reader app&mdash;for access to hundreds of thousands of library e-books.</p>
-                      <div>
-                        <a href="https://itunes.apple.com/us/app/nypl-simplye/id1046583900?mt=8" title="Download on the App Store" onclick="gap('send', 'event', 'DownloadApp', 'iOS');"><img src="apple_badge.png" alt="Download on the App Store"/></a>
-                        <a href="https://play.google.com/store/apps/details?id=org.nypl.simplified.simplye&hl=en" title="Get it on Google Play" onclick="gap('send', 'event', 'DownloadApp', 'Android');"><img src="google_badge.png" alt="Get it on Google Play"/></a>
-                      </div>
-                    </li>
-                  """
-
               books_html_home += """
                 <li class="category-lane">
                   <div class="category-header">
@@ -379,7 +377,11 @@ class GenerateLandingPageScript:
           for category_key in mta_category_page:
               with open(BOOK_CATEGORY_TEMPLATE) as template_file:
                   template = template_file.read()
-                  out = template.replace("{{category}}", category_key).replace("{{category_nav}}", "".join(category_nav)).replace("{{book_category}}", "".join(mta_category_page[category_key])).replace("{{logo}}", logo).replace("{{menuOpenBtn}}", menuOpenBtn).replace("{{xIconBtn}}", xIconBtn)
+                  out = template.replace("{{category}}", category_key).replace("{{category_nav}}", "".join(category_nav))
+                  out = out.replace("{{book_category}}", "".join(mta_category_page[category_key])).replace("{{logo}}", logo)
+                  out = out.replace("{{menuOpenBtn}}", menuOpenBtn).replace("{{xIconBtn}}", xIconBtn).replace("{{footerLogos}}", footerLogos)
+                  out = out.replace("{{footerSocialMedia}}", footerSocialMedia).replace("{{downloadAppBtns}}", downloadAppBtns)
+                  out = out.replace("{{callOutText}}", callOutText)
 
                   with codecs.open(os.path.join(book_category_dir, category_key + ".html"), 'w', "utf-8") as output_file:
                       output_file.write(out)
@@ -388,19 +390,38 @@ class GenerateLandingPageScript:
           for book in all_books_description:
               with open(BOOK_DESC_TEMPLATE) as template_file:
                   template = template_file.read()
-                  out = template.replace("{{title}}", all_books_description[book]['title']).replace("{{book_desc_html}}", all_books_description[book]['book_desc_html']).replace("{{category_nav}}", "".join(category_nav)).replace("{{logo}}", logo).replace("{{menuOpenBtn}}", menuOpenBtn).replace("{{xIconBtn}}", xIconBtn)
+                  out = template.replace("{{title}}", all_books_description[book]['title'])
+                  out = out.replace("{{book_desc_html}}", all_books_description[book]['book_desc_html']).replace("{{category_nav}}", "".join(category_nav))
+                  out = out.replace("{{logo}}", logo).replace("{{menuOpenBtn}}", menuOpenBtn).replace("{{xIconBtn}}", xIconBtn).replace("{{footerLogos}}", footerLogos)
+                  out = out.replace("{{footerSocialMedia}}", footerSocialMedia).replace("{{downloadAppBtns}}", downloadAppBtns)
+                  out = out.replace("{{callOutText}}", callOutText)
 
                   with codecs.open(os.path.join(book_desc_dir, all_books_description[book]["book_hash"] + ".html"), 'w', "utf-8") as output_file:
                       output_file.write(out)
 
           with open(INDEX_TEMPLATE) as template_file:
               template = template_file.read()
-              out = template.replace("{{all_books}}", "".join(books_html_home)).replace("{{category_nav}}", "".join(category_nav_home)).replace("{{logo}}", logo).replace("{{menuOpenBtn}}", menuOpenBtn).replace("{{xIconBtn}}", xIconBtn)
+              out = template.replace("{{all_books}}", "".join(books_html_home)).replace("{{category_nav}}", "".join(category_nav_home))
+              out = out.replace("{{logo}}", logo).replace("{{menuOpenBtn}}", menuOpenBtn).replace("{{xIconBtn}}", xIconBtn).replace("{{footerLogos}}", footerLogos)
+              out = out.replace("{{footerSocialMedia}}", footerSocialMedia).replace("{{downloadAppBtns}}", downloadAppBtns)
+              out = out.replace("{{callOutText}}", callOutText)
 
               with codecs.open(os.path.join(self.output_dir, "index.html"), 'w', "utf-8") as output_file:
                   output_file.write(out)
 
               cacheManifest += "index.html\n"
+
+          with open(ABOUT_PAGE_TEMPLATE) as template_file:
+              template = template_file.read()
+              out = template.replace("{{category_nav}}", "".join(category_nav_home)).replace("{{logo}}", logo)
+              out = out.replace("{{menuOpenBtn}}", menuOpenBtn).replace("{{xIconBtn}}", xIconBtn).replace("{{footerLogos}}", footerLogos)
+              out = out.replace("{{footerSocialMedia}}", footerSocialMedia).replace("{{downloadAppBtns}}", downloadAppBtns)
+              out = out.replace("{{callOutText}}", callOutText)
+
+              with codecs.open(os.path.join(self.output_dir, "about.html"), 'w', "utf-8") as output_file:
+                  output_file.write(out)
+
+              cacheManifest += "about.html\n"
 
           for file_to_copy in FILES_TO_COPY:
               path = os.path.join(package_dir, file_to_copy)

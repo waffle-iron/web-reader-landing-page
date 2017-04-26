@@ -29,12 +29,8 @@
       {{category_nav}}
     </ul>
     <div class="nav-simplye">
-      <p>Get free access to over 300,000 eBooks with SimplyE.</p>
-      <p>Download now</p>
-      <div>
-        <a href="https://itunes.apple.com/us/app/nypl-simplye/id1046583900?mt=8" title="Download on the App Store" onclick="gap('send', 'event', 'DownloadApp', 'iOS');"><img src="apple_badge.png" alt="Download on the App Store"/></a>
-        <a href="https://play.google.com/store/apps/details?id=org.nypl.simplified.simplye&hl=en" title="Get it on Google Play" onclick="gap('send', 'event', 'DownloadApp', 'Android');"><img src="google_badge.png" alt="Get it on Google Play"/></a>
-      </div>
+      {{callOutText}}
+      {{downloadAppBtns}}
     </div>
   </nav>
   <div class="wrapper">
@@ -49,6 +45,7 @@
     <main>
       <div class="banner">
         <p>Read books, excerpts, and short stories from NYC public libraries.</p>
+        <a href="about.html">Learn more &gt;</a>
       </div>
 
       <div role="dialog" aria-labelledby="age-check-title" class="age-check" style="display: none">
@@ -67,15 +64,24 @@
       </ul>
     </main>
     <footer>
-      <div class="share-app">
-        <h2>Share Underground Library</h2>
-      </div>
-      <div class="deep-footer">
-        <div class="footer-logo">
-          <span>{{logo}}</span>
-          <span>Powered by SimplyE<br />The Library E-Reader App</span>
+      <div class="call-to-action">
+        <p>Want more free e-books?</p>
+        {{callOutText}}
+        {{downloadAppBtns}}
+        <div class="action-links">
+          <p>Learn more about <a href="#">SimplyE</a>, <a href="#">Queens Library</a>, and
+            <a href="#">Brooklyn Library</a> apps.
+          </p>
         </div>
-        <p>Terms of Service | About Us</p>
+      </div>
+      {{footerSocialMedia}}
+      <div class="deep-footer">
+        {{footerLogos}}
+        <p>The New York Public Library<br /><br />
+          <a href="license.html">Terms and Conditions</a> &bull;
+          <a href="about.html">About Us</a> &bull;
+          <a href="nyplprivacypolicy.html">Privacy Policy</a>
+        </p>
       </div>
     </footer>
   </div>
