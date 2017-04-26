@@ -2,3 +2,4 @@ TextBlob
 openpyxl
 requests
 pysftp
+Pillow == 4.1.0
