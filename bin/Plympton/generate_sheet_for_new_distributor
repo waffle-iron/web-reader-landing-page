@@ -95,7 +95,8 @@ class Book(object):
                     description, bisacs, isbn, epub, jpg, word_count, publisher)
 
 def dictreader(filename):
-    """Load a single-sheet Excel spreadsheet into a list of dictionaries.
+    """Load a single-sheet Excel spreadsheet into a generator sequence of
+    dictionaries.
 
     Each dictionary represents a row of the spreadsheet. The values of the
     first row are used for the key names.
