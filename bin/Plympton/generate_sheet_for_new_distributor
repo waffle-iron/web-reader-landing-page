@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/env python
 # Take a previously unseen set of books and generate a CSV file that can be
 # made into a new sheet in MTA Subway Reads Titles
 # https://docs.google.com/spreadsheets/d/1s5v-NJTmBfXAh8xBhBSA4ABQ2weaGu-j7Jy_5hbgfh4/edit#gid=605586782
@@ -10,6 +10,7 @@
 #  will output ./Distributor.csv (a normalized .csv file)
 #  will output ./Distributor.html (a guide to the content)
 
+from openpyxl import load_workbook
 from pdb import set_trace
 import os
 from csv import reader, writer, DictReader
@@ -33,16 +34,24 @@ class Book(object):
         
     @property
     def csv_row(self):
-        return [self.title, self.author, "", "", "", "", self.children_ok,
-                self.fiction, self.short, self.bisac, self.description,
-                self.identifier, self.epub, self.cover, self.word_count]
+        return map(self.output_ready,
+                   [self.title, self.author, "", "", "", "", self.children_ok,
+                    self.fiction, self.short, self.bisac, self.description,
+                    self.identifier, self.epub, self.cover, self.word_count]
+        )
 
+    def output_ready(self, value):
+        if isinstance(value, unicode):
+            value = value.encode("utf8")
+        return value
+    
     @property
     def html_item(self):
-        return '<td><img src="%s/%s" height="300" width="225"><br><a href="%s/%s">%s</a><br>%s</td>\n' % (
+        value = u'<td><img src="%s/%s" height="300" width="225"><br><a href="%s/%s">%s</a><br>%s</td>\n' % (
             self.publisher, self.cover, self.publisher, self.epub,
             self.title, self.author
         )
+        return value.encode("utf8")
 
     @classmethod
     def from_plympton_row(cls, publisher, row):
@@ -56,7 +65,9 @@ class Book(object):
         bisac1 = row['BISAC / Genre 1']
         bisac2 = row['BISAC / Genre 2']
         bisac3 = row['BISAC / Genre 3']
-        word_count = row['Word Count'].replace(",", "")
+        word_count = row['Word Count']
+        if isinstance(word_count, basestring):
+            word_count = word_count.replace(",", "")
         if word_count:
             word_count = int(word_count)
         else:
@@ -83,18 +94,39 @@ class Book(object):
         return Book(title, author, children_ok, fiction, is_short,
                     description, bisacs, isbn, epub, jpg, word_count, publisher)
 
-publisher = sys.argv[1]
-if publisher.endswith('/'):
-    publisher = publisher[:-1]
-[csv] = [x for x in os.listdir(publisher) if x.endswith(".csv")]
-csv_path = os.path.join(publisher, csv)
-csv_in = DictReader(open(csv_path))
+def dictreader(filename):
+    """Load a single-sheet Excel spreadsheet into a list of dictionaries.
 
-html_out = open("%s.html" % publisher, "w")
+    Each dictionary represents a row of the spreadsheet. The values of the
+    first row are used for the key names.
+    """
+    wb = load_workbook(filename)
+    [sheet] = wb.sheetnames
+    sheet = wb.get_sheet_by_name(sheet)
+    keys = []
+    first_row = True
+    d = {}
+    for row in sheet.rows:
+        for i, cell in enumerate(row):
+            if first_row:
+                keys.append(cell.value)
+            else:
+                d[keys[i]] = cell.value
+        if first_row:
+            # We're done with the first row.
+            first_row = False
+        else:
+            # We're done with one of the other rows
+            yield d
+   
+publisher = sys.argv[1]
+csv_in = dictreader(publisher)
+
+html_out = open(publisher.replace(".xlsx", ".html"), "w")
 html_out.write("<html><head><title>%s titles</title></head><body>\n" % publisher)
 html_out.write("<table><tr>\n")
 
-csv_out = writer(open("%s.csv" % publisher, "w"))
+csv_out = writer(open(publisher.replace(".xlsx", ".csv"), "w"))
 csv_out.writerow(["Title", "Author Last, Author First", "MTA Category 1", "MTA Category 2", "Comment (for Lynn)", "Comment (for Leonard)", "OK for 12yo?", "Fiction", "Short", "BISAC", "Description", "Unique identifier", "EPUB URL", "Cover URL", "Word Count"])
 
 counter = 0
