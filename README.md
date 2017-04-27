@@ -19,6 +19,7 @@ Run `go get -u github.com/NYPL-Simplified/webpub-exporter` to download and build
 * Run `source ./env/bin/activate`
 * Run `pip install -r requirements.txt`
 * Run `git submodule init && git submodule update` to bring in the web reader.
+* Run `npm install` to install `gulp` used to compile SCSS and minify CSS and JS. That process is called when generating the site.
 
 ## Usage
 

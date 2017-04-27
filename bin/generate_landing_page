@@ -52,8 +52,7 @@ APP_CACHE_HTML = os.path.join(package_dir, "appcache.html")
 SIMPLYE_LOGO_TEMPLATE = os.path.join(template_dir, "se_logo.html.template")
 MENU_OPEN_BTN_TEMPLATE = os.path.join(template_dir, "menuOpenBtn.html.template")
 X_ICON_TEMPLATE = os.path.join(template_dir, "xIconBtn.html.template")
-FILES_TO_COPY = ["index.css",
-                 "simplyE_logo.png",
+FILES_TO_COPY = ["simplyE_logo.png",
                  "simplye.png",
                  "apple_badge.png",
                  "google_badge.png",
@@ -63,10 +62,11 @@ FILES_TO_COPY = ["index.css",
                  "webpub-viewer/node_modules/requirejs/require.js",
                  "webpub-viewer/node_modules/whatwg-fetch/fetch.js",
                  "webpub-viewer/dist/styles/css/main.css",
-                 "main.js",
                  "images/iphone_simplyE.png",
                  "nyplprivacypolicy.html",
-                 "license.html"
+                 "license.html",
+                 "assetBuild/index.min.css",
+                 "assetBuild/main.min.js",
                 ]
 
 logo = open(SIMPLYE_LOGO_TEMPLATE).read()
@@ -78,6 +78,11 @@ footerSocialMedia = open(FOOTER_SOCIAL_MEDIA_TEMPLATE).read()
 downloadAppBtns = open(DOWNLOAD_APP_BTNS_TEMPLATE).read()
 
 callOutText = "<p>Download SimplyE&mdash;the library e-reader app&mdash;for access to hundreds of thousands of library e-books.</p>"
+
+# Compile SASS and minify both CSS and JS
+css_js_build = subprocess.call("./node_modules/.bin/gulp", cwd=os.path.abspath(package_dir), shell=True)
+if css_js_build != 0:
+      raise Exception("Failed to build landing page javascript and css")
 
 class GenerateLandingPageScript:
 
@@ -372,6 +377,9 @@ class GenerateLandingPageScript:
           cacheManifest = "CACHE MANIFEST\n #timestamp "
           cacheManifest += str(datetime.datetime.utcnow())
           cacheManifest += "\n\n"
+
+          category_nav += "<li><a href='../about.html'>About</a></li>"
+          category_nav_home += "<li><a href='about.html'>About</a></li>"
 
           # Generate all individual category pages
           book_category_dir = os.path.join(self.output_dir, "category/")
