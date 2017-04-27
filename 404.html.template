@@ -48,7 +48,7 @@
   </nav>
   <div class="wrapper">
     <header>
-      <a href="." class="logo">
+      <a href="/" class="logo">
         {{logo}}
         <h1>Subway Library</h1>
       </a>
@@ -61,7 +61,7 @@
         The page you were looking for doesn’t exist.
         </p>
         <p>
-          Visit the Subway Library <a href="." title="Subway Library home page">home page</a> or
+          Visit the Subway Library <a href="/" title="Subway Library home page">home page</a> or
           <a href="https://www.nypl.org/books-music-dvds/ebookcentral/simplye">learn more about SimplyE</a>.
         </p>
       </div>
@@ -71,8 +71,8 @@
         {{footerLogos}}
         <p>
           <a href="https://www.nypl.org/help/about-nypl/legal-notices/website-terms-and-conditions">Terms and Conditions</a> &bull;
-          <a href="about.html">About Us</a> &bull;
-          <a href="privacypolicy.html">Privacy Policy</a>
+          <a href="/about.html">About Us</a> &bull;
+          <a href="/privacypolicy.html">Privacy Policy</a>
         </p>
       </div>
     </footer>
