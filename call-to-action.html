@@ -19,6 +19,66 @@
     </script>
   </head>
   <body>
-    <h1>A Call To Action Will Live Here</h1>
+    <style>
+    .call-to-action {
+      background: #f8f8f8;
+      text-align: center;
+      margin: 0 0 -15px;
+      padding: 20px 0;
+      max-width: 50rem;
+      margin: 0 auto;
+    }
+    .call-to-action p {
+      line-height: 1.2em;
+      padding: 5px 25px;
+      margin: 0;
+    }
+    .call-to-action p:nth-child(1) {
+      font-size: 1.8rem;
+      font-weight: 900;
+    }
+    .call-to-action p:nth-child(2) {
+      font-size: 1.4rem;
+      font-weight: 100;
+    }
+    .call-to-action img {
+      width: 100px;
+    }
+    .call-to-action .download-link {
+      margin: 10px 0;
+    }
+    .download-link svg {
+      width: 150px;
+    }
+    .google-badge .badge,
+    .apple-badge .badge {
+      fill: #538e0c;
+    }
+    .google-badge .mark,
+    .apple-badge .mark > path {
+      fill: #fff;
+    }
+    .call-to-action .action-links {
+      text-align: center;
+    }
+    .call-to-action .action-links a {
+      font-weight: 900;
+      text-decoration: underline;
+      display: block;
+      margin-top: 15px;
+    }
+    </style>
+    <div class="interstitialAd call-to-action">
+      <p>Want more free e-books?</p>
+      {{callOutText}}
+      {{downloadAppBtns}}
+      <div class="action-links">
+        <p>Learn more about
+          <a href="https://www.nypl.org/books-music-dvds/ebookcentral/simplye" onclick="gap('send', 'event', 'LearnMore', 'SimplyE');">The New York Public Library</a>
+          <a href="https://www.bklynlibrary.org/ebooks" onclick="gap('send', 'event', 'LearnMore', 'BrooklynLibrary');">Brooklyn Library</a>
+          <a href="http://connect.queenslibrary.org/" onclick="gap('send', 'event', 'LearnMore', 'QueensLibrary');">Queens Library</a>
+        </p>
+      </div>
+    </div>
   </body>
 </html>

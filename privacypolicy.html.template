@@ -56,41 +56,13 @@
     </header>
 
     <main>
-      <div class="banner">
-        <p>Read books, excerpts, and short stories from NYC public libraries.</p>
-        <p>A partnership with the MTA, Transit Wireless & New York State</p>
-        <a href="about.html" aria-label="Learn more about Subway Library">Learn more &gt;</a>
-      </div>
+      <div class="privacy-policy-page">
+        <p><strong>Simply E Privacy Statement</strong></p>
 
-      <div role="dialog" aria-labelledby="age-check-title" class="age-check" style="display: none">
-        <div>
-          <h2 id="age-check-title">You must be 13 or older to read all books.</h2>
-          <h3>How old are you?</h3>
-          <div class="age-check-buttons">
-            <button class="age-check-under"><h2>Under 13</h2></button>
-            <button class="age-check-over"><h2>13 or Older</h2></button>
-          </div>
-        </div>
+        <p>The New York Public Library’s SimplyE app makes it easy for you to access more than 120,000 free ebook titles in just a few short steps. SimplyE is consistent with NYPL’s privacy policy, which can be found at <a href="http://www.nypl.org/help/about-nypl/legal-notices/privacy-policyl">http://www.nypl.org/help/about-nypl/legal-notices/privacy-policyl</a>. We encourage you to read it carefully. In keeping with our privacy policy, the Library may provide your personal information as well as usage data to third-party providers who help NYPL deliver e-book content.</p>
       </div>
-
-      <ul>
-        {{all_books}}
-      </ul>
     </main>
     <footer>
-      <div class="call-to-action">
-        <p>Want more free e-books?</p>
-        {{callOutText}}
-        {{downloadAppBtns}}
-        <div class="action-links">
-          <p>Learn more about
-            <a href="https://www.nypl.org/books-music-dvds/ebookcentral/simplye" onclick="gap('send', 'event', 'LearnMore', 'SimplyE');">The New York Public Library</a>
-            <a href="https://www.bklynlibrary.org/ebooks" onclick="gap('send', 'event', 'LearnMore', 'BrooklynLibrary');">Brooklyn Library</a>
-            <a href="http://connect.queenslibrary.org/" onclick="gap('send', 'event', 'LearnMore', 'QueensLibrary');">Queens Library</a>
-          </p>
-        </div>
-      </div>
-      {{footerSocialMedia}}
       <div class="deep-footer">
         {{footerLogos}}
         <p>

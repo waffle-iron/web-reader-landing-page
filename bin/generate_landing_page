@@ -50,6 +50,8 @@ FOOTER_LOGOS_TEMPLATE = os.path.join(template_dir, "footer-logos.html.template")
 SOCIAL_MEDIA_TEMPLATE = os.path.join(template_dir, "bookSocialMedia.html.template")
 FOOTER_SOCIAL_MEDIA_TEMPLATE = os.path.join(template_dir, "footerSocialMedia.html.template")
 DOWNLOAD_APP_BTNS_TEMPLATE = os.path.join(template_dir, "downloadAppBtns.html.template")
+ERROR_PAGE_TEMPLATE = os.path.join(package_dir, "404.html.template")
+PRIVACY_POLICY_TEMPLATE = os.path.join(package_dir, "privacypolicy.html.template")
 APP_CACHE_HTML = os.path.join(package_dir, "appcache.html")
 SIMPLYE_LOGO_TEMPLATE = os.path.join(template_dir, "se_logo.html.template")
 MENU_OPEN_BTN_TEMPLATE = os.path.join(template_dir, "menuOpenBtn.html.template")
@@ -65,8 +67,6 @@ FILES_TO_COPY = ["simplyE_logo.png",
                  "webpub-viewer/node_modules/whatwg-fetch/fetch.js",
                  "webpub-viewer/dist/styles/css/main.css",
                  "images/iphone_simplyE.png",
-                 "nyplprivacypolicy.html",
-                 "license.html",
                  "assetBuild/index.min.css",
                  "assetBuild/main.min.js",
                 ]
@@ -79,7 +79,7 @@ socialMedia = open(SOCIAL_MEDIA_TEMPLATE).read()
 footerSocialMedia = open(FOOTER_SOCIAL_MEDIA_TEMPLATE).read()
 downloadAppBtns = open(DOWNLOAD_APP_BTNS_TEMPLATE).read()
 
-callOutText = "<p>Download SimplyE&mdash;the library e-reader app&mdash;for access to hundreds of thousands of library e-books.</p>"
+callOutText = "<p>Download SimplyE for access to hundreds of thousands of library e-books.</p>"
 
 # Compile SASS and minify both CSS and JS
 css_js_build = subprocess.call("./node_modules/.bin/gulp", cwd=os.path.abspath(package_dir), shell=True)
@@ -185,7 +185,7 @@ class GenerateLandingPageScript:
 
                   #  read call-to-action.html as a template and substitute in the Book's title as document title
                   call_to_action_string = open(os.path.join(package_dir, 'call-to-action.html')).read()
-                  call_to_action_string = call_to_action_string.replace("{{title}}", title)
+                  call_to_action_string = call_to_action_string.replace("{{title}}", title).replace("{{callOutText}}", callOutText).replace("{{downloadAppBtns}}", downloadAppBtns)
 
                   with codecs.open(os.path.join(book_dir, 'call-to-action.html'), 'w', 'utf-8') as book_specific_call_to_action_file:
                     book_specific_call_to_action_file.write(call_to_action_string)
@@ -432,6 +432,28 @@ class GenerateLandingPageScript:
                   output_file.write(out)
 
               cacheManifest += "about.html\n"
+
+          with open(ERROR_PAGE_TEMPLATE) as template_file:
+              template = template_file.read()
+              out = template.replace("{{category_nav}}", "".join(category_nav_home)).replace("{{logo}}", logo)
+              out = out.replace("{{menuOpenBtn}}", menuOpenBtn).replace("{{xIconBtn}}", xIconBtn).replace("{{footerLogos}}", footerLogos)
+              out = out.replace("{{downloadAppBtns}}", downloadAppBtns).replace("{{callOutText}}", callOutText)
+
+              with codecs.open(os.path.join(self.output_dir, "404.html"), 'w', "utf-8") as output_file:
+                  output_file.write(out)
+
+              cacheManifest += "404.html\n"
+
+          with open(PRIVACY_POLICY_TEMPLATE) as template_file:
+              template = template_file.read()
+              out = template.replace("{{category_nav}}", "".join(category_nav_home)).replace("{{logo}}", logo)
+              out = out.replace("{{menuOpenBtn}}", menuOpenBtn).replace("{{xIconBtn}}", xIconBtn).replace("{{footerLogos}}", footerLogos)
+              out = out.replace("{{downloadAppBtns}}", downloadAppBtns).replace("{{callOutText}}", callOutText)
+
+              with codecs.open(os.path.join(self.output_dir, "privacypolicy.html"), 'w', "utf-8") as output_file:
+                  output_file.write(out)
+
+              cacheManifest += "privacypolicy.html\n"
 
           for file_to_copy in FILES_TO_COPY:
               path = os.path.join(package_dir, file_to_copy)
