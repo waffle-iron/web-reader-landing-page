@@ -1,9 +1,23 @@
 <!DOCTYPE html>
 <html lang="en" manifest="manifest.appcache">
 <head>
-  <title>Subway Reads | About</title>
+  <title>Subway Library | About</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <meta  property="og:type" content="website" />
+  <meta  property="og:site_name" content="Subway Library" />
+  <meta  property="og:title" content="Subway Library | About" />
+  <meta  property="og:image" content="iphone_simplyE.png" />
+  <meta  property="og:description" content="Subway Library | Browse books, excerpts, and short stories from NYC public libraries. Connect to Transit Wireless Wi-Fi at any MTA station to start reading now." />
+  <meta  property="og:url" content="http://subwaylibrary.nyc" />
+  <meta  name="twitter:card" content="summary_large_image" />
+  <meta  name="twitter:site" content="@nypl" />
+  <meta  name="twitter:creator" content="@nypl" />
+  <meta  name="twitter:title" content="Subway Library" />
+  <meta  name="twitter:description" content="Subway Library | Browse books, excerpts, and short stories from NYC public libraries. Connect to Transit Wireless Wi-Fi at any MTA station to start reading now." />
+  <meta  name="twitter:image" content="iphone_simplyE.png" />
+
   <link rel="stylesheet" href="index.min.css" />
   <link rel="icon" href="simplye.png" sizes="300x300" type="image/png"/>
   <!-- Home screen icon in iOS -->
@@ -110,8 +124,8 @@
         </div>
 
         <p>To celebrate cell service and free Wi-Fi in all underground subway stations, NYC’s libraries, MTA, and Transit Wireless have partnered to bring you Subway Library.</p>
-        <p>Simply connect to TransitWireless Wi-Fi in any MTA station. Once you're connected, you can read free books, excerpts, and short stories, all provided by NYC’s public libraries.</p>
-        <p>Subway Library is powered by SimplyE, the free library e-reader app that lets you browse, borrow, and read thousands of library e-books instantly—anywhere, anytime.</p>
+        <p>Simply connect to TransitWireless Wi-Fi in any MTA station. Once you’re connected, you can read free books, excerpts, and short stories, all provided by NYC’s public libraries.</p>
+        <p>Subway Library is powered by SimplyE, the free library e-reader app that lets you browse, borrow, and read thousands more  library e-books instantly—anywhere, anytime.</p>
 
         <h3>SimplyE</h3>
         <img src="iphone_simplyE.png" class="about-simplye" alt="" />

@@ -1,9 +1,23 @@
 <!DOCTYPE html>
 <html lang="en" manifest="manifest.appcache">
 <head>
-  <title>Subway Reads</title>
+  <title>Subway Library</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <meta  property="og:type" content="website" />
+  <meta  property="og:site_name" content="Subway Library" />
+  <meta  property="og:title" content="Subway Library" />
+  <meta  property="og:image" content="iphone_simplyE.png" />
+  <meta  property="og:description" content="Subway Library | Browse books, excerpts, and short stories from NYC public libraries. Connect to Transit Wireless Wi-Fi at any MTA station to start reading now." />
+  <meta  property="og:url" content="http://subwaylibrary.nyc" />
+  <meta  name="twitter:card" content="summary_large_image" />
+  <meta  name="twitter:site" content="@nypl" />
+  <meta  name="twitter:creator" content="@nypl" />
+  <meta  name="twitter:title" content="Subway Library" />
+  <meta  name="twitter:description" content="Subway Library | Browse books, excerpts, and short stories from NYC public libraries. Connect to Transit Wireless Wi-Fi at any MTA station to start reading now." />
+  <meta  name="twitter:image" content="iphone_simplyE.png" />
+
   <link rel="stylesheet" href="index.min.css" />
   <link rel="icon" href="simplye.png" sizes="300x300" type="image/png"/>
   <!-- Home screen icon in iOS -->
@@ -43,8 +57,8 @@
 
     <main>
       <div class="banner">
-        <p>Read books, excerpts, and short stories from NYC public libraries.</p>
-        <a href="about.html">Learn more &gt;</a>
+        <p>Browse books, excerpts, and short stories from NYC public libraries. Connect to Transit Wireless Wi-Fi at any MTA station to start reading now.</p>
+        <a href="about.html" aria-label="Learn more about Subway Library">Learn more &gt;</a>
       </div>
 
       <div role="dialog" aria-labelledby="age-check-title" class="age-check" style="display: none">
@@ -68,8 +82,10 @@
         {{callOutText}}
         {{downloadAppBtns}}
         <div class="action-links">
-          <p>Learn more about <a href="#">SimplyE</a>, <a href="#">Queens Library</a>, and
-            <a href="#">Brooklyn Library</a> apps.
+          <p>Learn more about
+            <a href="https://www.nypl.org/books-music-dvds/ebookcentral/simplye">The New York Public Library</a>
+            <a href="https://www.bklynlibrary.org/ebooks">Brooklyn Library</a>
+            <a href="http://connect.queenslibrary.org/">Queens Library</a>
           </p>
         </div>
       </div>
