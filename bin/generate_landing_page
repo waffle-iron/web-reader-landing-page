@@ -12,8 +12,10 @@ import urllib2
 import json
 import shutil
 import zipfile
-import uuid
 import glob
+import re
+import base64
+
 from PIL import Image
 
 # I am having SSL Cert problems
@@ -95,6 +97,7 @@ class GenerateLandingPageScript:
       def run(self):
           self.clean_and_create_workspace()
           self.download_and_extract_publisher_assets()
+
           if not os.path.exists(self.output_dir):
               os.mkdir(self.output_dir)
               os.mkdir(self.output_dir + "/books")
@@ -128,12 +131,10 @@ class GenerateLandingPageScript:
                   else:
                     cover = row.get(COVER_FILENAME_HEADER)
 
-                  # Get the cover, from either the workspace or the internet
-                  # and put it in output_dir/covers/originalfilename.ext
+                  book_hash = base64.b64encode(author+title)
+                  book_hash = re.sub('[^0-9a-zA-Z]+', '', book_hash)
 
-                  #This UUID is helpful in cache-busting
-                  book_uuid = str(uuid.uuid4())
-                  local_path_to_cover = os.path.join(self.output_dir, 'covers', book_uuid)
+                  local_path_to_cover = os.path.join(self.output_dir, 'covers', book_hash)
                   os.makedirs(local_path_to_cover)
                   if "http" in cover or "https" in cover:
                     remote_cover_content = urllib2.urlopen(cover).read()
@@ -146,7 +147,7 @@ class GenerateLandingPageScript:
                     local_path_to_cover     = os.path.join(local_path_to_cover, cover)
                     shutil.copy(workspace_path_to_cover, local_path_to_cover)
 
-                  cover_src = os.path.join('covers', book_uuid, os.path.basename(local_path_to_cover))
+                  cover_src = os.path.join('covers', book_hash, os.path.basename(local_path_to_cover))
 
                   if row.get(EPUB_URL_HEADER) and (row.get(EPUB_URL_HEADER).replace(' ', '') != ''):
                     download = row.get(EPUB_URL_HEADER)
@@ -157,9 +158,6 @@ class GenerateLandingPageScript:
 
                   description = row.get(DESCRIPTION_HEADER).encode('utf-8', 'ignore')
                   mta_category = row.get(MTA_CATEGORY_1)
-
-                  # Generate the individual webreader for the book
-                  folder_name = (title + " - " + author).encode('ascii', 'ignore')
 
                   if "http" in download or "https" in download:
                       print "Downloading %s." % download
@@ -172,7 +170,7 @@ class GenerateLandingPageScript:
                       print "Looking for %s locally" % download
                       temp_file = os.path.join(self.workspace_path, download)
 
-                  book_dir = os.path.join(self.output_dir, "books/" + folder_name)
+                  book_dir = os.path.join(self.output_dir, "books/" + book_hash)
                   export_result = subprocess.call('$GOPATH/bin/webpub-exporter -f %s -o "%s"' % (temp_file, book_dir), shell=True)
                   if export_result != 0:
                       print "Failed to export %s" % download
@@ -214,7 +212,7 @@ class GenerateLandingPageScript:
                           <div class="read-time">2 hour read</div>
                         </div>
                       </div>
-                      <a href="../books/%(folder_name)s/index.html" title="%(title)s" class="read-now">
+                      <a href="../books/%(book_hash)s/index.html" title="%(title)s" class="read-now">
                         START READING
                       </a>
                       <div class="book_desc">
@@ -232,7 +230,7 @@ class GenerateLandingPageScript:
                       "title": title,
                       "author": author,
                       "cover_src": cover_src,
-                      "folder_name": folder_name,
+                      "book_hash": book_hash,
                       "description": description,
                       "mta_category": mta_category,
                       "socialMedia": socialMedia
@@ -241,7 +239,8 @@ class GenerateLandingPageScript:
                   # Adding individual book titles and descriptions to dictionary to render later
                   all_books_description[title + " - " + author] = {
                       "title": title,
-                      "book_desc_html": book_desc_html
+                      "book_desc_html": book_desc_html,
+                      "book_hash":      book_hash
                   }
 
                   with open(APP_CACHE_HTML) as appcache_file:
@@ -267,7 +266,7 @@ class GenerateLandingPageScript:
                   # This is the markup for a single book on the homepage
                   book_html_home = """
                     <li>
-                      <a href="./book_desc/%(title)s - %(author)s.html" title="%(title)s" class="%(class)s">
+                      <a href="./book_desc/%(book_hash)s.html" title="%(title)s" class="%(class)s">
                         <img src="%(cover_src)s" alt="" />
                         <div class="info">
                           <div class="title">%(title)s</div>
@@ -279,7 +278,7 @@ class GenerateLandingPageScript:
                       "title": title,
                       "author": author,
                       "cover_src": cover_src,
-                      "folder_name": folder_name,
+                      "book_hash": book_hash,
                       "class": "adult"# if adult else ""
                   }
 
@@ -293,10 +292,10 @@ class GenerateLandingPageScript:
                         <p>Short description</p>
                         <div class="read-time">4 hour read</div>
                         <div class="book-links">
-                          <a href="../books/%(folder_name)s/index.html" title="%(title)s">
+                          <a href="../books/%(book_hash)s/index.html" title="%(title)s">
                             READ
                           </a>
-                          <a href="../book_desc/%(title)s - %(author)s.html" title="%(title)s">
+                          <a href="../book_desc/%(book_hash)s.html" title="%(title)s">
                             LEARN MORE
                           </a>
                         </div>
@@ -306,7 +305,7 @@ class GenerateLandingPageScript:
                       "title": title,
                       "author": author,
                       "cover_src": cover_src,
-                      "folder_name": folder_name,
+                      "book_hash": book_hash,
                       "class": "adult"# if adult else ""
                   }
 
@@ -405,7 +404,7 @@ class GenerateLandingPageScript:
                   out = out.replace("{{footerSocialMedia}}", footerSocialMedia).replace("{{downloadAppBtns}}", downloadAppBtns)
                   out = out.replace("{{callOutText}}", callOutText)
 
-                  with codecs.open(os.path.join(book_desc_dir, book + ".html"), 'w', "utf-8") as output_file:
+                  with codecs.open(os.path.join(book_desc_dir, all_books_description[book]["book_hash"] + ".html"), 'w', "utf-8") as output_file:
                       output_file.write(out)
 
           with open(INDEX_TEMPLATE) as template_file:
