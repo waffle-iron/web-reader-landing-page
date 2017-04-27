@@ -68,8 +68,8 @@
         {{callOutText}}
         {{downloadAppBtns}}
         <div class="action-links">
-          <p>Learn more about <a href="#">SimplyE</a>, <a href="#">Queens Library</a>, and
-            <a href="#">Brooklyn Library</a> apps.
+          <p>Learn more about <a href="#" onclick="gap('send', 'event', 'LearnMore', 'SimplyE');">SimplyE</a>, <a href="#" onclick="gap('send', 'event', 'LearnMore', 'QueensLibrary');">Queens Library</a>, and
+            <a href="#" onclick="gap('send', 'event', 'LearnMore', 'BrooklynLibrary');">Brooklyn Library</a> apps.
           </p>
         </div>
       </div>
