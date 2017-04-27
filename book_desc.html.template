@@ -1,9 +1,23 @@
 <!DOCTYPE html>
 <html lang="en" manifest="../manifest.appcache">
 <head>
-  <title>Subway Reads | {{title}}</title>
+  <title>Subway Library | {{title}}</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <meta  property="og:type" content="website" />
+  <meta  property="og:site_name" content="Subway Library" />
+  <meta  property="og:title" content="Subway Library | {{title}}" />
+  <meta  property="og:image" content="{{cover}}" />
+  <meta  property="og:description" content="Subway Library | Currently reading {{title}}." />
+  <meta  property="og:url" content="http://subwaylibrary.nyc" />
+  <meta  name="twitter:card" content="summary_large_image" />
+  <meta  name="twitter:site" content="@nypl" />
+  <meta  name="twitter:creator" content="@nypl" />
+  <meta  name="twitter:title" content="Subway Library" />
+  <meta  name="twitter:description" content="Subway Library | Currently reading {{title}}." />
+  <meta  name="twitter:image" content="{{cover}}" />
+
   <link rel="stylesheet" href="../index.min.css" />
   <link rel="icon" href="../simplye.png" sizes="300x300" type="image/png"/>
   <!-- Home screen icon in iOS -->
@@ -62,8 +76,10 @@
         {{callOutText}}
         {{downloadAppBtns}}
         <div class="action-links">
-          <p>Learn more about <a href="#" onclick="gap('send', 'event', 'LearnMore', 'SimplyE');">SimplyE</a>, <a href="#" onclick="gap('send', 'event', 'LearnMore', 'QueensLibrary');">Queens Library</a>, and
-            <a href="#" onclick="gap('send', 'event', 'LearnMore', 'BrooklynLibrary');">Brooklyn Library</a> apps.
+          <p>Learn more about
+            <a href="https://www.nypl.org/books-music-dvds/ebookcentral/simplye" onclick="gap('send', 'event', 'LearnMore', 'SimplyE');">The New York Public Library</a>
+            <a href="https://www.bklynlibrary.org/ebooks" onclick="gap('send', 'event', 'LearnMore', 'BrooklynLibrary');">Brooklyn Library</a>
+            <a href="http://connect.queenslibrary.org/" onclick="gap('send', 'event', 'LearnMore', 'QueensLibrary');">Queens Library</a>
           </p>
         </div>
       </div>
