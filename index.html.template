@@ -25,7 +25,6 @@
   <nav id="global-nav" aria-label="Main navigation">
     {{xIconBtn}}
     <ul class="tabs">
-      <li><a href=".">Subway Library</a></li>
       {{category_nav}}
     </ul>
     <div class="nav-simplye">

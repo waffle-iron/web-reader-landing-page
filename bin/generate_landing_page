@@ -233,25 +233,25 @@ class GenerateLandingPageScript:
                       "book_desc_html": book_desc_html
                   }
 
-                #   with open(APP_CACHE_HTML) as appcache_file:
-                #         html = appcache_file.read()
-                #         with open(os.path.join(book_dir, "appcache.html"), "w") as output_file:
-                #               output_file.write(html)
-                #
-                #   with open(os.path.join(book_dir, "manifest.appcache")) as manifest_file:
-                #       manifest = manifest_file.read()
-                #
-                #   manifest_list = "index.html\n"
-                #   manifest_list += "call-to-action.html\n"
-                #
-                #   for file_to_copy in FILES_TO_COPY:
-                #       path = os.path.join(package_dir, file_to_copy)
-                #       shutil.copy(path, self.output_dir)
-                #       manifest_list += "../../" + file_to_copy.split("/")[-1] + "\n"
-                #
-                #   manifest = manifest.replace("index.html\n", manifest_list)
-                #   with open(os.path.join(book_dir, "manifest.appcache"), "w") as manifest_file:
-                #         manifest_file.write(manifest)
+                  with open(APP_CACHE_HTML) as appcache_file:
+                        html = appcache_file.read()
+                        with open(os.path.join(book_dir, "appcache.html"), "w") as output_file:
+                              output_file.write(html)
+
+                  with open(os.path.join(book_dir, "manifest.appcache")) as manifest_file:
+                      manifest = manifest_file.read()
+
+                  manifest_list = "index.html\n"
+                  manifest_list += "call-to-action.html\n"
+
+                  for file_to_copy in FILES_TO_COPY:
+                      path = os.path.join(package_dir, file_to_copy)
+                      shutil.copy(path, self.output_dir)
+                      manifest_list += "../../" + file_to_copy.split("/")[-1] + "\n"
+
+                  manifest = manifest.replace("index.html\n", manifest_list)
+                  with open(os.path.join(book_dir, "manifest.appcache"), "w") as manifest_file:
+                        manifest_file.write(manifest)
 
                   # This is the markup for a single book on the homepage
                   book_html_home = """
