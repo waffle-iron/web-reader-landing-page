@@ -6,3 +6,9 @@ output
 workspace
 
 *.csv
+
+# npm packages
+node_modules
+
+# CSS and JS min assets
+assetBuild

@@ -36,11 +36,12 @@ header {
   background: #f8f8f8;
   color: #000;
   height: 40px;
-}
-header h1 {
-  margin: 10px;
-  display: inline-block;
-  vertical-align: super;
+
+  h1 {
+    margin: 10px;
+    display: inline-block;
+    vertical-align: super;
+  }
 }
 .header-wrapper {
   max-width: 87.5rem;
@@ -52,12 +53,14 @@ a.logo {
   /*float: left;*/
   margin: 5px 0 0;
   display: inline-block;
-}
-a.logo svg {
-  height: 30px;
-}
-a.logo img {
-  width: 65px;
+
+  svg {
+    height: 30px;
+  }
+
+  img {
+    width: 65px;
+  }
 }
 nav {
   display: inline-block;
@@ -104,18 +107,20 @@ main {
   color: #000;
   display: inline-block;
   width: 100%;
-}
-.banner p {
-  font-weight: 100;
-  font-size: 2.25rem;
-  padding: 0;
-  width: 92%;
-  margin-top: 10px;
-}
-.banner a {
-  text-transform: uppercase;
-  color: #61a60e;
-  font-weight: 900;
+
+  p {
+    font-weight: 100;
+    font-size: 2.25rem;
+    padding: 0;
+    width: 92%;
+    margin-top: 10px;
+  }
+
+  a {
+    text-transform: uppercase;
+    color: #61a60e;
+    font-weight: 900;
+  }
 }
 @media (min-width: 960px) {
   .banner p {
@@ -310,6 +315,22 @@ nav#global-nav {
   border: none;
   background: #f8f8f8;
   float: right;
+
+  .menu-text {
+    float: left;
+    padding: 15px 5px;
+    text-transform: uppercase;
+    color: #61a60e;
+    font-size: 1rem;
+  }
+}
+@media (min-width: 960px) {
+  #menu-button-open .menu-text {
+    display: block;
+    position: relative;
+    margin: 0px 35px 0px 0;
+    overflow: visible;
+  }
 }
 #menu-button-open svg {
   height: 20px;
@@ -478,28 +499,6 @@ body.active #global-nav {
 ul {
   margin: 0;
   padding: 1em 0 0;
-
-  li {
-    border-bottom: 1px solid #474747;
-    padding: 0;
-    margin: 0;
-    width: 100%;
-
-    a {
-      display: block;
-      color: #fff;
-      text-decoration: none;
-      padding: 1.5em 0 1.5em 2em;
-
-      &:hover,
-      &:focus {
-        background-color: #474747;
-      }
-      &:active {
-        color: #9fbf00;
-      }
-    }
-  }
 }
 
 #wrapper {
