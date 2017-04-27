@@ -15,6 +15,7 @@ import zipfile
 import glob
 import re
 import base64
+import random
 
 from PIL import Image
 
@@ -313,11 +314,11 @@ class GenerateLandingPageScript:
 
                   # Organize the book by its category
                   if mta_category in mta_category_dict:
-                      mta_category_dict[mta_category]["home"] += book_html_home
+                      mta_category_dict[mta_category]["home"].append(book_html_home)
                       mta_category_dict[mta_category]["category"] += book_html_category
                   else:
                       mta_category_dict[mta_category] = {
-                          "home": book_html_home,
+                          "home": [book_html_home],
                           "category": book_html_category
                       }
 
@@ -327,6 +328,9 @@ class GenerateLandingPageScript:
 
           # Generate the book lanes and insert a call to action for SimplyE on the homepage
           for category_key in mta_category_dict:
+              # randomize books in lane, each build
+              random.shuffle(mta_category_dict[category_key]["home"])
+
               books_html_home += """
                 <li class="category-lane">
                   <div class="category-header">
@@ -343,7 +347,7 @@ class GenerateLandingPageScript:
                 </li>
               """ % {
                   "category_key": category_key,
-                  "books": mta_category_dict[category_key]["home"]
+                  "books": "".join(mta_category_dict[category_key]["home"])
               }
 
               # Generate the main navigation from all the category titles
