@@ -139,9 +139,6 @@ main {
   }
 }
 
-.books a {
-  // display: table-cell;
-}
 .books a .title {
   font-weight: 900;
   font-size: 1.2em;
@@ -155,7 +152,6 @@ main {
   /*display: none;*/
 }
 .books img {
-  // width: 120px;
   height: 180px;
 }
 .books .info {
@@ -416,13 +412,9 @@ nav#global-nav {
 
 /* home page */
 .books {
-  // display: table;
-  // table-layout: fixed;
   width: 100%;
 }
 .books li {
-  // width: 120px;
-  // height: 120px;
   display: table-cell;
   vertical-align: top;
   padding-right: 10px;
