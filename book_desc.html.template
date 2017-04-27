@@ -34,13 +34,11 @@
   </nav>
   <div class="wrapper">
     <header>
-      <div class="header-wrapper">
-        <a href="../" class="logo">
-          {{logo}}
-          <h1>Subway Library</h1>
-        </a>
-        {{menuOpenBtn}}
-      </div>
+      <a href="../" class="logo">
+        {{logo}}
+        <h1>Subway Library</h1>
+      </a>
+      {{menuOpenBtn}}
     </header>
 
     <main>
