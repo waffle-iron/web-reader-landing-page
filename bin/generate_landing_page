@@ -78,7 +78,7 @@ downloadAppBtns = open(DOWNLOAD_APP_BTNS_TEMPLATE).read()
 callOutText = "<p>Download SimplyE&mdash;the library e-reader app&mdash;for access to hundreds of thousands of library e-books.</p>"
 
 # Compile SASS and minify both CSS and JS
-css_js_build = subprocess.call("gulp", cwd=os.path.abspath(package_dir), shell=True)
+css_js_build = subprocess.call("./node_modules/.bin/gulp", cwd=os.path.abspath(package_dir), shell=True)
 if css_js_build != 0:
       raise Exception("Failed to build landing page javascript and css")
 

@@ -4,7 +4,7 @@
 
 ### Dependencies
 
-* `npm` and `gulp` installed
+* `npm` installed
 * Having `go` installed and having `$GOPATH` env var set.
 
 go requires a directory to use for the $GOPATH. go will install dependencies there.
@@ -19,7 +19,7 @@ Run `go get -u github.com/NYPL-Simplified/webpub-exporter` to download and build
 * Run `source ./env/bin/activate`
 * Run `pip install -r requirements.txt`
 * Run `git submodule init && git submodule update` to bring in the web reader.
-* Run `npm install` to install `gulp` used to compile SCSS and minify CSS and JS.
+* Run `npm install` to install `gulp` used to compile SCSS and minify CSS and JS. That process is called when generating the site.
 
 ## Usage
 
