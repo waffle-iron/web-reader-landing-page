@@ -434,6 +434,7 @@ nav#global-nav {
 /* home page */
 .books {
   width: 100%;
+  display: table;
 }
 .books li {
   display: table-cell;
@@ -441,16 +442,23 @@ nav#global-nav {
   padding-right: 10px;
 }
 @media (min-width: 960px) {
+  .books {
+    display: block;
+  }
   .lane-container {
     height: 100%;
   }
   .books li {
-    width: 150px;
+    width: 154px;
     height: 320px;
   }
   .books li:nth-child(n+6) {
     display: inline-block;
-    padding-right: 7px;
+    padding-right: 6px;
+  }
+  .books li:nth-child(5),
+  .books li:nth-child(10) {
+    padding-right: 0;
   }
   .books img {
     width: 150px;
