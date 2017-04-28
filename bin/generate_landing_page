@@ -37,6 +37,7 @@ COVER_FILENAME_HEADER       = "Cover filename"
 EPUB_URL_HEADER             = "EPUB URL"
 EPUB_FILENAME_HEADER        = "EPUB filename"
 MTA_CATEGORY_1              = "MTA Category 1"
+WORD_COUNT                  = "Word Count"
 
 bin_dir = os.path.split(__file__)[0]
 package_dir = os.path.join(bin_dir, "..")
@@ -160,6 +161,20 @@ class GenerateLandingPageScript:
                   description = row.get(DESCRIPTION_HEADER).encode('utf-8', 'ignore')
                   mta_category = row.get(MTA_CATEGORY_1)
 
+                  book_word_count = row.get(WORD_COUNT)
+                  # using avg 150 wpm
+                  book_word_minutes = float(book_word_count) / 150
+                  book_word_hours = book_word_minutes / 60
+
+                  if book_word_hours <= 0.5:
+                      total_reading_time = "1/2 hour read"
+                  elif book_word_hours > 0.5 and book_word_hours <= 2:
+                      total_reading_time = "1 hour read"
+                  elif book_word_hours > 2 and book_word_hours <= 4:
+                      total_reading_time = "2+ hour read"
+                  elif book_word_hours > 4:
+                      total_reading_time = "4+ hour read"
+
                   if "http" in download or "https" in download:
                       print "Downloading %s." % download
                       remote_epub = urllib2.urlopen(download)
@@ -212,7 +227,7 @@ class GenerateLandingPageScript:
                         <div class="info">
                           <h2 class="title">%(title)s</h2>
                           <div class="author">%(author)s</div>
-                          <div class="read-time">2 hour read</div>
+                          <div class="read-time">%(total_reading_time)s</div>
                         </div>
                       </div>
                       <a href="../books/%(book_hash)s/index.html" title="%(title)s" class="read-now">
@@ -236,7 +251,8 @@ class GenerateLandingPageScript:
                       "book_hash": book_hash,
                       "description": description,
                       "mta_category": mta_category,
-                      "socialMedia": socialMediaHTML
+                      "socialMedia": socialMediaHTML,
+                      "total_reading_time": total_reading_time
                   }
 
                   # Adding individual book titles and descriptions to dictionary to render later
@@ -300,7 +316,7 @@ class GenerateLandingPageScript:
                             <a tabindex="-1" href="../book_desc/%(book_hash)s.html" title="%(title)s">%(title)s</a>
                         </h2>
                         <div class="author">%(author)s</div>
-                        <div class="read-time">4 hour read</div>
+                        <div class="read-time">%(total_reading_time)s</div>
                         <div class="book-links">
                           <a href="../books/%(book_hash)s/index.html" title="%(title)s"
                             aria-label="Read %(title)s">
@@ -318,7 +334,8 @@ class GenerateLandingPageScript:
                       "author": author,
                       "cover_src": cover_src,
                       "book_hash": book_hash,
-                      "class": "adult"# if adult else ""
+                      "class": "adult",
+                      "total_reading_time": total_reading_time
                   }
 
                   # Organize the book by its category
