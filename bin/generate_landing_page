@@ -339,6 +339,7 @@ class GenerateLandingPageScript:
           for category_key in mta_category_dict:
               # randomize books in lane, each build
               random.shuffle(mta_category_dict[category_key]["home"])
+              shortenHomeLane = (mta_category_dict[category_key]["home"])[:10]
 
               books_html_home += """
                 <li class="category-lane">
@@ -356,7 +357,7 @@ class GenerateLandingPageScript:
                 </li>
               """ % {
                   "category_key": category_key,
-                  "books": "".join(mta_category_dict[category_key]["home"])
+                  "books": "".join(shortenHomeLane)
               }
 
               # Generate the main navigation from all the category titles

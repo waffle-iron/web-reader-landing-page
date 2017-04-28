@@ -146,6 +146,7 @@ main {
 
 .cover {
   min-height: 180px;
+  min-width: 120px;
   display: block;
 }
 .books a .title {
@@ -433,11 +434,36 @@ nav#global-nav {
 /* home page */
 .books {
   width: 100%;
+  display: table;
 }
 .books li {
   display: table-cell;
   vertical-align: top;
   padding-right: 10px;
+}
+@media (min-width: 960px) {
+  .books {
+    display: block;
+  }
+  .lane-container {
+    height: 100%;
+  }
+  .books li {
+    width: 154px;
+    height: 320px;
+  }
+  .books li:nth-child(n+6) {
+    display: inline-block;
+    padding-right: 6px;
+  }
+  .books li:nth-child(5),
+  .books li:nth-child(10) {
+    padding-right: 0;
+  }
+  .books img {
+    width: 150px;
+    height: 220px;
+  }
 }
 .call-to-action.book-details-page {
   padding-bottom: 70px;
