@@ -105,15 +105,11 @@ main {
 
   p {
     font-weight: 100;
-    font-size: 2.25rem;
+    font-size: 1.8rem;
+    line-height: 1.3;
     padding: 0;
     width: 92%;
     margin: 10px 0;
-
-    &:nth-child(2) {
-      font-size: 1.3rem;
-      font-style: italic;
-    }
   }
 
   a {
@@ -403,6 +399,7 @@ nav#global-nav {
 .book-category img {
   display: inline-block;
   width: 120px;
+  width: 31vw; // Viewport units
 }
 .book-category .info {
   display: inline-block;
@@ -423,15 +420,20 @@ nav#global-nav {
   a {
     color: #468028;
     letter-spacing: .15rem;
+    display: inline-block;
+
+    &:first-child {
+      background: #468028;
+      border-radius: 5px;
+      border: 1px solid #468028;
+      color: #fff;
+      font-size: 1.2rem;
+      padding: 5px 25px 5px 30px;
+    }
+    &:last-child {
+      margin-left: 3%;
+    }
   }
-}
-.book-links a:first-child {
-  padding: 5px 20px 5px 30px;
-  border-radius: 5px;
-  border: 1px solid #468028;
-}
-.book-links a:last-child {
-  margin-left: 3%;
 }
 
 /* home page */
