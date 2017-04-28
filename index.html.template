@@ -57,7 +57,7 @@
 
     <main>
       <div class="banner">
-        <p>Read books, excerpts, and short stories from NYC public libraries. A partnership with the MTA, Transit Wireless & New York State</p>
+        <p>Read books, excerpts, and short stories from NYC public libraries. A partnership with the MTA, Transit Wireless & New York State.</p>
         <a href="about.html" aria-label="Learn more about Subway Library">Learn more &gt;</a>
       </div>
 
@@ -83,9 +83,9 @@
         {{downloadAppBtns}}
         <div class="action-links">
           <p>Learn more about
-            <a href="https://www.nypl.org/books-music-dvds/ebookcentral/simplye" onclick="gap('send', 'event', 'LearnMore', 'SimplyE');">The New York Public Library</a>
-            <a href="https://www.bklynlibrary.org/ebooks" onclick="gap('send', 'event', 'LearnMore', 'BrooklynLibrary');">Brooklyn Library</a>
-            <a href="http://connect.queenslibrary.org/" onclick="gap('send', 'event', 'LearnMore', 'QueensLibrary');">Queens Library</a>
+            <a href="https://www.nypl.org/books-music-dvds/ebookcentral/simplye" onclick="gap('send', 'event', 'LearnMore', 'SimplyE');">The New York Public Library &gt;</a>
+            <a href="https://www.bklynlibrary.org/ebooks" onclick="gap('send', 'event', 'LearnMore', 'BrooklynLibrary');">Brooklyn Library &gt;</a>
+            <a href="http://connect.queenslibrary.org/" onclick="gap('send', 'event', 'LearnMore', 'QueensLibrary');">Queens Library &gt;</a>
           </p>
         </div>
       </div>

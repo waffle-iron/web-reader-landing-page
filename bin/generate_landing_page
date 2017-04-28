@@ -324,7 +324,7 @@ class GenerateLandingPageScript:
                           </a>
                           <a href="../book_desc/%(book_hash)s.html" title="%(title)s"
                             aria-label="Learn more about %(title)s">
-                            LEARN MORE
+                            LEARN MORE &gt;
                           </a>
                         </div>
                       </div>
