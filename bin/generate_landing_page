@@ -163,7 +163,7 @@ class GenerateLandingPageScript:
 
                   book_word_count = row.get(WORD_COUNT)
                   # using avg 150 wpm
-                  book_word_minutes = int(book_word_count) / 150
+                  book_word_minutes = float(book_word_count) / 150
                   book_word_hours = book_word_minutes / 60
 
                   if book_word_hours <= 0.5:
