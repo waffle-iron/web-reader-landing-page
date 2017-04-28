@@ -303,7 +303,7 @@ class GenerateLandingPageScript:
                         <div class="read-time">4 hour read</div>
                         <div class="book-links">
                           <a href="../books/%(book_hash)s/index.html" title="%(title)s"
-                            aria-label="Read more about %(title)s">
+                            aria-label="Read %(title)s">
                             READ
                           </a>
                           <a href="../book_desc/%(book_hash)s.html" title="%(title)s"
