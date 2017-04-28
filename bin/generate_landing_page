@@ -199,6 +199,7 @@ class GenerateLandingPageScript:
                   with open(BOOK_INDEX_TEMPLATE) as template_file:
                       template = template_file.read()
                       out = template.replace("{{title}}", title).replace("{{cover}}", cover)
+                      out = out.replace("{{back_url}}", "../../book_desc/" + book_hash + ".html")
                       with codecs.open(os.path.join(book_dir, "index.html"), "w", "utf-8") as output_file:
                           output_file.write(out)
 
