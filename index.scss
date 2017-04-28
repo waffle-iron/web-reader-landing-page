@@ -428,6 +428,23 @@ nav#global-nav {
   vertical-align: top;
   padding-right: 10px;
 }
+@media (min-width: 960px) {
+  .lane-container {
+    height: 100%;
+  }
+  .books li {
+    width: 150px;
+    height: 320px;
+  }
+  .books li:nth-child(n+6) {
+    display: inline-block;
+    padding-right: 7px;
+  }
+  .books img {
+    width: 150px;
+    height: 220px;
+  }
+}
 .call-to-action.book-details-page {
   padding-bottom: 70px;
 }
