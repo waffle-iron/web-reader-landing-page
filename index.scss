@@ -174,7 +174,7 @@ main {
   width: 200px;
 }
 .book-details h2 {
-  font-size: 2.6em;
+  font-size: 2rem;
   font-weight: 900;
   margin-bottom: .5rem;
 }
@@ -435,7 +435,7 @@ nav#global-nav {
       padding: 5px 25px 5px 30px;
     }
     &:last-child {
-      margin-left: 20px 3% 0;
+      margin: 20px 3% 0;
     }
   }
 }
@@ -569,8 +569,6 @@ ul {
 main.about {
   padding: 0;
   line-height: 2rem;
-  /* Not a fan of this: */
-  margin: 0 0 -15px;
 }
 .about h2 {
   text-align: center;
