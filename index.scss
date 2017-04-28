@@ -171,6 +171,7 @@ main {
 .book .book-details {
   text-align: center;
   padding-bottom: 30px;
+  font-size: 1.4rem;
 }
 .book-details img {
   margin-top: 20px;
@@ -213,14 +214,14 @@ main {
 .social-media-share svg {
   width: 40px;
   height: 40px;
-  fill: #61a60e;
+  fill: #468028;
 }
 
 .back-to-category {
   text-align: center;
   display: block;
   margin-top: 30px;
-  font-size: 1.1em;
+  font-size: 1.4em;
   font-weight: bold;
 }
 
@@ -229,7 +230,7 @@ main {
 }
 .description-text {
   line-height: 1.8em;
-  font-size: 1.1em;
+  font-size: 1.4em;
 }
 .age-check {
   position: fixed;
@@ -330,7 +331,7 @@ nav#global-nav {
   #menu-button-open .menu-text {
     display: block;
     position: relative;
-    margin: 0px 35px 0px 0;
+    margin: -2px 35px 0px 0;
     overflow: visible;
   }
 }
@@ -380,19 +381,24 @@ nav#global-nav {
   width: 100%;
   height: 320px;
   overflow: auto;
+  -webkit-overflow-scrolling: touch;
 }
 
 /* Category page */
 .category-title {
   padding: 15px;
   text-align: center;
-  font-size: 1.4em;
+
+  h2 {
+    font-size: 2em;
+  }
 }
 .book-category li {
   width: 100%;
   border-top: 1px solid #ddd;
   display: block;
   padding: 15px;
+  min-height: 170px;
 }
 .book-category img {
   display: inline-block;
@@ -401,22 +407,27 @@ nav#global-nav {
 .book-category .info {
   display: inline-block;
   vertical-align: top;
-  margin: 0px 10px;
+  margin: 0px 20px;
   width: 55%;
+  font-size: 1.4rem;
 }
 .book-category .info h2 {
   margin-top: 0;
 }
 .book-category .info .book-links {
   margin-top: 20px;
+
+  a {
+    color: #468028;
+    letter-spacing: .15rem;
+  }
 }
 .book-links a:first-child {
-  padding: 5px 20px;
+  padding: 5px 20px 5px 30px;
   border-radius: 5px;
   border: 1px solid #468028;
 }
 .book-links a:last-child {
-  color: #468028;
   margin-left: 3%;
 }
 
@@ -566,19 +577,12 @@ main.about {
   margin: 0 auto;
   display: block;
 }
-.about-container .about-simplye.desktop {
-  display: none;
-}
+
 @media (min-width: 960px) {
   .about-container .about-simplye {
-    width: 30%;
-    display: inline-block;
-    left: 20%;
-    position: relative;
+    width: 40%;
+    display: block;
     margin-bottom: -10px;
-  }
-  .about-container .about-simplye.desktop {
-    display: inline-block;
   }
 }
 
@@ -600,7 +604,7 @@ footer .share-app {
 }
 footer .share-app h2 {
   padding: 20px 15px;
-  font-size: 1.4rem;
+  font-size: 1.8rem;
 }
 footer .share-app ul {
   padding: 0;
@@ -617,7 +621,7 @@ footer .share-app a {
 footer .share-app svg {
   width: 40px;
   height: 40px;
-  fill: #61a60e;
+  fill: #468028;
 }
 footer .deep-footer {
   background: #2e343b;
@@ -694,14 +698,17 @@ footer .sponsors svg {
 .about .sponsors svg {
   fill: #333;
 }
+// MTA
 footer .sponsors span:first-child {
   border-bottom: 1px solid #DEDEDE;
 }
+// In the about page: TransitWireless
 .about .sponsors span:nth-child(2) {
   border-left: 1px solid #DEDEDE;
   border-right: 1px solid #DEDEDE;
   padding: 10px 15px;
 }
+// TransitWireless
 footer .sponsors span:nth-child(2) {
   border-left: 1px solid #DEDEDE;
   border-bottom: 1px solid #DEDEDE;
@@ -711,9 +718,16 @@ footer .sponsors span:nth-child(2) svg {
   height: 25px;
   padding-top: 10px;
 }
+// NY State
 footer .sponsors span:nth-child(3) {
   border-bottom: 1px solid #DEDEDE;
 }
+// NYPL
+footer .sponsors span:nth-child(4) svg {
+  height: 50px;
+  margin: 0;
+}
+// BK Library
 footer .sponsors span:nth-child(5) {
   border-left: 1px solid #DEDEDE;
   border-right: 1px solid #DEDEDE;
@@ -731,9 +745,15 @@ footer .sponsors span:nth-child(5) svg {
   footer .sponsors span:nth-child(3) {
     border-bottom: none;
   }
+  // NY State
   footer .sponsors span:nth-child(3) {
     border-right: 1px solid #DEDEDE;
   }
+  // NYPL
+  footer .sponsors span:nth-child(4) svg {
+    height: 55px;
+  }
+  // Qns Library
   footer .sponsors span:nth-child(6) {
     padding-left: 20px;
   }

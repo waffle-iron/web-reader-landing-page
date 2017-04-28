@@ -199,6 +199,7 @@ class GenerateLandingPageScript:
                   with open(BOOK_INDEX_TEMPLATE) as template_file:
                       template = template_file.read()
                       out = template.replace("{{title}}", title).replace("{{cover}}", cover)
+                      out = out.replace("{{back_url}}", "../../book_desc/" + book_hash + ".html")
                       with codecs.open(os.path.join(book_dir, "index.html"), "w", "utf-8") as output_file:
                           output_file.write(out)
 
@@ -291,16 +292,22 @@ class GenerateLandingPageScript:
                   # This is the markup for a single book on a category page
                   book_html_category = """
                     <li>
-                      <img src="../%(cover_src)s" alt="" />
+                      <a tabindex="-1" href="../book_desc/%(book_hash)s.html" title="%(title)s">
+                        <img src="../%(cover_src)s" alt="" />
+                      </a>
                       <div class="info book_desc">
-                        <h2 class="title">%(title)s</h2>
+                        <h2 class="title">
+                            <a tabindex="-1" href="../book_desc/%(book_hash)s.html" title="%(title)s">%(title)s</a>
+                        </h2>
                         <div class="author">%(author)s</div>
                         <div class="read-time">4 hour read</div>
                         <div class="book-links">
-                          <a href="../books/%(book_hash)s/index.html" title="%(title)s">
+                          <a href="../books/%(book_hash)s/index.html" title="%(title)s"
+                            aria-label="Read %(title)s">
                             READ
                           </a>
-                          <a href="../book_desc/%(book_hash)s.html" title="%(title)s">
+                          <a href="../book_desc/%(book_hash)s.html" title="%(title)s"
+                            aria-label="Learn more about %(title)s">
                             LEARN MORE
                           </a>
                         </div>

@@ -8,15 +8,15 @@
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content="Subway Library" />
   <meta property="og:title" content="Subway Library | About" />
-  <meta property="og:image" content="iphone_simplyE.png" />
+  <meta property="og:image" content="./iphone_simplyE.png" />
   <meta property="og:description" content="Subway Library | Read books, excerpts, and short stories from NYC public libraries." />
-  <meta property="og:url" content="http://subwaylibrary.com" />
+  <meta property="og:url" content="http://www.subwaylibrary.com" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:site" content="@nypl" />
   <meta name="twitter:creator" content="@nypl" />
   <meta name="twitter:title" content="Subway Library" />
   <meta name="twitter:description" content="Subway Library | Read books, excerpts, and short stories from NYC public libraries." />
-  <meta name="twitter:image" content="iphone_simplyE.png" />
+  <meta name="twitter:image" content="./iphone_simplyE.png" />
 
   <link rel="stylesheet" href="index.min.css" />
   <link rel="icon" href="simplye.png" sizes="300x300" type="image/png"/>
@@ -57,7 +57,7 @@
 
     <main class="about">
       <div class="about-container">
-        <h2>About Subway Library</h2>
+        <h2>A Partnership With</h2>
         <div class="sponsors">
           <div class="container">
             <span>
@@ -129,7 +129,6 @@
 
         <h3>SimplyE</h3>
         <img src="iphone_simplyE.png" class="about-simplye" alt="" />
-        <img src="iphone_simplyE.png" class="about-simplye desktop" alt="" />
       </div>
     </main>
     <footer>
