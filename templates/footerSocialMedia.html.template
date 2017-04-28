@@ -2,7 +2,7 @@
   <h2>Share Subway Library</h2>
   <ul>
     <li>
-      <a href="https://twitter.com/intent/tweet?text=Read books, excerpts, and short stories from NYC public libraries&url=https://subwaylibrary.nyc&via=nypl"
+      <a href="https://twitter.com/intent/tweet?text=Read books, excerpts, and more&url=https://subwaylibrary.com&via=nypl"
         target="_blank"  onclick="gap('send', 'event', 'ShareSite', 'Twitter');">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500" viewBox="0 0 500 500" preserveAspectRatio="xMidYMid meet" role="img" aria-labelledby="share-on-twitter" class="twitter-icon">
         <title id="share-on-twitter">Share on Twitter</title>
@@ -16,7 +16,7 @@
       </a>
     </li>
     <li>
-      <a href="https://www.facebook.com/sharer/sharer.php?u=https://subwaylibrary.nyc&display=popup"
+      <a href="https://www.facebook.com/sharer/sharer.php?u=https://subwaylibrary.com&display=popup"
         target="_blank" onclick="gap('send', 'event', 'ShareSite', 'Facebook');">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500" preserveAspectRatio="xMidYMid meet" role="img" aria-labelledby="brooklyn-public-library-logo" class="fb-icon">
           <title id="share-on-face-book">Share on Face Book</title>
@@ -26,7 +26,7 @@
       </a>
     </li>
     <li>
-      <a href="mailto:?subject=Check out Subway Library&amp;body=Read books, excerpts, and short stories from NYC public libraries."
+      <a href="mailto:?subject=Subway Library: Start Reading Now&amp;body=Read books, excerpts, and more from NYC public libraries on <a href='https://subwaylibrary.com{{url}}'>Subway Library</a>."
         onclick="gap('send', 'event', 'ShareSite', 'Email');">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500" preserveAspectRatio="xMidYMid meet" role="img" aria-labelledby="email" class="email-icon">
         <title id="email">Email</title>

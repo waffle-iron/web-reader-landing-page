@@ -5,18 +5,18 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <meta  property="og:type" content="website" />
-  <meta  property="og:site_name" content="Subway Library" />
-  <meta  property="og:title" content="Subway Library | {{category}}" />
-  <meta  property="og:image" content="iphone_simplyE.png" />
-  <meta  property="og:description" content="Subway Library | Browse books, excerpts, and short stories from NYC public libraries. Connect to Transit Wireless Wi-Fi at any MTA station to start reading now." />
-  <meta  property="og:url" content="http://subwaylibrary.nyc" />
-  <meta  name="twitter:card" content="summary_large_image" />
-  <meta  name="twitter:site" content="@nypl" />
-  <meta  name="twitter:creator" content="@nypl" />
-  <meta  name="twitter:title" content="Subway Library" />
-  <meta  name="twitter:description" content="Subway Library | Browse books, excerpts, and short stories from NYC public libraries. Connect to Transit Wireless Wi-Fi at any MTA station to start reading now." />
-  <meta  name="twitter:image" content="iphone_simplyE.png" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Subway Library" />
+  <meta property="og:title" content="Subway Library | {{category}}" />
+  <meta property="og:image" content="../iphone_simplyE.png" />
+  <meta property="og:description" content="Subway Library | With Subway Library you can read books, excerpts, and short stories from NYC public libraries." />
+  <meta property="og:url" content="http://subwaylibrary.com" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:site" content="@nypl" />
+  <meta name="twitter:creator" content="@nypl" />
+  <meta name="twitter:title" content="Subway Library" />
+  <meta name="twitter:description" content="Subway Library | With Subway Library you can read books, excerpts, and short stories from NYC public libraries." />
+  <meta name="twitter:image" content="../iphone_simplyE.png" />
 
   <link rel="stylesheet" href="../index.min.css" />
   <link rel="icon" href="../simplye.png" sizes="300x300" type="image/png"/>
@@ -86,10 +86,10 @@
       {{footerSocialMedia}}
       <div class="deep-footer">
         {{footerLogos}}
-        <p>The New York Public Library<br /><br />
-          <a href="../license.html">Terms and Conditions</a> &bull;
+        <p>
+          <a href="https://www.nypl.org/help/about-nypl/legal-notices/website-terms-and-conditions">Terms and Conditions</a> &bull;
           <a href="../about.html">About Us</a> &bull;
-          <a href="../nyplprivacypolicy.html">Privacy Policy</a>
+          <a href="../privacypolicy.html">Privacy Policy</a>
         </p>
       </div>
     </footer>
