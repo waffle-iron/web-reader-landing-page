@@ -5,18 +5,18 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <meta  property="og:type" content="website" />
-  <meta  property="og:site_name" content="Subway Library" />
-  <meta  property="og:title" content="Subway Library" />
-  <meta  property="og:image" content="iphone_simplyE.png" />
-  <meta  property="og:description" content="Subway Library | Browse books, excerpts, and short stories from NYC public libraries. Connect to Transit Wireless Wi-Fi at any MTA station to start reading now." />
-  <meta  property="og:url" content="http://subwaylibrary.nyc" />
-  <meta  name="twitter:card" content="summary_large_image" />
-  <meta  name="twitter:site" content="@nypl" />
-  <meta  name="twitter:creator" content="@nypl" />
-  <meta  name="twitter:title" content="Subway Library" />
-  <meta  name="twitter:description" content="Subway Library | Browse books, excerpts, and short stories from NYC public libraries. Connect to Transit Wireless Wi-Fi at any MTA station to start reading now." />
-  <meta  name="twitter:image" content="iphone_simplyE.png" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Subway Library" />
+  <meta property="og:title" content="Subway Library" />
+  <meta property="og:image" content="iphone_simplyE.png" />
+  <meta property="og:description" content="Subway Library | Read books, excerpts, and short stories from NYC public libraries." />
+  <meta property="og:url" content="http://subwaylibrary.com" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:site" content="@nypl" />
+  <meta name="twitter:creator" content="@nypl" />
+  <meta name="twitter:title" content="Subway Library" />
+  <meta name="twitter:description" content="Subway Library | Read books, excerpts, and short stories from NYC public libraries." />
+  <meta name="twitter:image" content="iphone_simplyE.png" />
 
   <link rel="stylesheet" href="/index.min.css" />
   <link rel="icon" href="simplye.png" sizes="300x300" type="image/png"/>
@@ -57,12 +57,12 @@
 
     <main>
       <div class="error-page">
-        <p><strong>We’re sorry…</strong></br>
-        The page you were looking for doesn’t exist.
-        </p>
+        <p><strong>We’re sorry…</strong></p>
+        <p class="error-message">The page you were looking for doesn’t exist.</p>
         <p>
-          Visit the Subway Library <a href="/" title="Subway Library home page">home page</a> or
-          <a href="https://www.nypl.org/books-music-dvds/ebookcentral/simplye">learn more about SimplyE</a>.
+          <span class="error-return-message">
+          Visit the Subway Library <a href="/" title="Subway Library home page">home page</a>
+          </span> or <a href="https://www.nypl.org/books-music-dvds/ebookcentral/simplye">learn more about SimplyE</a>.
         </p>
       </div>
     </main>
@@ -77,6 +77,23 @@
       </div>
     </footer>
   </div>
+  <script type="text/javascript">
+    function errorPage() {
+      var locationHref = window.location.href;
+      var errorElm = document.querySelector('.error-message');
+      var errorReturnElm = document.querySelector('.error-return-message');
+
+      if (locationHref.indexOf('category/') !== -1 ||
+        locationHref.indexOf('book_desc/') !== -1 ||
+        locationHref.indexOf('books/') !== -1) {
+          errorElm.innerHTML = "This item is no longer available.";
+          errorReturnElm.innerHTML = "Return to <a href=\"/\" title=\"Subway Library home page\">Subway Library</a>";
+      }
+    }
+    document.addEventListener("DOMContentLoaded", function() {
+      errorPage();
+    });
+  </script>
   <script type="text/javascript" src="/main.min.js"></script>
 </body>
 </html>

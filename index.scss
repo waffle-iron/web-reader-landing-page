@@ -108,7 +108,7 @@ main {
     font-size: 2.25rem;
     padding: 0;
     width: 92%;
-    margin-top: 10px;
+    margin: 10px 0;
 
     &:nth-child(2) {
       font-size: 1.3rem;
@@ -144,6 +144,10 @@ main {
   }
 }
 
+.cover {
+  min-height: 180px;
+  display: block;
+}
 .books a .title {
   font-weight: 900;
   font-size: 1.2em;

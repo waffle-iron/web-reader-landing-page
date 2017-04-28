@@ -9,13 +9,13 @@
   <meta  property="og:site_name" content="Subway Library" />
   <meta  property="og:title" content="Subway Library" />
   <meta  property="og:image" content="iphone_simplyE.png" />
-  <meta  property="og:description" content="Subway Library | Browse books, excerpts, and short stories from NYC public libraries. Connect to Transit Wireless Wi-Fi at any MTA station to start reading now." />
-  <meta  property="og:url" content="http://subwaylibrary.nyc" />
+  <meta  property="og:description" content="Subway Library | With Subway Library you can read books, excerpts, and short stories from NYC public libraries." />
+  <meta  property="og:url" content="http://subwaylibrary.com" />
   <meta  name="twitter:card" content="summary_large_image" />
   <meta  name="twitter:site" content="@nypl" />
   <meta  name="twitter:creator" content="@nypl" />
   <meta  name="twitter:title" content="Subway Library" />
-  <meta  name="twitter:description" content="Subway Library | Browse books, excerpts, and short stories from NYC public libraries. Connect to Transit Wireless Wi-Fi at any MTA station to start reading now." />
+  <meta  name="twitter:description" content="Subway Library | With Subway Library you can read books, excerpts, and short stories from NYC public libraries." />
   <meta  name="twitter:image" content="iphone_simplyE.png" />
 
   <link rel="stylesheet" href="index.min.css" />

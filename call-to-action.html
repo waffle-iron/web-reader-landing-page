@@ -3,6 +3,7 @@
   <head>
     <title>{{title}}</title>
     <meta charset="utf-8">
+    <link rel="stylesheet" href="/index.min.css" />
     <script>
       (function(i,s,o,g,r,a,m){i['GoogleAnalyticsProxyObject']=r;i[r]=i[r]||function(){
           (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
@@ -18,56 +19,7 @@
       gap('send', 'event', 'ReadBook', 'Finish', document.title);
     </script>
   </head>
-  <body>
-    <style>
-    .call-to-action {
-      background: #f8f8f8;
-      text-align: center;
-      margin: 0 0 -15px;
-      padding: 20px 0;
-      max-width: 50rem;
-      margin: 0 auto;
-    }
-    .call-to-action p {
-      line-height: 1.2em;
-      padding: 5px 25px;
-      margin: 0;
-    }
-    .call-to-action p:nth-child(1) {
-      font-size: 1.8rem;
-      font-weight: 900;
-    }
-    .call-to-action p:nth-child(2) {
-      font-size: 1.4rem;
-      font-weight: 100;
-    }
-    .call-to-action img {
-      width: 100px;
-    }
-    .call-to-action .download-link {
-      margin: 10px 0;
-    }
-    .download-link svg {
-      width: 150px;
-    }
-    .google-badge .badge,
-    .apple-badge .badge {
-      fill: #538e0c;
-    }
-    .google-badge .mark,
-    .apple-badge .mark > path {
-      fill: #fff;
-    }
-    .call-to-action .action-links {
-      text-align: center;
-    }
-    .call-to-action .action-links a {
-      font-weight: 900;
-      text-decoration: underline;
-      display: block;
-      margin-top: 15px;
-    }
-    </style>
+  <body style="background: #f8f8f8;">
     <div class="interstitialAd call-to-action">
       <p>Want more free e-books?</p>
       {{callOutText}}
@@ -80,5 +32,6 @@
         </p>
       </div>
     </div>
+    <script type="text/javascript" src="/main.min.js"></script>
   </body>
 </html>
