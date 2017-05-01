@@ -38,6 +38,8 @@ EPUB_URL_HEADER             = "EPUB URL"
 EPUB_FILENAME_HEADER        = "EPUB filename"
 MTA_CATEGORY_1              = "MTA Category 1"
 WORD_COUNT                  = "Word Count"
+FEATURABLE_ON_CATALOG_PAGE  = "Can be Featured on Catalog Page"
+
 
 bin_dir = os.path.split(__file__)[0]
 package_dir = os.path.join(bin_dir, "..")
@@ -121,6 +123,10 @@ class GenerateLandingPageScript:
 
               for row in reader:
                   title = unicode(row.get(SPREADSHEET_TITLE_HEADER), 'utf-8')
+
+                  featurable = True
+                  if row.get(FEATURABLE_ON_CATALOG_PAGE) and row.get(FEATURABLE_ON_CATALOG_PAGE).strip().upper() == "N":
+                      featurable = False
 
                   adult = True
                   if row.get(OKAY_FOR_12_AND_UNDER) == "Y":
@@ -340,11 +346,11 @@ class GenerateLandingPageScript:
 
                   # Organize the book by its category
                   if mta_category in mta_category_dict:
-                      mta_category_dict[mta_category]["home"].append(book_html_home)
+                      mta_category_dict[mta_category]["home"].append(book_html_home if featurable else None)
                       mta_category_dict[mta_category]["category"].append({"title": title.lower(), "html_fragment": book_html_category})
                   else:
                       mta_category_dict[mta_category] = {
-                          "home": [book_html_home],
+                          "home": [book_html_home if featurable else None],
                           "category": [{"title": title.lower(), "html_fragment": book_html_category}]
                       }
 
@@ -356,6 +362,11 @@ class GenerateLandingPageScript:
           for category_key in mta_category_dict:
               # randomize books in lane, each build
               random.shuffle(mta_category_dict[category_key]["home"])
+
+              # remove non-featurable books
+              mta_category_dict[category_key]["home"] = [x for x in mta_category_dict[category_key]["home"] if x is not None]
+
+              #pluck first 10
               shortenHomeLane = (mta_category_dict[category_key]["home"])[:10]
 
               books_html_home += """
