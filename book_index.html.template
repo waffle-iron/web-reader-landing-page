@@ -3,12 +3,14 @@
 <head>
   <title>{{title}}</title>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <meta name="apple-mobile-web-app-capable" content="yes">                        
   <link href="webapp.webmanifest" rel="manifest" type="application/manifest+json">
   <link rel="apple-touch-icon" href="{{cover}}" type="image/jpeg">
   <link rel="stylesheet" href="../../main.css">
   <script src="../../require.js"></script>
   <script src="../../fetch.js"></script>
+  <script src="../../url-polyfill.min.js"></script>
   <script src="../../webpub-viewer.js"></script>
   <script>
     (function(i,s,o,g,r,a,m){i['GoogleAnalyticsProxyObject']=r;i[r]=i[r]||function(){
