@@ -31,30 +31,25 @@ body {
 }
 
 header {
-  padding: 5px 15px 15px;
+  padding: 10px 15px 15px;
   text-align: left;
   background: #f8f8f8;
   color: #000;
   height: 40px;
 
   h1 {
-    margin: 10px;
+    margin: 3px 6px;
     display: inline-block;
-    vertical-align: super;
   }
 }
 
 a.logo {
-  /*float: left;*/
   margin: 5px 0 0;
   display: inline-block;
 
   svg {
     height: 30px;
-  }
-
-  img {
-    width: 65px;
+    float: left;
   }
 }
 nav {
