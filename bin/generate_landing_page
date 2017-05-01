@@ -58,11 +58,7 @@ APP_CACHE_HTML = os.path.join(package_dir, "appcache.html")
 SIMPLYE_LOGO_TEMPLATE = os.path.join(template_dir, "se_logo.html.template")
 MENU_OPEN_BTN_TEMPLATE = os.path.join(template_dir, "menuOpenBtn.html.template")
 X_ICON_TEMPLATE = os.path.join(template_dir, "xIconBtn.html.template")
-FILES_TO_COPY = ["simplyE_logo.png",
-                 "simplye.png",
-                 "apple_badge.png",
-                 "google_badge.png",
-                 "amazon_badge.png",
+FILES_TO_COPY = [
                  "webpub-viewer/dist/sw.js",
                  "webpub-viewer/dist/webpub-viewer.js",
                  "webpub-viewer/node_modules/requirejs/require.js",
