@@ -68,7 +68,7 @@ FILES_TO_COPY = ["simplyE_logo.png",
                  "webpub-viewer/node_modules/requirejs/require.js",
                  "webpub-viewer/node_modules/whatwg-fetch/fetch.js",
                  "webpub-viewer/dist/styles/css/main.css",
-                 "images/iphone_simplyE.png",
+                 "images/iphone_simplyE_about.png",
                  "assetBuild/index.min.css",
                  "assetBuild/main.min.js",
                 ]
