@@ -402,23 +402,26 @@ nav#global-nav {
   min-height: 170px;
 }
 .book-category img {
-  // display: inline-block;
-  // width: 120px;
   width: 100px;
-}
-@media screen and (min-width: 360px) {
-  .book-category img {
-    width: 120px;
-  }
 }
 
 .book-category .info {
   display: inline-block;
   vertical-align: top;
   margin: 0px 20px;
-  width: 55%;
+  width: 50%;
   font-size: 1.4rem;
 }
+
+@media screen and (min-width: 360px) {
+  .book-category img {
+    width: 120px;
+  }
+  .book-category .info {
+    width: 55%;
+  }
+}
+
 .book-category .info h2 {
   margin-top: 0;
 }
