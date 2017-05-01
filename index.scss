@@ -402,9 +402,16 @@ nav#global-nav {
   min-height: 170px;
 }
 .book-category img {
-  display: inline-block;
-  width: 120px;
+  // display: inline-block;
+  // width: 120px;
+  width: 100px;
 }
+@media screen and (min-width: 360px) {
+  .book-category img {
+    width: 120px;
+  }
+}
+
 .book-category .info {
   display: inline-block;
   vertical-align: top;
@@ -423,7 +430,7 @@ nav#global-nav {
 
   a {
     color: #468028;
-    letter-spacing: .15rem;
+    letter-spacing: .1rem;
     display: inline-block;
 
     &:first-child {
@@ -435,7 +442,8 @@ nav#global-nav {
       padding: 5px 25px 5px 30px;
     }
     &:last-child {
-      margin: 20px 3% 0;
+      margin: 10px 3% 0;
+      font-size: 1.2rem;
     }
   }
 }
