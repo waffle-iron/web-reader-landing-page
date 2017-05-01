@@ -1,3 +1,4 @@
+[![Stories in Ready](https://badge.waffle.io/NYPL-Simplified/web-reader-landing-page.png?label=ready&title=Ready)](https://waffle.io/NYPL-Simplified/web-reader-landing-page)
 # web-reader-landing-page
 
 ## Setup
