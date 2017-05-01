@@ -46,7 +46,7 @@
 
       var settingsStore = new LocalStorageStore.default("subway-library");
       var fontSizes = [ 12, 14, 16, 18, 20, 22, 24, 26, 28, 30, 32 ];
-      var defaultFontSize = 16;
+      var defaultFontSize = 20;
       BookSettings.default.create(settingsStore, [paginator, scroller], fontSizes, defaultFontSize).then(function (settings) {
         IFrameNavigator.default.create(element, webpubManifestUrl, store, cacher, settings, annotator, paginator, scroller, null, new URL("{{back_url}}", window.location.href), "Details");
       });
