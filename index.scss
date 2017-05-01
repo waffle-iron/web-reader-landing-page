@@ -105,20 +105,16 @@ main {
 
   p {
     font-weight: 100;
-    font-size: 2.25rem;
+    font-size: 1.8rem;
+    line-height: 1.3;
     padding: 0;
     width: 92%;
     margin: 10px 0;
-
-    &:nth-child(2) {
-      font-size: 1.3rem;
-      font-style: italic;
-    }
   }
 
   a {
     text-transform: uppercase;
-    color: #61a60e;
+    color: #468028;
     font-weight: 900;
   }
 }
@@ -146,6 +142,7 @@ main {
 
 .cover {
   min-height: 180px;
+  min-width: 120px;
   display: block;
 }
 .books a .title {
@@ -177,29 +174,34 @@ main {
   width: 200px;
 }
 .book-details h2 {
-  font-size: 1.6em;
+  font-size: 2rem;
   font-weight: 900;
+  margin-bottom: .5rem;
 }
 .book-details .info div {
-  line-height: 2em;
+  line-height: 1.5;
+  font-size: 1.6rem;
 }
 .book .read-now {
   display: inline-block;
   border-radius: 5px;
   background: #468028;
   color: #fff;
-  padding: 10px;
+  padding: 10px 25px;
   width: 130px;
   position: absolute;
   text-align: center;
   left: 50%;
   transform: translateY(-50%) translateX(-50%);
+  font-size: 1.2rem;
+  letter-spacing: .07rem;
 }
 .book .book_desc {
   padding: 50px 15px 0;
 }
 .social-media-share {
   text-align: center;
+  margin-bottom: 2.25rem;
 }
 .social-media-share li {
   display: inline-block;
@@ -220,7 +222,7 @@ main {
   text-align: center;
   display: block;
   margin-top: 30px;
-  font-size: 1.4em;
+  font-size: 1.5em;
   font-weight: bold;
 }
 
@@ -322,7 +324,7 @@ nav#global-nav {
     float: left;
     padding: 15px 5px;
     text-transform: uppercase;
-    color: #61a60e;
+    color: #468028;
     font-size: 1rem;
   }
 }
@@ -337,8 +339,8 @@ nav#global-nav {
 #menu-button-open svg {
   height: 20px;
   margin: 10px 5px;
-  color: #61a60e;
-  fill: #61a60e;
+  color: #468028;
+  fill: #468028;
 }
 #menu-button-close {
   float: right;
@@ -348,8 +350,8 @@ nav#global-nav {
 #menu-button-close svg {
   height: 20px;
   margin: 10px 10px 5px;
-  color: #61a60e;
-  fill: #61a60e;
+  color: #468028;
+  fill: #468028;
 }
 
 /* Homepage */
@@ -374,7 +376,7 @@ nav#global-nav {
   text-transform: uppercase;
   font-size: 110%;
   font-weight: 900;
-  color: #61a60e;
+  color: #468028;
 }
 .lane-container {
   width: 100%;
@@ -413,31 +415,64 @@ nav#global-nav {
 .book-category .info h2 {
   margin-top: 0;
 }
+.book-category .read-time {
+  margin: 10px 0;
+}
 .book-category .info .book-links {
   margin-top: 20px;
 
   a {
     color: #468028;
     letter-spacing: .15rem;
+    display: inline-block;
+
+    &:first-child {
+      background: #468028;
+      border-radius: 5px;
+      border: 1px solid #468028;
+      color: #fff;
+      font-size: 1.2rem;
+      padding: 5px 25px 5px 30px;
+    }
+    &:last-child {
+      margin: 20px 3% 0;
+    }
   }
-}
-.book-links a:first-child {
-  padding: 5px 20px 5px 30px;
-  border-radius: 5px;
-  border: 1px solid #468028;
-}
-.book-links a:last-child {
-  margin-left: 3%;
 }
 
 /* home page */
 .books {
   width: 100%;
+  display: table;
 }
 .books li {
   display: table-cell;
   vertical-align: top;
   padding-right: 10px;
+}
+@media (min-width: 960px) {
+  .books {
+    display: block;
+  }
+  .lane-container {
+    height: 100%;
+  }
+  .books li {
+    width: 154px;
+    height: 320px;
+  }
+  .books li:nth-child(n+6) {
+    display: inline-block;
+    padding-right: 6px;
+  }
+  .books li:nth-child(5),
+  .books li:nth-child(10) {
+    padding-right: 0;
+  }
+  .books img {
+    width: 150px;
+    height: 220px;
+  }
 }
 .call-to-action.book-details-page {
   padding-bottom: 70px;
@@ -534,8 +569,6 @@ ul {
 main.about {
   padding: 0;
   line-height: 2rem;
-  /* Not a fan of this: */
-  margin: 0 0 -15px;
 }
 .about h2 {
   text-align: center;

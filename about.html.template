@@ -132,6 +132,18 @@
       </div>
     </main>
     <footer>
+      <div class="call-to-action">
+        <p>Want more free e-books?</p>
+        {{callOutText}}
+        {{downloadAppBtns}}
+        <div class="action-links">
+          <p>Learn more about
+            <a href="https://www.nypl.org/books-music-dvds/ebookcentral/simplye" onclick="gap('send', 'event', 'LearnMore', 'SimplyE');">The New York Public Library &gt;</a>
+            <a href="https://www.bklynlibrary.org/ebooks" onclick="gap('send', 'event', 'LearnMore', 'BrooklynLibrary');">Brooklyn Library &gt;</a>
+            <a href="http://connect.queenslibrary.org/" onclick="gap('send', 'event', 'LearnMore', 'QueensLibrary');">Queens Library &gt;</a>
+          </p>
+        </div>
+      </div>
       {{footerSocialMedia}}
       <div class="deep-footer">
         {{footerLogos}}
