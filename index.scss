@@ -402,16 +402,26 @@ nav#global-nav {
   min-height: 170px;
 }
 .book-category img {
-  display: inline-block;
-  width: 120px;
+  width: 100px;
 }
+
 .book-category .info {
   display: inline-block;
   vertical-align: top;
   margin: 0px 20px;
-  width: 55%;
+  width: 50%;
   font-size: 1.4rem;
 }
+
+@media screen and (min-width: 360px) {
+  .book-category img {
+    width: 120px;
+  }
+  .book-category .info {
+    width: 55%;
+  }
+}
+
 .book-category .info h2 {
   margin-top: 0;
 }
@@ -423,7 +433,7 @@ nav#global-nav {
 
   a {
     color: #468028;
-    letter-spacing: .15rem;
+    letter-spacing: .1rem;
     display: inline-block;
 
     &:first-child {
@@ -435,7 +445,8 @@ nav#global-nav {
       padding: 5px 25px 5px 30px;
     }
     &:last-child {
-      margin: 20px 3% 0;
+      margin: 10px 3% 0;
+      font-size: 1.2rem;
     }
   }
 }

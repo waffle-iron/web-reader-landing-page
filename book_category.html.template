@@ -8,7 +8,8 @@
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content="Subway Library" />
   <meta property="og:title" content="Subway Library | {{category}}" />
-  <meta property="og:image" content="../iphone_simplyE.png" />
+  <meta property="og:image:type" content="image/png" />
+  <meta property="og:image" content="http://www.subwaylibrary.com/iphone_simplyE.png" />
   <meta property="og:description" content="Subway Library | With Subway Library you can read books, excerpts, and short stories from NYC public libraries." />
   <meta property="og:url" content="http://www.subwaylibrary.com" />
   <meta name="twitter:card" content="summary_large_image" />
@@ -16,7 +17,7 @@
   <meta name="twitter:creator" content="@nypl" />
   <meta name="twitter:title" content="Subway Library" />
   <meta name="twitter:description" content="Subway Library | With Subway Library you can read books, excerpts, and short stories from NYC public libraries." />
-  <meta name="twitter:image" content="../iphone_simplyE.png" />
+  <meta name="twitter:image" content="http://www.subwaylibrary.com/iphone_simplyE.png" />
 
   <link rel="stylesheet" href="../index.min.css" />
   <link rel="icon" href="../simplye.png" sizes="300x300" type="image/png"/>
